@@ -85,6 +85,7 @@ if (Meteor.isClient) {
             var tasksImport = $form.find('#sprint-tasks-import').val();
             if (tasksImport) {
               var taskRows = parseImport(tasksImport);
+              var currentStory;
               for (var ii = 0; ii < taskRows.length; ii++) {
                 var taskRow = taskRows[ii];
                 var task = {
@@ -95,8 +96,11 @@ if (Meteor.isClient) {
                   status: 'notstarted'
                 }
                 var storyName = taskRow[0]
+                if (storyName) {
+                  currentStory = storyName;
+                }
                 for (var jj = 0; jj < stories.length; jj++) {
-                  if (stories[jj].name == storyName) {
+                  if (stories[jj].name == currentStory) {
                     stories[jj].tasks.push(task);
                     break;
                   }
