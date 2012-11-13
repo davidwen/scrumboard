@@ -3,11 +3,26 @@
 </head>
 
 <body>
-  {{> hello}}
+  {{> scrumboard}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="scrumboard">
+  {{#if sprint}}
+    {{> sprint}}
+  {{else}}
+    {{> dashboard}}
+  {{/if}}
+</template>
+
+<template name="dashboard">
+  <div>
+    <span>Sprints</span>
+    <ul>
+      {{#each sprint}}
+        <li><a href="/{{name}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+  <button type="button" class="btn show-add-sprint-dialog" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
+  {{> addSprintDialog}}
 </template>

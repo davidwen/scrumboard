@@ -1,0 +1,127 @@
+<template name="newStoryDialog">
+  <div id="add-story-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Story</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal add-story-form">
+        <div class="control-group">
+          <label class="control-label" for="story-name">Name</label>
+          <div class="controls">
+            <input type="text" id="story-name" placeholder="Name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="story-points">Story Points</label>
+          <div class="controls">
+            <input type="text" id="story-points" placeholder="Story Points">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="story-description">Description</label>
+          <div class="controls">
+            <textarea id="story-description" placeholder="Description"></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="story-acceptance-criteria">Acceptance Criteria</label>
+          <div class="controls">
+            <textarea id="story-acceptance-criteria" placeholder="Acceptance Criteria"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-primary add-story">Add Story</button>
+    </div>
+  </div>
+</template>
+
+<template name="newTaskDialog">
+  <div id="add-task-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>New Task</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal add-task-form">
+        <div class="control-group">
+          <label class="control-label" for="task-name">Name</label>
+          <div class="controls">
+            <input type="text" id="task-name" placeholder="Name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="task-owner">Owner</label>
+          <div class="controls">
+            <input type="text" id="task-owner" placeholder="Owner">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="task-hours">Hours</label>
+          <div class="controls">
+            <input type="text" id="task-hours" placeholder="Hours">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="task-description">Description</label>
+          <div class="controls">
+            <textarea id="task-description" placeholder="Description"></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="task-status">Status</label>
+          <div class="controls">
+            <select id="task-status">
+              <option value="notstarted">Not Started</option>
+              <option value="inprogress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+        </div>
+        <input type="hidden" id="story-name">
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-primary add-task"></button>
+    </div>
+  </div>
+</template>
+
+<template name="addSprintDialog">
+  <div id="add-sprint-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Add Sprint</h3>
+    </div>
+    <div class="modal-body">
+      <form class="form-horizontal add-sprint-form">
+        <div class="control-group">
+          <label class="control-label" for="sprint-name">Name</label>
+          <div class="controls">
+            <input type="text" id="sprint-name" placeholder="Name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="sprint-stories-import">Stories Import</label>
+          <div class="controls">
+            <textarea rows="7" id="sprint-stories-import" placeholder="Copy and paste story cells here"></textarea>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="sprint-tasks-import">Tasks Import</label>
+          <div class="controls">
+            <textarea rows="7" id="sprint-tasks-import" placeholder="Copy and paste task cells here"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <button class="btn btn-primary add-sprint">Add Sprint</button>
+    </div>
+  </div>
+</template>

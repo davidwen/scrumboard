@@ -1,0 +1,58 @@
+<template name="sprint">
+  <div class="pull-left">
+    <a href="/">&lt; Back</a>
+  </div>
+  <div style="text-align: center;">
+    <h1>{{sprintName}}</h1>
+  </div>
+  <table class="table">
+    <thead>
+      <th>Story</th>
+      <th>Not Started</th>
+      <th>In Progress</th>
+      <th>Done</th>
+    </thead>
+    <tbody>
+      {{#each story}}
+        {{> story}}
+      {{/each}}
+      <tr class="add-story-row" >
+        <td colspan="4" style="text-align: center;">
+          <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {{> newStoryDialog}}
+  {{> newTaskDialog}}
+</template>
+
+<template name="story">
+  <tr>
+    <td class="story-cell">
+      <span>{{name}}</span>
+      <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog" style="visibility: hidden;">+Task</a>
+    </td>
+    <td>
+      {{#each tasks}}
+        {{#if taskStatus "notstarted"}}
+          {{name}}
+        {{/if}}
+      {{/each}}
+    </td>
+    <td>
+      {{#each tasks}}
+        {{#if taskStatus "inprogress"}}
+          {{name}}
+        {{/if}}
+      {{/each}}
+    </td>
+    <td>
+      {{#each tasks}}
+        {{#if taskStatus "done"}}
+          {{name}}
+        {{/if}}
+      {{/each}}
+    </td>
+  </tr>
+</template>
