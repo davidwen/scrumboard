@@ -16,6 +16,9 @@ var parseImport = function(input) {
   for (var ii = 0; ii < rowSplit.length; ii++) {
     var cell = rowSplit[ii];
     if (cell[0] == '"' || cell.indexOf('\n') == -1) {
+      if (cell[0] == '"') {
+        cell = cell.slice(1, -1);
+      }
       currentRow.push(cell);
     } else {
       var cellSplit = cell.split('\n');
