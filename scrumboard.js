@@ -214,7 +214,7 @@ if (Meteor.isClient) {
     });
 
     $tr.find('.edit-task').click(function() {
-      var storyId = $(this).closest('tr').find('#story-id').val();
+      var storyId = $(this).closest('tr').attr('data-id');
       var taskId = $(this).closest('.task').attr('data-id');
 
       var story = getStory(storyId);
