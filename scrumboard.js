@@ -46,7 +46,11 @@ if (Meteor.isClient) {
   Template.sprint.rendered = function() {
     $(window).unbind('resize');
     $(window).resize(function() {
-      $('.tasks-container').masonry({
+      var $containers = $('.tasks-container');
+      if ($containers.data('masonry')) {
+        $containers.masonry('destroy');
+      }
+      $containers.masonry({
         itemSelector : '.task',
       });
     });
