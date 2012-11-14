@@ -74,13 +74,16 @@ var submitAddSprintForm = function() {
         }
       }
 
-      Sprints.insert(
-        {name: sprintName, stories: stories},
-        function(error, result) {
-          if (result) {
-            window.location = '/' + sprintName;
-          }
+      var sprintStories = [];
+      for (var ii = 0; ii < stories.length; ii++) {
+        var story = stories[ii];
+        var storyId = Stories.insert(story);
+        sprintStories.push({
+          id: storyId,
+          name: story.name
         });
+      }
+      Sprints.insert({name: sprintName, stories: sprintStories});
       $('#import-sprint-dialog').modal('hide');
     }
   } else {
@@ -100,7 +103,6 @@ if (Meteor.isClient) {
   }
 
   Template.dashboardSprint.nameUriDecoded = function() {
-    console.log(this.name);
     return encodeURIComponent(this.name);
   }
 

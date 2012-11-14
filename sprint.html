@@ -31,8 +31,9 @@
 </template>
 
 <template name="story">
-  <tr>
+  <tr class="story-row">
     <td class="story-cell">
+      <input type="hidden" id="story-id" value="{{_id}}">
       <span class="story-name">{{name}}</span>
       <div class="story-controls" style="visibility: hidden;">
         <a class="show-story-details-dialog btn btn-link">Details</a>
