@@ -2,27 +2,29 @@
   <div class="pull-left">
     <a href="/">&lt; Back</a>
   </div>
-  <div style="text-align: center;">
-    <h1>{{sprintName}}</h1>
-  </div>
-  <table class="sprint-table table table-bordered">
-    <thead>
-      <th width="10%">Story</th>
-      <th width="30%">Not Started</th>
-      <th width="30%">In Progress</th>
-      <th width="30%">Done</th>
-    </thead>
-    <tbody>
-      {{#each story}}
-        {{> story}}
-      {{/each}}
-      <tr class="add-story-row" >
-        <td colspan="4" style="text-align: center;">
-          <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  {{#with sprint}}
+    <div style="text-align: center;">
+      <h1>{{name}}</h1>
+    </div>
+    <table class="sprint-table table table-bordered">
+      <thead>
+        <th width="10%">Story</th>
+        <th width="30%">Not Started</th>
+        <th width="30%">In Progress</th>
+        <th width="30%">Done</th>
+      </thead>
+      <tbody>
+        {{#each stories}}
+          {{> story}}
+        {{/each}}
+        <tr class="add-story-row" >
+          <td colspan="4" style="text-align: center;">
+            <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  {{/with}}
   {{> newStoryDialog}}
   {{> newTaskDialog}}
   {{> storyDetailsDialog}}

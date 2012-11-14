@@ -61,16 +61,8 @@ if (Meteor.isClient) {
     });
   }
 
-  Template.sprint.story = function() {
-    var sprint = getSprint();
-    if (sprint) {
-      return sprint.stories;
-    }
-    return [];
-  };
-
-  Template.sprint.sprintName = function() {
-    return getSprint().name;
+  Template.sprint.sprint = function() {
+    return getSprint();
   }
 
   Template.sprint.events = {
@@ -185,7 +177,8 @@ if (Meteor.isClient) {
     $(window).trigger('resize');
 
     var $tr = $(this.find('tr'));
-    $(this.findAll('.task')).draggable({
+    var $tasks = $(this.findAll('.task'));
+    $tasks.draggable({
       cancel: '.edit-task',
       containment: $tr[0],
       cursor: 'move',
@@ -194,7 +187,8 @@ if (Meteor.isClient) {
       zIndex: 100
     });
 
-    $(this.findAll('td:not(.story-cell)')).droppable({
+    var $td = $tr.find('td:not(.story-cell)');
+    $td.droppable({
       drop: function(event, ui) {
         var taskId = $(ui.draggable).find('input[name=taskId]').val();
         var newStatus = $(this).find('input[name=status]').val();
