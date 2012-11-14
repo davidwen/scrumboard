@@ -1,6 +1,6 @@
 <template name="sprint">
   <div class="pull-left">
-    <a href="/">&lt; Back</a>
+    <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
   </div>
   {{#with sprint}}
     <div style="text-align: center;">
@@ -8,10 +8,10 @@
     </div>
     <table class="sprint-table table table-bordered">
       <thead>
-        <th width="10%">Story</th>
-        <th width="30%">Not Started</th>
-        <th width="30%">In Progress</th>
-        <th width="30%">Done</th>
+        <th style="text-align: center;" width="10%">Story</th>
+        <th style="text-align: center;" width="30%">Not Started</th>
+        <th style="text-align: center;" width="30%">In Progress</th>
+        <th style="text-align: center;" width="30%">Done</th>
       </thead>
       <tbody>
         {{#each stories}}
