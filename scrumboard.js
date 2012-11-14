@@ -232,6 +232,11 @@ if (Meteor.isClient) {
     return this.status == status;
   }
 
+  Template.story.rendered = function() {
+    $(this.find('.tasks-container')).masonry({
+      itemSelector : '.task',
+    });
+  }
 }
 
 if(Meteor.is_server) {

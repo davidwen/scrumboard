@@ -7,10 +7,10 @@
   </div>
   <table class="table">
     <thead>
-      <th>Story</th>
-      <th>Not Started</th>
-      <th>In Progress</th>
-      <th>Done</th>
+      <th width="10%">Story</th>
+      <th width="30%">Not Started</th>
+      <th width="30%">In Progress</th>
+      <th width="30%">Done</th>
     </thead>
     <tbody>
       {{#each story}}
@@ -34,25 +34,39 @@
       <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog" style="visibility: hidden;">+Task</a>
     </td>
     <td>
-      {{#each tasks}}
-        {{#if taskStatus "notstarted"}}
-          {{name}}
-        {{/if}}
-      {{/each}}
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "notstarted"}}
+            {{> task}}
+          {{/if}}
+        {{/each}}
+      </div>
     </td>
     <td>
-      {{#each tasks}}
-        {{#if taskStatus "inprogress"}}
-          {{name}}
-        {{/if}}
-      {{/each}}
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "inprogress"}}
+            {{> task}}
+          {{/if}}
+        {{/each}}
+      </div>
     </td>
     <td>
-      {{#each tasks}}
-        {{#if taskStatus "done"}}
-          {{name}}
-        {{/if}}
-      {{/each}}
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "done"}}
+            {{> task}}
+          {{/if}}
+        {{/each}}
+      </div>
     </td>
   </tr>
+</template>
+
+<template name="task">
+  <div class="task">
+    <div><small>{{name}}</small></div>
+    <div style="text-align: center;"><h5>{{description}}</h5></div>
+    <div style="text-align: right;"><small>{{owner}}: {{hours}} hrs</small></div>
+  </div>
 </template>
