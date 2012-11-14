@@ -33,6 +33,16 @@ if (Meteor.isClient) {
     if (pathSplit.length == 2 && pathSplit[1] != '') {
       Session.set(SPRINT, decodeURI(pathSplit[1]));
     }
+
+    var $containers = $('.tasks-container');
+    if ($containers.length) {
+      $containers.masonry({
+        itemSelector : '.task',
+      });
+      $(window).resize(function() {
+        $containers.masonry('reload');
+      });
+    }
   });
 
   Template.scrumboard.sprint = function() {
@@ -44,18 +54,6 @@ if (Meteor.isClient) {
   }
 
   Template.sprint.rendered = function() {
-    $(window).unbind('resize');
-    $(window).resize(function() {
-      var $containers = $('.tasks-container');
-      if ($containers.data('masonry')) {
-        $containers.masonry('destroy');
-      }
-      $containers.masonry({
-        itemSelector : '.task',
-      });
-    });
-    $(window).trigger('resize');
-
     $('.sprint-table').on('mouseenter', '.task', function() {
       $(this).find('.edit-task').css('visibility', 'visible');
     }).on('mouseleave', '.task', function() {
