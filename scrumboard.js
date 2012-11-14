@@ -80,7 +80,8 @@ if (Meteor.isClient) {
                 description: storyRow[2],
                 acceptanceCriteria: storyRow[3],
                 points: Number(storyRow[4]),
-                tasks: []
+                tasks: [],
+                nextTaskId: 0
               };
               stories.push(story);
             }
@@ -103,8 +104,11 @@ if (Meteor.isClient) {
                   currentStory = storyName;
                 }
                 for (var jj = 0; jj < stories.length; jj++) {
-                  if (stories[jj].name == currentStory) {
-                    stories[jj].tasks.push(task);
+                  var story = stories[jj];
+                  if (story.name == currentStory) {
+                    task.id = story.nextTaskId;
+                    story.nextTaskId++;
+                    story.tasks.push(task);
                     break;
                   }
                 }
@@ -174,7 +178,8 @@ if (Meteor.isClient) {
           points: storyPoints,
           description: storyDescription,
           acceptanceCriteria: storyAcceptanceCriteria,
-          tasks: []
+          tasks: [],
+          nextTaskId: 0
         };
         var newStories = sprint.stories;
         newStories.push(newStory);
@@ -209,6 +214,8 @@ if (Meteor.isClient) {
         for (var ii = 0; ii < numStories; ii++) {
           var story = newStories[ii];
           if (story.name == storyName) {
+            newTask.id = story.nextTaskId;
+            story.nextTaskId++;
             story.tasks.push(newTask);
             break;
           }
