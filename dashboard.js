@@ -99,6 +99,11 @@ if (Meteor.isClient) {
     }
   }
 
+  Template.dashboardSprint.nameUriDecoded = function() {
+    console.log(this.name);
+    return encodeURIComponent(this.name);
+  }
+
   Template.addSprintDialog.events = {
     'submit .add-sprint-form': function() {
       submitAddSprintForm();

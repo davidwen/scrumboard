@@ -15,14 +15,37 @@
 </template>
 
 <template name="dashboard">
-  <div>
-    <span>Sprints</span>
-    <ul>
-      {{#each sprint}}
-        <li><a href="/{{name}}">{{name}}</a></li>
-      {{/each}}
-    </ul>
+  <div style="margin: 0 auto; width: 1100px;">
+    <div class="pull-right">
+      <button type="button" class="btn show-add-sprint-dialog" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
+    </div>
+    <div style="text-align: center; margin: 0 auto; width: 300px;">
+      <h1>Sprint Directory</h1>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <th width="30%"><h3>Sprint Name</h3></th>
+        <th width="70%"><h3>Stories</h3></th>
+      </thead>
+      <tbody>
+        {{#each sprint}}
+          {{> dashboardSprint}}
+        {{/each}}
+      </tbody>
+    </table>
+    {{> addSprintDialog}}
   </div>
-  <button type="button" class="btn show-add-sprint-dialog" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
-  {{> addSprintDialog}}
+</template>
+
+<template name="dashboardSprint">
+  <tr>
+    <td><h3><a href="/{{nameUriDecoded}}">{{name}}</a></h3></td>
+    <td>
+      <ul>
+        {{#each stories}}
+          <li><span class="lead">{{name}}</span></li>
+        {{/each}}
+      </ul>
+    </td>
+  </tr>
 </template>
