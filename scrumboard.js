@@ -47,7 +47,7 @@ if (Meteor.isClient) {
     return getSprint();
   }
 
-  Template.scrumboard.rendered = function() {
+  Template.sprint.rendered = function() {
     $('.sprint-table').on('mouseenter', 'td.story-cell', function() {
       $(this).find('.story-controls').css('visibility', 'visible');
     }).on('mouseleave', 'td.story-cell', function() {
