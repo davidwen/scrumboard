@@ -202,7 +202,7 @@ if (Meteor.isClient) {
         var newStatus = $(this).attr('data-status');
 
         var sprint = getSprint();
-        var storyId = $(this).closest('tr').find('#story-id').val();
+        var storyId = $(this).closest('tr').attr('data-id');
         var story = getStory(storyId);
         var task = getTask(story, taskId);
         if (task && task.status != newStatus) {
