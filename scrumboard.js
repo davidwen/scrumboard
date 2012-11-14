@@ -49,9 +49,9 @@ if (Meteor.isClient) {
 
   Template.scrumboard.rendered = function() {
     $('.sprint-table').on('mouseenter', 'td.story-cell', function() {
-      $(this).find('.show-add-task-dialog').css('visibility', 'visible');
+      $(this).find('.story-controls').css('visibility', 'visible');
     }).on('mouseleave', 'td.story-cell', function() {
-      $(this).find('.show-add-task-dialog').css('visibility', 'hidden');
+      $(this).find('.story-controls').css('visibility', 'hidden');
     });
 
     $('.sprint-table').on('mouseenter', 'tr.add-story-row', function() {
@@ -86,6 +86,18 @@ if (Meteor.isClient) {
       $dialog.find('.add-task').text('Add Task To ' + this.name);
       $dialog.find('.task-header').hide();
       $dialog.find('.new-task-header').show();
+    },
+
+    'click .show-story-details-dialog': function() {
+      var $dialog = $('#story-details-dialog');
+      $dialog.find('#story-name').text(this.name);
+      $dialog.find('#story-description').text(this.description);
+      $dialog.find('#story-acceptance-criteria').text(this.acceptanceCriteria);
+      $dialog.find('#story-points').text(this.points);
+      $dialog.modal({
+        backdrop: true,
+        keyboard: true
+      }).addClass('big-modal');
     }
   }
 

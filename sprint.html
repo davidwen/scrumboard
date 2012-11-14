@@ -5,7 +5,7 @@
   <div style="text-align: center;">
     <h1>{{sprintName}}</h1>
   </div>
-  <table class="sprint-table table">
+  <table class="sprint-table table table-bordered">
     <thead>
       <th width="10%">Story</th>
       <th width="30%">Not Started</th>
@@ -25,13 +25,17 @@
   </table>
   {{> newStoryDialog}}
   {{> newTaskDialog}}
+  {{> storyDetailsDialog}}
 </template>
 
 <template name="story">
   <tr>
     <td class="story-cell">
       <span class="story-name">{{name}}</span>
-      <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog" style="visibility: hidden;">+Task</a>
+      <div class="story-controls" style="visibility: hidden;">
+        <a class="show-story-details-dialog btn btn-link">Details</a>
+        <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
+      </div>
     </td>
     <td>
       <input type="hidden" name="status" value="notstarted">

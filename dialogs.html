@@ -21,13 +21,13 @@
         <div class="control-group">
           <label class="control-label" for="story-description">Description</label>
           <div class="controls">
-            <textarea id="story-description" placeholder="Description"></textarea>
+            <textarea rows="5" id="story-description" placeholder="Description"></textarea>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="story-acceptance-criteria">Acceptance Criteria</label>
           <div class="controls">
-            <textarea id="story-acceptance-criteria" placeholder="Acceptance Criteria"></textarea>
+            <textarea rows="5" id="story-acceptance-criteria" placeholder="Acceptance Criteria"></textarea>
           </div>
         </div>
       </form>
@@ -124,6 +124,25 @@
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
       <button class="btn btn-primary add-sprint">Add Sprint</button>
+    </div>
+  </div>
+</template>
+
+<template name="storyDetailsDialog">
+  <div id="story-details-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+      <h1 id="story-name" class="pull-left"></h1>
+      <h3 class="pull-right"><span id="story-points"></span> points</h3>
+      <div class="clearfix"></div>
+    </div>
+    <div class="modal-body">
+      <h2>Description</h2>
+      <p id="story-description" class="lead keep-white-space"></p>
+      <h2>Acceptance Criteria</h2>
+      <p id="story-acceptance-criteria" class="lead keep-white-space"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
 </template>

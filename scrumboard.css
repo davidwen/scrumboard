@@ -24,3 +24,13 @@
 .task-hover {
     background-color: #bbb;
 }
+
+.big-modal {
+    width: 80%;
+    margin-left: -40%;
+}
+
+.keep-white-space {
+    white-space: pre-wrap;
+}
+
