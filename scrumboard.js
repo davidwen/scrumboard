@@ -62,7 +62,7 @@ if (Meteor.isClient) {
   }
 
   Template.addSprintDialog.events = {
-    'click .add-sprint': function() {
+    'submit .add-sprint-form': function() {
       var $form = $('form.add-sprint-form');
       var sprintName = $form.find('#sprint-name').val();
       if (sprintName) {
@@ -124,6 +124,11 @@ if (Meteor.isClient) {
       } else {
         alert('Name required');
       }
+      return false;
+    },
+
+    'click .add-sprint': function() {
+      $('form.add-sprint-form').submit();
     }
   }
 
