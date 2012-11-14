@@ -242,6 +242,20 @@ if (Meteor.isClient) {
       }
     });
   }
+
+  Template.task.color = function() {
+    var letters = '789aabbccddeeff'.split('');
+    var color = '#';
+    var cur = 0;
+    for (var i = 0; i < 6; i++) {
+      var charCode = this.owner.charCodeAt(i);
+      if (charCode) {
+        cur = (cur + charCode) % letters.length;
+      }
+      color += letters[cur];
+    }
+    return color;
+  }
 }
 
 if(Meteor.is_server) {
