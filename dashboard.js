@@ -84,7 +84,7 @@ var submitAddSprintForm = function() {
         });
       }
       Sprints.insert({name: sprintName, stories: sprintStories});
-      $('#import-sprint-dialog').modal('hide');
+      $('#add-sprint-dialog').modal('hide');
     }
   } else {
     alert('Name required');
