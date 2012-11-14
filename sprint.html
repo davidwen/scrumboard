@@ -5,7 +5,7 @@
   <div style="text-align: center;">
     <h1>{{sprintName}}</h1>
   </div>
-  <table class="table">
+  <table class="sprint-table table">
     <thead>
       <th width="10%">Story</th>
       <th width="30%">Not Started</th>
@@ -30,10 +30,11 @@
 <template name="story">
   <tr>
     <td class="story-cell">
-      <span>{{name}}</span>
+      <span class="story-name">{{name}}</span>
       <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog" style="visibility: hidden;">+Task</a>
     </td>
     <td>
+      <input type="hidden" name="status" value="notstarted">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "notstarted"}}
@@ -43,6 +44,7 @@
       </div>
     </td>
     <td>
+      <input type="hidden" name="status" value="inprogress">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "inprogress"}}
@@ -52,6 +54,7 @@
       </div>
     </td>
     <td>
+      <input type="hidden" name="status" value="done">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "done"}}
@@ -65,6 +68,7 @@
 
 <template name="task">
   <div class="task">
+    <input type="hidden" name="taskId" value="{{id}}">
     <div><small>{{name}}</small></div>
     <div style="text-align: center;"><h5>{{description}}</h5></div>
     <div style="text-align: right;"><small>{{owner}}: {{hours}} hrs</small></div>
