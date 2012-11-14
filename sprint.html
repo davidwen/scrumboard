@@ -41,8 +41,7 @@
         <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
       </div>
     </td>
-    <td>
-      <input type="hidden" name="status" value="notstarted">
+    <td class="droppable" data-status="notstarted">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "notstarted"}}
@@ -51,8 +50,7 @@
         {{/each}}
       </div>
     </td>
-    <td>
-      <input type="hidden" name="status" value="inprogress">
+    <td class="droppable" data-status="inprogress">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "inprogress"}}
@@ -61,8 +59,7 @@
         {{/each}}
       </div>
     </td>
-    <td>
-      <input type="hidden" name="status" value="done">
+    <td class="droppable" data-status="done">
       <div class="tasks-container">
         {{#each tasks}}
           {{#if taskStatus "done"}}
@@ -76,8 +73,7 @@
 </template>
 
 <template name="task">
-  <div class="task" style="background-color: {{color}}">
-    <input type="hidden" name="taskId" value="{{id}}">
+  <div class="task" style="background-color: {{color}}" data-id="{{id}}">
     <div>
       <small class="pull-left">{{name}}</small>
       <i class="edit-task icon-edit pull-right" style="visibility: hidden;"></i>

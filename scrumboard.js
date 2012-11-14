@@ -180,6 +180,7 @@ if (Meteor.isClient) {
   Template.story.rendered = function() {
     var $tasks = $(this.findAll('.task'));
     var $tr = $(this.find('tr'));
+    $tasks.removeData('ui-draggable');
     $tasks.draggable({
       cancel: '.edit-task',
       containment: $tr[0],
@@ -189,11 +190,12 @@ if (Meteor.isClient) {
       zIndex: 100
     });
 
-    var $td = $(this.findAll('td:not(.story-cell)'));
+    var $td = $(this.findAll('td.droppable'));
+    $td.removeData('ui-droppable');
     $td.droppable({
       drop: function(event, ui) {
-        var taskId = $(ui.draggable).find('input[name=taskId]').val();
-        var newStatus = $(this).find('input[name=status]').val();
+        var taskId = $(ui.draggable).attr('data-id');
+        var newStatus = $(this).attr('data-status');
 
         var sprint = getSprint();
         var storyId = $(this).closest('tr').find('#story-id').val();
@@ -211,7 +213,7 @@ if (Meteor.isClient) {
 
     $tr.find('.edit-task').click(function() {
       var storyId = $(this).closest('tr').find('#story-id').val();
-      var taskId = $(this).closest('.task').find('input[name=taskId]').val();
+      var taskId = $(this).closest('.task').attr('data-id');
 
       var story = getStory(storyId);
       var task = getTask(story, taskId);
