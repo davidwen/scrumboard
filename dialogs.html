@@ -43,10 +43,13 @@
   <div id="add-task-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3>New Task</h3>
+      <h3 class="new-task-header task-header">New Task</h3>
+      <h3 class="edit-task-header task-header">Edit Task</h3>
     </div>
     <div class="modal-body">
       <form class="form-horizontal add-task-form">
+        <input type="hidden" id="story-name">
+        <input type="hidden" id="task-id">
         <div class="control-group">
           <label class="control-label" for="task-name">Name</label>
           <div class="controls">
@@ -81,7 +84,6 @@
             </select>
           </div>
         </div>
-        <input type="hidden" id="story-name">
       </form>
     </div>
     <div class="modal-footer">

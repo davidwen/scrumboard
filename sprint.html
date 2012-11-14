@@ -69,7 +69,11 @@
 <template name="task">
   <div class="task">
     <input type="hidden" name="taskId" value="{{id}}">
-    <div><small>{{name}}</small></div>
+    <div>
+      <small class="pull-left">{{name}}</small>
+      <i class="edit-task icon-edit pull-right" style="visibility: hidden;"></i>
+      <div class="clearfix"></div>
+    </div>
     <div style="text-align: center;"><h5>{{description}}</h5></div>
     <div style="text-align: right;"><small>{{owner}}: {{hours}} hrs</small></div>
   </div>
