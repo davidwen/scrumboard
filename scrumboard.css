@@ -37,7 +37,3 @@
 .ui-droppable {
     background-color: #eee;
 }
-
-.story-row:first-child {
-    display: none;
-}

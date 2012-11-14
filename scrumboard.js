@@ -43,13 +43,28 @@ if (Meteor.isClient) {
     return getSprint();
   }
 
-  Template.sprint.stories = function() {
-    var stories = [{}];
-    for (var ii = 0; ii < this.stories.length; ii++) {
-      var story = this.stories[ii];
-      stories.push(Stories.findOne({_id: story.id}));
-    }
-    return stories;
+  Template.sprint.rendered = function() {
+    $(window).unbind('resize');
+    $(window).resize(function() {
+      $('.tasks-container').masonry({
+        itemSelector : '.task',
+      });
+    });
+    $(window).trigger('resize');
+
+    $('.sprint-table').on('mouseenter', '.task', function() {
+      $(this).find('.edit-task').css('visibility', 'visible');
+    }).on('mouseleave', '.task', function() {
+      $(this).find('.edit-task').css('visibility', 'hidden');
+    }).on('mouseenter', 'td.story-cell', function() {
+      $(this).find('.story-controls').css('visibility', 'visible');
+    }).on('mouseleave', 'td.story-cell', function() {
+      $(this).find('.story-controls').css('visibility', 'hidden');
+    }).on('mouseenter', 'tr.add-story-row', function() {
+      $(this).find('.show-add-story-dialog').css('visibility', 'visible');
+    }).on('mouseleave', 'tr.add-story-row', function() {
+      $(this).find('.show-add-story-dialog').css('visibility', 'hidden');
+    });
   }
 
   Template.sprint.events = {
@@ -158,19 +173,16 @@ if (Meteor.isClient) {
     return this.status == status;
   }
 
-  Template.sprint.rendered = function() {
-    var $container = $(this.findAll('.tasks-container'));
-    $(window).resize(function() {
-      $container.masonry({
-        itemSelector : '.task',
-      });
-    });
-    $(window).trigger('resize');
+  Template.story.story = function() {
+    return Stories.findOne({_id: this.id});
+  }
 
+  Template.story.rendered = function() {
     var $tasks = $(this.findAll('.task'));
+    var $tr = $(this.find('tr'));
     $tasks.draggable({
       cancel: '.edit-task',
-      containment: $(this).closest('tr')[0],
+      containment: $tr[0],
       cursor: 'move',
       revert: 'invalid',
       revertDuration: 80,
@@ -197,21 +209,7 @@ if (Meteor.isClient) {
       hoverClass: 'task-hover'
     });
 
-    $('.sprint-table').on('mouseenter', '.task', function() {
-      $(this).find('.edit-task').css('visibility', 'visible');
-    }).on('mouseleave', '.task', function() {
-      $(this).find('.edit-task').css('visibility', 'hidden');
-    }).on('mouseenter', 'td.story-cell', function() {
-      $(this).find('.story-controls').css('visibility', 'visible');
-    }).on('mouseleave', 'td.story-cell', function() {
-      $(this).find('.story-controls').css('visibility', 'hidden');
-    }).on('mouseenter', 'tr.add-story-row', function() {
-      $(this).find('.show-add-story-dialog').css('visibility', 'visible');
-    }).on('mouseleave', 'tr.add-story-row', function() {
-      $(this).find('.show-add-story-dialog').css('visibility', 'hidden');
-    });
-
-    $('.edit-task').click(function() {
+    $tr.find('.edit-task').click(function() {
       var storyId = $(this).closest('tr').find('#story-id').val();
       var taskId = $(this).closest('.task').find('input[name=taskId]').val();
 

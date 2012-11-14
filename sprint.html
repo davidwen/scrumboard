@@ -31,6 +31,7 @@
 </template>
 
 <template name="story">
+  {{#with story}}
   <tr class="story-row">
     <td class="story-cell">
       <input type="hidden" id="story-id" value="{{_id}}">
@@ -71,6 +72,7 @@
       </div>
     </td>
   </tr>
+  {{/with}}
 </template>
 
 <template name="task">
