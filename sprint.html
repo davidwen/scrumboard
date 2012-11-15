@@ -1,17 +1,18 @@
 <template name="sprint">
-  <div class="pull-left">
-    <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
-  </div>
   {{#with sprint}}
-    <div style="text-align: center;">
+    <div class="pull-left" style="width: 200px;">
+      <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
+    </div>
+    <div class="pull-right" style="width: 200px; height: 1px;"></div>
+    <div style="text-align: center; margin: 0 auto;">
       <h1>{{name}}</h1>
     </div>
     <table class="sprint-table table table-bordered">
       <thead>
-        <th style="text-align: center;" width="10%">Story</th>
-        <th style="text-align: center;" width="30%">Not Started</th>
-        <th style="text-align: center;" width="30%">In Progress</th>
-        <th style="text-align: center;" width="30%">Done</th>
+        <th style="text-align: center;" width="14.5%">Story</th>
+        <th style="text-align: center;" width="28.5%">Not Started</th>
+        <th style="text-align: center;" width="28.5%">In Progress</th>
+        <th style="text-align: center;" width="28.5%">Done</th>
       </thead>
       <tbody>
         {{#each stories}}

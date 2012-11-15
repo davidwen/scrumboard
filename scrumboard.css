@@ -6,14 +6,12 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    border: 1px solid black;
-
-    background-color: white;
+    
     cursor: move;
     float: left;
     margin: 5px 2%;
     padding: 1%;
-    width: 43%;
+    width: 44%;
     word-wrap: break-word;
 }
 
@@ -22,7 +20,7 @@
 }
 
 .task-hover {
-    background-color: #bbb;
+    background-color: #ddd;
 }
 
 .big-modal {
