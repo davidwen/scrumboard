@@ -36,7 +36,7 @@ if (Meteor.isClient) {
   });
 
   Template.scrumboard.sprint = function() {
-    return getSprint();
+    return Session.get(SPRINT);
   }
 
   Template.sprint.sprint = function() {
