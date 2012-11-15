@@ -1,32 +1,3 @@
-Sprints = new Meteor.Collection("sprints");
-Stories = new Meteor.Collection("stories");
-
-var SPRINT = "sprint";
-
-var getSprint = function(name) {
-  if (!name) {
-    name = Session.get(SPRINT);
-  }
-  return Sprints.findOne({ name: name });
-}
-
-var getStory = function(storyId) {
-  return Stories.findOne({ _id: storyId });
-}
-
-var getTask = function(story, taskId) {
-  if (!story) {
-    return null;
-  }
-  for (var jj = 0; jj < story.tasks.length; jj++) {
-    var task = story.tasks[jj];
-    if (task.id == taskId) {
-      return task;
-    }
-  }
-  return null;
-}
-
 if (Meteor.isClient) {
   Meteor.startup(function() {
     var pathSplit = window.location.pathname.split('/');
@@ -100,86 +71,12 @@ if (Meteor.isClient) {
     }
   }
 
-  Template.newStoryDialog.events = {
-    'click .add-story': function() {
-      var sprint = getSprint();
-      var $form = $('form.add-story-form');
-      var storyName = $form.find('#story-name').val();
-      var storyPoints = Number($form.find('#story-points').val());
-      var storyDescription = $form.find('#story-description').val();
-      var storyAcceptanceCriteria = $form.find('#story-acceptance-criteria').val();
-      if (storyName && storyPoints && storyDescription && storyAcceptanceCriteria) {
-        var newStory = {
-          name: storyName,
-          points: storyPoints,
-          description: storyDescription,
-          acceptanceCriteria: storyAcceptanceCriteria,
-          tasks: [],
-          nextTaskId: 0
-        };
-        var storyId = Stories.insert(newStory);
-        Sprints.update(
-          {_id: sprint._id},
-          {stories: {$push: {
-            id: storyId,
-            name: storyName
-          }}});
-        $('#add-story-dialog').modal('hide');
-      } else {
-        alert('All fields required');
-      }
-    }
-  }
-
-  Template.newTaskDialog.events = {
-    'click .add-task': function() {
-      var sprint = getSprint();
-      var $form = $('form.add-task-form');
-      var taskName = $form.find('#task-name').val();
-      var taskOwner = $form.find('#task-owner').val();
-      var taskHours = Number($form.find('#task-hours').val());
-      var taskDescription = $form.find('#task-description').val();
-      var taskStatus = $form.find('#task-status').val();
-      var storyId = $form.find('#story-id').val();
-      var taskId = $form.find('#task-id').val();
-      if (taskName && taskOwner && taskHours && taskDescription && taskStatus) {
-        var story = getStory(storyId);
-        if (taskId) {
-          var task = getTask(story, taskId);
-          task.name = taskName;
-          task.owner = taskOwner;
-          task.hours = taskHours;
-          task.description = taskDescription;
-          task.status = taskStatus;
-          Stories.update(
-            {_id: story._id},
-            {$set: {tasks: story.tasks}});
-        } else {
-          var newTask = {
-            name: taskName,
-            owner: taskOwner,
-            hours: taskHours,
-            description: taskDescription,
-            status: taskStatus,
-            id: story.nextTaskId
-          };
-          Stories.update(
-            {_id: story._id},
-            {$push: {tasks: newTask}, $inc: {nextTaskId: 1}});
-        }
-        $('#add-task-dialog').modal('hide');
-      } else {
-        alert('All fields required');
-      }
-    }
-  }
-
   Template.story.taskStatus = function(status) {
     return this.status == status;
   }
 
   Template.story.story = function() {
-    return Stories.findOne({_id: this.id});
+    return getStory(this.id);
   }
 
   Template.story.rendered = function() {
@@ -202,7 +99,6 @@ if (Meteor.isClient) {
         var taskId = $(ui.draggable).attr('data-id');
         var newStatus = $(this).attr('data-status');
 
-        var sprint = getSprint();
         var storyId = $(this).closest('tr').attr('data-id');
         var story = getStory(storyId);
         var task = getTask(story, taskId);
@@ -216,7 +112,9 @@ if (Meteor.isClient) {
       hoverClass: 'task-hover'
     });
 
-    $tr.find('.edit-task').click(function() {
+    var $edits = $tr.find('.edit-task');
+    $edits.unbind('click');
+    $edits.click(function() {
       var storyId = $(this).closest('tr').attr('data-id');
       var taskId = $(this).closest('.task').attr('data-id');
 
@@ -241,6 +139,7 @@ if (Meteor.isClient) {
     });
   }
 
+  /* Return random color based on task owner */
   Template.task.color = function() {
     var letters = '789aabbccddeeff'.split('');
     var color = '#';
@@ -254,25 +153,4 @@ if (Meteor.isClient) {
     }
     return color;
   }
-}
-
-if(Meteor.is_server) {
-
-  Sprints.allow({
-    'insert': function (userId,doc) {
-      return true; 
-    },
-    'update': function (userId,doc) {
-      return true; 
-    },
-  });
-
-  Stories.allow({
-    'insert': function (userId,doc) {
-      return true; 
-    },
-    'update': function (userId,doc) {
-      return true; 
-    },
-  });
 }

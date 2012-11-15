@@ -6,6 +6,7 @@ var parseImport = function(input) {
     var cell = rowSplit[ii];
     if (cell[0] == '"' || cell.indexOf('\n') == -1) {
       if (cell[0] == '"') {
+        // Strip surrounding quotes
         cell = cell.slice(1, -1);
       }
       currentRow.push(cell);
