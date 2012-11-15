@@ -35,10 +35,12 @@
   {{#with story}}
   <tr class="story-row" data-id="{{_id}}">
     <td class="story-cell">
-      <span class="story-name">{{name}}</span>
-      <div class="story-controls" style="visibility: hidden;">
-        <a class="show-story-details-dialog btn btn-link">Details</a>
-        <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
+      <div style="text-align: center; margin: 0 auto;">
+        <span class="story-name">{{name}}</span>
+        <div class="story-controls" style="visibility: hidden;">
+          <a class="show-story-details-dialog btn btn-link">Details</a>
+          <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
+        </div>
       </div>
     </td>
     <td class="droppable" data-status="notstarted">
