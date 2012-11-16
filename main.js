@@ -1,7 +1,8 @@
-Sprints = new Meteor.Collection("sprints");
-Stories = new Meteor.Collection("stories");
+Sprints = new Meteor.Collection('sprints');
+Stories = new Meteor.Collection('stories');
 
-var SPRINT = "sprint";
+var SPRINT = 'sprint';
+var UPDATED_TASK = 'updated-task';
 
 var getSprint = function(name) {
   if (!name) {

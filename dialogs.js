@@ -50,6 +50,7 @@ if (Meteor.isClient) {
           task.hours = taskHours;
           task.description = taskDescription;
           task.status = taskStatus;
+          Session.set(UPDATED_TASK, task.id);
           Stories.update(
             {_id: story._id},
             {$set: {tasks: story.tasks}});
@@ -62,6 +63,7 @@ if (Meteor.isClient) {
             status: taskStatus,
             id: story.nextTaskId
           };
+          Session.set(UPDATED_TASK, newTask.id);
           Stories.update(
             {_id: story._id},
             {$push: {tasks: newTask}, $inc: {nextTaskId: 1}});

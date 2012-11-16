@@ -108,6 +108,7 @@ if (Meteor.isClient) {
             {_id: story._id},
             {$set: {tasks: story.tasks}});
         }
+        Session.set(UPDATED_TASK, taskId);
       },
       hoverClass: 'task-hover'
     });
@@ -137,6 +138,13 @@ if (Meteor.isClient) {
         $dialog.modal({});
       }
     });
+  }
+
+  Template.task.rendered = function() {
+    if (this.data.id == Session.get('updated-task')) {
+      Session.set('updated-task', null);
+      $(this.find('.task')).hide().fadeIn('slow');
+    }
   }
 
   /* Return random color based on task owner */
