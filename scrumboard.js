@@ -141,8 +141,8 @@ if (Meteor.isClient) {
   }
 
   Template.task.rendered = function() {
-    if (this.data.id == Session.get('updated-task')) {
-      Session.set('updated-task', null);
+    if (this.data.id == Session.get(UPDATED_TASK)) {
+      Session.set(UPDATED_TASK, null);
       $(this.find('.task')).hide().fadeIn('slow');
     }
   }
