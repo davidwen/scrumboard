@@ -52,7 +52,8 @@ if (Meteor.isClient) {
       var $form = $('form.add-task-form');
       var $dialog = $('#add-task-dialog');
       $form[0].reset();
-      $form.find('#story-id').val(this.id);
+      $form.find('#story-id').val(this._id);
+      $form.find('#task-id').val('');
       $dialog.find('.add-task').text('Add Task To ' + this.name);
       $dialog.find('.task-header').hide();
       $dialog.find('.new-task-header').show();
