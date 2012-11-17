@@ -43,8 +43,8 @@
   <div id="add-task-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 class="new-task-header task-header">New Task</h3>
-      <h3 class="edit-task-header task-header">Edit Task</h3>
+      <h3 class="show-on-add task-header">New Task</h3>
+      <h3 class="show-on-edit task-header">Edit Task</h3>
     </div>
     <div class="modal-body">
       <form class="form-horizontal add-task-form">
@@ -68,6 +68,12 @@
             <input type="number" id="task-hours" placeholder="Hours">
           </div>
         </div>
+        <div class="control-group show-on-edit">
+          <label class="control-label" for="task-hours-remaining">Hours Remaining</label>
+          <div class="controls">
+            <input type="number" id="task-hours-remaining" placeholder="Hours Remaining">
+          </div>
+        </div>
         <div class="control-group">
           <label class="control-label" for="task-description">Description</label>
           <div class="controls">
@@ -87,7 +93,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger pull-left delete-task">Delete</button>
+      <button class="btn btn-danger pull-left delete-task show-on-edit">Delete</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
       <button class="btn btn-primary add-task"></button>
     </div>

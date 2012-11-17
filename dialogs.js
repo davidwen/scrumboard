@@ -47,6 +47,7 @@ if (Meteor.isClient) {
           task.name = taskName;
           task.owner = taskOwner;
           task.hours = taskHours;
+          task.hoursRemaining = Number($form.find('#task-hours-remaining').val());
           task.description = taskDescription;
           task.status = taskStatus;
           Session.set(UPDATED_TASK, task.id);
@@ -58,6 +59,7 @@ if (Meteor.isClient) {
             name: taskName,
             owner: taskOwner,
             hours: taskHours,
+            hoursRemaining: taskStatus == 'done' ? 0 : taskHours,
             description: taskDescription,
             status: taskStatus,
             id: story.nextTaskId
@@ -74,22 +76,24 @@ if (Meteor.isClient) {
     },
 
     'click .delete-task': function() {
-      var $form = $('form.add-task-form');
-      var storyId = $form.find('#story-id').val();
-      var taskId = $form.find('#task-id').val();
-      var story = getStory(storyId);
-      if (story) {
-        for (var ii = 0; ii < story.tasks.length; ii++) {
-          if (story.tasks[ii].id == taskId) {
-            story.tasks.splice(ii, 1);
-            break;
+      if (confirm('Are you sure you would like to delete this task?')) {
+        var $form = $('form.add-task-form');
+        var storyId = $form.find('#story-id').val();
+        var taskId = $form.find('#task-id').val();
+        var story = getStory(storyId);
+        if (story) {
+          for (var ii = 0; ii < story.tasks.length; ii++) {
+            if (story.tasks[ii].id == taskId) {
+              story.tasks.splice(ii, 1);
+              break;
+            }
           }
+          Stories.update(
+            {_id: story._id},
+            {$set: {tasks: story.tasks}});
         }
-        Stories.update(
-          {_id: story._id},
-          {$set: {tasks: story.tasks}});
+        $('#add-task-dialog').modal('hide');
       }
-      $('#add-task-dialog').modal('hide');
     }
   }
 }

@@ -55,9 +55,8 @@ if (Meteor.isClient) {
       $form.find('#story-id').val(this._id);
       $form.find('#task-id').val('');
       $dialog.find('.add-task').text('Add Task To ' + this.name);
-      $dialog.find('.task-header').hide();
-      $dialog.find('.new-task-header').show();
-      $dialog.find('.delete-task').hide();
+      $dialog.find('.show-on-edit').hide();
+      $dialog.find('.show-on-add').show();
     },
 
     'click .show-story-details-dialog': function() {
@@ -105,6 +104,13 @@ if (Meteor.isClient) {
         var story = getStory(storyId);
         var task = getTask(story, taskId);
         if (task && task.status != newStatus) {
+          if (task.status == 'done' && task.hoursRemaining == 0) {
+            // If moving task from done and there were no hours
+            // remaining, replenish hours.
+            task.hoursRemaining = task.hours;
+          } else if (newStatus == 'done') {
+            task.hoursRemaining = 0;
+          }
           task.status = newStatus;
           Stories.update(
             {_id: story._id},
@@ -132,12 +138,12 @@ if (Meteor.isClient) {
         $form.find('#task-name').val(task.name);
         $form.find('#task-owner').val(task.owner);
         $form.find('#task-hours').val(task.hours);
+        $form.find('#task-hours-remaining').val(task.hoursRemaining);
         $form.find('#task-description').val(task.description);
         $form.find('#task-status').val(task.status);
         $dialog.find('.add-task').text('Save');
-        $dialog.find('.task-header').hide();
-        $dialog.find('.edit-task-header').show();
-        $dialog.find('.delete-task').show();
+        $dialog.find('.show-on-add').hide();
+        $dialog.find('.show-on-edit').show();
         $dialog.modal({});
       }
     });
