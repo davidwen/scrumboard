@@ -46,17 +46,24 @@ if (Meteor.isClient) {
     }).on('mouseleave', 'tr.add-story-row', function() {
       $(this).find('.show-add-story-dialog').css('visibility', 'hidden');
     });
+
+    $('#add-task-dialog, #add-story-dialog').on('shown', function () {
+        $(this).find('input:visible:first').focus();
+    });
   }
 
   Template.sprint.events = {
     'click .show-add-story-dialog': function() {
-      $('form.add-story-form')[0].reset();
+      var $form = $('form.add-story-form');
+      $form[0].reset();
+      $form.find('.error').hide();
     },
 
     'click .show-add-task-dialog': function() {
       var $form = $('form.add-task-form');
       var $dialog = $('#add-task-dialog');
       $form[0].reset();
+      $form.find('.error').hide();
       $form.find('#story-id').val(this._id);
       $form.find('#task-id').val('');
       $dialog.find('.add-task').text('Add Task To ' + this.name);
@@ -160,6 +167,7 @@ if (Meteor.isClient) {
         var $form = $('form.add-task-form');
         var $dialog = $('#add-task-dialog');
         $form[0].reset();
+        $form.find('.error').hide();
         $form.find('#story-id').val(story._id);
         $form.find('#task-id').val(taskId);
         $form.find('#task-name').val(task.name);
