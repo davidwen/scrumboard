@@ -57,6 +57,7 @@ if (Meteor.isClient) {
       $dialog.find('.add-task').text('Add Task To ' + this.name);
       $dialog.find('.task-header').hide();
       $dialog.find('.new-task-header').show();
+      $dialog.find('.delete-task').hide();
     },
 
     'click .show-story-details-dialog': function() {
@@ -136,6 +137,7 @@ if (Meteor.isClient) {
         $dialog.find('.add-task').text('Save');
         $dialog.find('.task-header').hide();
         $dialog.find('.edit-task-header').show();
+        $dialog.find('.delete-task').show();
         $dialog.modal({});
       }
     });

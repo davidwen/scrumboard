@@ -19,7 +19,7 @@ if (Meteor.isClient) {
         var storyId = Stories.insert(newStory);
         Sprints.update(
           {_id: sprint._id},
-          {stories: {$push: {
+          {$push: {stories: {
             id: storyId,
             name: storyName
           }}});
@@ -32,7 +32,6 @@ if (Meteor.isClient) {
 
   Template.newTaskDialog.events = {
     'click .add-task': function() {
-      var sprint = getSprint();
       var $form = $('form.add-task-form');
       var taskName = $form.find('#task-name').val();
       var taskOwner = $form.find('#task-owner').val();
@@ -72,6 +71,25 @@ if (Meteor.isClient) {
       } else {
         alert('All fields required');
       }
+    },
+
+    'click .delete-task': function() {
+      var $form = $('form.add-task-form');
+      var storyId = $form.find('#story-id').val();
+      var taskId = $form.find('#task-id').val();
+      var story = getStory(storyId);
+      if (story) {
+        for (var ii = 0; ii < story.tasks.length; ii++) {
+          if (story.tasks[ii].id == taskId) {
+            story.tasks.splice(ii, 1);
+            break;
+          }
+        }
+        Stories.update(
+          {_id: story._id},
+          {$set: {tasks: story.tasks}});
+      }
+      $('#add-task-dialog').modal('hide');
     }
   }
 }
