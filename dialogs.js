@@ -1,4 +1,13 @@
 if (Meteor.isClient) {
+  Template.newStoryDialog.rendered = function() {
+    $('form.add-story-form input').unbind('keyup');
+    $('form.add-story-form input').keyup(function(e) {
+      if (e.which == 13) {
+        $('.add-story').click();
+      }
+    });
+  }
+
   Template.newStoryDialog.events = {
     'click .add-story': function() {
       var sprint = getSprint();
@@ -25,9 +34,18 @@ if (Meteor.isClient) {
           }}});
         $('#add-story-dialog').modal('hide');
       } else {
-        alert('All fields required');
+        $form.find('.error').text('All fields required').show();
       }
     }
+  }
+
+  Template.newTaskDialog.rendered = function() {
+    $('form.add-task-form input').unbind('keyup');
+    $('form.add-task-form input').keyup(function(e) {
+      if (e.which == 13) {
+        $('.add-task').click();
+      }
+    })
   }
 
   Template.newTaskDialog.events = {
@@ -87,7 +105,7 @@ if (Meteor.isClient) {
         }
         $('#add-task-dialog').modal('hide');
       } else {
-        alert('All fields required');
+        $form.find('.error').text('All fields required').show();
       }
     },
 
