@@ -21,6 +21,22 @@ if (Meteor.isClient) {
         lines: { show: true },
         points: { show: true }
       });
+
+    $('.hours-input').unbind('keyup');
+    $('.hours-input').keyup(function(e) {
+      if (e.which == 13) {
+        var hoursRemainingPerDay = [];
+        $('.hours-input').each(function() {
+          var value = $(this).val();
+          if (value != null && value != '' && !isNaN(value)) {
+            hoursRemainingPerDay.push(Number(value));
+          } else {
+            hoursRemainingPerDay.push(null);
+          }
+        });
+        Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
+      }
+    })
   }
 
   Template.burndown.days = function() {
@@ -32,6 +48,9 @@ if (Meteor.isClient) {
         day.day = ii;
         day.hoursExpected = Math.round(sprint.totalHours * (sprint.days - ii) / sprint.days * 10) / 10;
         day.hoursActual = sprint.hoursRemainingPerDay[ii];
+        if (day.hoursActual == null) {
+          day.hoursActual = '--';
+        }
         days.push(day);
       }
     }
@@ -45,10 +64,51 @@ if (Meteor.isClient) {
     }
   }
 
+  Template.burndown.noMoreDays = function() {
+    var sprint = getSprint();
+    if (sprint) {
+      if (sprint.hoursRemainingPerDay.length < sprint.days) {
+        return false;
+      }
+      for (var ii = 0; ii < sprint.days; ii++) {
+        if (sprint.hoursRemainingPerDay[ii] == null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   Template.burndown.events = {
     'click .log-day': function() {
       var sprint = getSprint();
-      Sprints.update({_id: sprint._id}, {$push: {hoursRemainingPerDay: sprint.hoursRemaining}});
+      var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
+      var added = false;
+      for (var ii = 0; ii < hoursRemainingPerDay.length; ii++) {
+        if (hoursRemainingPerDay[ii] == null) {
+          hoursRemainingPerDay[ii] = sprint.hoursRemaining;
+          added = true;
+          break;
+        }
+      }
+      if (!added && hoursRemainingPerDay.length < sprint.days) {
+        hoursRemainingPerDay.push(sprint.hoursRemaining);
+      }
+      Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
+    },
+
+    'dblclick td.hours-actual': function() {
+      $('.hours-edit:visible').each(function() {
+        $(this).val($(this).closest('td').find('.hours-display').text());
+      });
+      $('.hours-edit').hide();
+      $('.hours-display').show();
+      var $target = $(event.target).closest('td');
+      if ($target.find('.hours-display').is(':visible')) {
+        $target.find('.hours-display').hide();
+        $target.find('.hours-edit').show();
+        $target.find('.hours-input').focus();
+      }
     }
   }
 }

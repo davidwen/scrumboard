@@ -17,12 +17,19 @@
       <tr>
         <td><h5>Hours Remaining (Actual)</h5></td>
         {{#each days}}
-          <td style="vertical-align: middle; text-align: center;">{{hoursActual}}</td>
+          <td class="hours-actual" style="vertical-align: middle; text-align: center;">
+            <span class="hours-display">{{hoursActual}}</span>
+            <span class="hours-edit" style="display: none;">
+              <input type="text" class="hours-input" value="{{hoursActual}}">
+            </span>
+          </td>
         {{/each}}
       </tr>
     </tbody>
   </table>
-  <div style="text-align: center; margin-top: 20px;">
-    <button type="button" class="btn log-day">Log Next Day ({{hoursRemaining}} hours)</button>
+  <div style="text-align: center; margin: 20px 0;">
+    <button type="button" class="btn log-day" {{#if noMoreDays ""}}disabled{{/if}}>
+      Log Next Day ({{hoursRemaining}} hours)
+    </button>
   </div>
 </template>
