@@ -1,5 +1,5 @@
 <template name="table">
-  <table class="table table-bordered">
+  <table class="table-view table table-bordered table-condensed">
     <thead>
       <th style="text-align: center;">Story</th>
       <th style="text-align: center;">Task ID</th>
@@ -11,14 +11,27 @@
       {{#each stories}}
         {{> storyTable}}
       {{/each}}
+      <tr class="add-story-row" >
+        <td colspan="6" style="text-align: center;">
+          <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </template>
 
 <template name="storyTable">
   {{#with firstTask}}
-    <tr>
-      <td style="text-align: center;" rowspan="{{numTasks}}">{{storyName}}</td>
+    <tr data-id="{{storyId}}">
+      <td class="story-cell" rowspan="{{numTasks}}">
+        <div style="text-align: center; margin: 0 auto;">
+          <span class="story-name">{{storyName}}</span>
+          <div class="story-controls" style="visibility: hidden;">
+            <a class="show-story-details-dialog btn btn-link">Details</a>
+            <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
+          </div>
+        </div>
+      </td>
       {{> taskRow}}
     </tr>
   {{/with}}

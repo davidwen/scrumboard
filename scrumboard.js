@@ -46,7 +46,7 @@ if (Meteor.isClient) {
       $('.show-on-burndown').hide();
     }
 
-    $('.sprint-table').on('mouseenter', '.task', function() {
+    $('.sprint-table, .table-view').on('mouseenter', '.task', function() {
       $(this).find('.edit-task').css('visibility', 'visible');
     }).on('mouseleave', '.task', function() {
       $(this).find('.edit-task').css('visibility', 'hidden');
@@ -77,7 +77,7 @@ if (Meteor.isClient) {
       var $dialog = $('#add-task-dialog');
       $form[0].reset();
       $form.find('.error').hide();
-      $form.find('#story-id').val(this._id);
+      $form.find('#story-id').val($(event.target).closest('tr').attr('data-id'));
       $form.find('#task-id').val('');
       $dialog.find('.add-task').text('Add Task To ' + this.name);
       $dialog.find('.show-on-edit').hide();
@@ -85,11 +85,13 @@ if (Meteor.isClient) {
     },
 
     'click .show-story-details-dialog': function() {
+      var storyId = $(event.target).closest('tr').attr('data-id');
+      var story = getStory(storyId);
       var $dialog = $('#story-details-dialog');
-      $dialog.find('#story-name').text(this.name);
-      $dialog.find('#story-description').text(this.description);
-      $dialog.find('#story-acceptance-criteria').text(this.acceptanceCriteria);
-      $dialog.find('#story-points').text(this.points);
+      $dialog.find('#story-name').text(story.name);
+      $dialog.find('#story-description').text(story.description);
+      $dialog.find('#story-acceptance-criteria').text(story.acceptanceCriteria);
+      $dialog.find('#story-points').text(story.points);
       $dialog.modal({
         backdrop: true,
         keyboard: true
@@ -99,16 +101,29 @@ if (Meteor.isClient) {
     'click .show-burndown': function() {
       event.preventDefault();
       $('.nav .active').removeClass('active');
-      $('.show-burndown').closest('li').addClass('active');
+      $(event.target).closest('li').addClass('active');
       $('.show-on-scrumboard').hide();
+      $('.show-on-table').hide();
       $('.show-on-burndown').show();
       Session.set(SPRINT_VIEW, 'burndown');
+    },
+
+    'click .show-table': function() {
+      event.preventDefault();
+      $('.nav .active').removeClass('active');
+      $(event.target).closest('li').addClass('active');
+      $('.show-on-scrumboard').hide();
+      $('.show-on-burndown').hide();
+      $('.show-on-table').show();
+      $(window).trigger('resize');
+      Session.set(SPRINT_VIEW, 'table');
     },
 
     'click .show-scrumboard': function() {
       event.preventDefault();
       $('.nav .active').removeClass('active');
-      $('.show-scrumboard').closest('li').addClass('active');
+      $(event.target).closest('li').addClass('active');
+      $('.show-on-table').hide();
       $('.show-on-burndown').hide();
       $('.show-on-scrumboard').show();
       $(window).trigger('resize');

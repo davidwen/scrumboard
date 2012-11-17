@@ -37,6 +37,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="show-on-table" style="display: none;">
+      {{> table}}
+    </div>
     <div class="show-on-burndown" style="display: none;">
       {{> burndown}}
     </div>
@@ -48,7 +51,7 @@
 
 <template name="story">
   {{#with story}}
-  <tr class="story-row" data-id="{{_id}}">
+  <tr data-id="{{_id}}">
     <td class="story-cell">
       <div style="text-align: center; margin: 0 auto;">
         <span class="story-name">{{name}}</span>
