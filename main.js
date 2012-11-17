@@ -37,9 +37,6 @@ if (Meteor.is_server) {
     'update': function (userId, doc) {
       return true; 
     },
-    'remove': function (userId, doc) {
-      return true; 
-    },
   });
 
   Stories.allow({
