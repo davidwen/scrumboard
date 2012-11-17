@@ -36,7 +36,7 @@ if (Meteor.isClient) {
         });
         Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
       }
-    })
+    });
   }
 
   Template.burndown.days = function() {
