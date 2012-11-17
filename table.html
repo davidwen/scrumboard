@@ -1,0 +1,38 @@
+<template name="table">
+  <table class="table table-bordered">
+    <thead>
+      <th style="text-align: center;">Story</th>
+      <th style="text-align: center;">Task ID</th>
+      <th style="text-align: center;">Task</th>
+      <th style="text-align: center;">Assignee</th>
+      <th style="text-align: center;">Hours</th>
+      <th style="text-align: center;">Hrs Rem</th>
+    <tbody>
+      {{#each stories}}
+        {{> storyTable}}
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="storyTable">
+  {{#with firstTask}}
+    <tr>
+      <td style="text-align: center;" rowspan="{{numTasks}}">{{storyName}}</td>
+      {{> taskRow}}
+    </tr>
+  {{/with}}
+  {{#each otherTasks}}
+    <tr>
+      {{> taskRow}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="taskRow">
+  <td>{{name}}</td>
+  <td>{{description}}</td>
+  <td>{{owner}}</td>
+  <td style="text-align: center;">{{hours}}</td>
+  <td style="text-align: center;">{{hoursRemaining}}</td>
+</template>
