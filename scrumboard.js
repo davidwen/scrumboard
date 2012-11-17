@@ -84,12 +84,18 @@ if (Meteor.isClient) {
     },
 
     'click .show-burndown': function() {
+      event.preventDefault();
+      $('.nav .active').removeClass('active');
+      $('.show-burndown').closest('li').addClass('active');
       $('.show-on-scrumboard').hide();
       $('.show-on-burndown').show();
       Session.set(BURNDOWN, true);
     },
 
     'click .show-scrumboard': function() {
+      event.preventDefault();
+      $('.nav .active').removeClass('active');
+      $('.show-scrumboard').closest('li').addClass('active');
       $('.show-on-burndown').hide();
       $('.show-on-scrumboard').show();
       $(window).trigger('resize');

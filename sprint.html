@@ -1,11 +1,15 @@
 <template name="sprint">
   {{#with sprint}}
-    <div class="pull-left" style="width: 200px;">
+    <div class="pull-left" style="width: 300px;">
       <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
     </div>
-    <div class="pull-right" style="width: 200px;">
-      <a class="btn show-burndown show-on-scrumboard pull-right" style="margin-right: 20px;">Show Burndown</a>
-      <a class="btn show-scrumboard show-on-burndown pull-right" style="margin-right: 20px; display: none;">Show Scrumboard</a>
+    <div class="pull-right" style="width: 300px;">
+      <ul class="nav nav-pills pull-right" style="margin-right: 20px;">
+        <li class="active">
+          <a href="#" class="show-scrumboard">Scrumboard</a>
+        </li>
+        <li><a href="#" class="show-burndown">Burndown</a></li>
+      </ul>
     </div>
     <div style="text-align: center; margin: 0 auto;">
       <h1>{{name}}</h1>
