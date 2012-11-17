@@ -14,6 +14,14 @@ if (Meteor.isClient) {
     return getSprint();
   }
 
+  Template.sprint.sprintView = function(view) {
+    var currentView = "scrumboard";
+    if (Session.get(SPRINT_VIEW)) {
+      currentView = Session.get(SPRINT_VIEW);
+    }
+    return currentView == view;
+  }
+
   Template.sprint.rendered = function() {
     $(window).unbind('resize');
     $(window).resize(function() {
@@ -28,9 +36,14 @@ if (Meteor.isClient) {
     }); 
     $(window).trigger('resize');
 
-    if (Session.get(BURNDOWN)) {
+    if (Session.get(SPRINT_VIEW) == 'burndown') {
       $('.show-on-scrumboard').hide();
+      $('.show-on-table').hide();
       $('.show-on-burndown').show();
+    } else if (Session.get(SPRINT_VIEW) == 'table') {
+      $('.show-on-scrumboard').hide();
+      $('.show-on-table').show();
+      $('.show-on-burndown').hide();
     }
 
     $('.sprint-table').on('mouseenter', '.task', function() {
@@ -89,7 +102,7 @@ if (Meteor.isClient) {
       $('.show-burndown').closest('li').addClass('active');
       $('.show-on-scrumboard').hide();
       $('.show-on-burndown').show();
-      Session.set(BURNDOWN, true);
+      Session.set(SPRINT_VIEW, 'burndown');
     },
 
     'click .show-scrumboard': function() {
@@ -99,7 +112,7 @@ if (Meteor.isClient) {
       $('.show-on-burndown').hide();
       $('.show-on-scrumboard').show();
       $(window).trigger('resize');
-      Session.set(BURNDOWN, false);
+      Session.set(SPRINT_VIEW, 'scrumboard');
     }
   }
 

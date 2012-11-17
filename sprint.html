@@ -5,10 +5,15 @@
     </div>
     <div class="pull-right" style="width: 300px;">
       <ul class="nav nav-pills pull-right" style="margin-right: 20px;">
-        <li class="active">
+        <li {{#if sprintView "scrumboard"}}class="active"{{/if}}>
           <a href="#" class="show-scrumboard">Scrumboard</a>
         </li>
-        <li><a href="#" class="show-burndown">Burndown</a></li>
+        <li {{#if sprintView "table"}}class="active"{{/if}}>
+          <a href="#" class="show-table">Table</a>
+        </li>
+        <li {{#if sprintView "burndown"}}class="active"{{/if}}>
+          <a href="#" class="show-burndown">Burndown</a>
+        </li>
       </ul>
     </div>
     <div style="text-align: center; margin: 0 auto;">

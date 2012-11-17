@@ -3,7 +3,7 @@ Stories = new Meteor.Collection('stories');
 
 var SPRINT = 'sprint';
 var UPDATED_TASK = 'updated-task';
-var BURNDOWN = 'burndown';
+var SPRINT_VIEW = 'sprint-view';
 
 var getSprint = function(name) {
   if (!name) {
