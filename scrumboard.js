@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
   Meteor.startup(function() {
     var pathSplit = window.location.pathname.split('/');
-    if (pathSplit.length == 2 && pathSplit[1] != '') {
+    if (pathSplit.length >= 2 && pathSplit[1] != '') {
       Session.set(SPRINT, decodeURI(pathSplit[1]));
     }
   });
@@ -24,9 +24,14 @@ if (Meteor.isClient) {
       }); 
       $('.tasks-container').masonry({
         itemSelector : '.task',
-      }); 
+      });
     }); 
     $(window).trigger('resize');
+
+    if (Session.get(BURNDOWN)) {
+      $('.show-on-scrumboard').hide();
+      $('.show-on-burndown').show();
+    }
 
     $('.sprint-table').on('mouseenter', '.task', function() {
       $(this).find('.edit-task').css('visibility', 'visible');
@@ -74,12 +79,14 @@ if (Meteor.isClient) {
     'click .show-burndown': function() {
       $('.show-on-scrumboard').hide();
       $('.show-on-burndown').show();
+      Session.set(BURNDOWN, true);
     },
 
     'click .show-scrumboard': function() {
       $('.show-on-burndown').hide();
       $('.show-on-scrumboard').show();
       $(window).trigger('resize');
+      Session.set(BURNDOWN, false);
     }
   }
 
@@ -115,17 +122,26 @@ if (Meteor.isClient) {
         var story = getStory(storyId);
         var task = getTask(story, taskId);
         if (task && task.status != newStatus) {
+          var hoursRemainingDelta;
           if (task.status == 'done' && task.hoursRemaining == 0) {
             // If moving task from done and there were no hours
             // remaining, replenish hours.
+            hoursRemainingDelta = task.hours;
             task.hoursRemaining = task.hours;
           } else if (newStatus == 'done') {
+            hoursRemainingDelta = -task.hoursRemaining;
             task.hoursRemaining = 0;
           }
           task.status = newStatus;
           Stories.update(
             {_id: story._id},
             {$set: {tasks: story.tasks}});
+          if (hoursRemainingDelta) {
+            var sprint = getSprint();
+            Sprints.update(
+              {_id: sprint._id},
+              {$set: {hoursRemaining: sprint.hoursRemaining + hoursRemainingDelta}});
+          }
         }
         Session.set(UPDATED_TASK, taskId);
       },

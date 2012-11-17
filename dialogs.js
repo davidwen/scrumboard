@@ -45,11 +45,13 @@ if (Meteor.isClient) {
         var story = getStory(storyId);
         if (taskId) {
           var task = getTask(story, taskId);
+          var taskHoursRemaining = Number($form.find('#task-hours-remaining').val());
           var hoursDelta = taskHours - task.hours;
+          var hoursRemainingDelta = taskHoursRemaining - task.hoursRemaining;
           task.name = taskName;
           task.owner = taskOwner;
           task.hours = taskHours;
-          task.hoursRemaining = Number($form.find('#task-hours-remaining').val());
+          task.hoursRemaining = taskHoursRemaining;
           task.description = taskDescription;
           task.status = taskStatus;
           Session.set(UPDATED_TASK, task.id);
@@ -58,7 +60,10 @@ if (Meteor.isClient) {
             {$set: {tasks: story.tasks}});
           Sprints.update(
             {_id: sprint._id},
-            {$set: {totalHours: sprint.totalHours + hoursDelta}});
+            {$set: {
+              totalHours: sprint.totalHours + hoursDelta,
+              hoursRemaining: sprint.hoursRemaining + hoursRemainingDelta
+            }});
         } else {
           var newTask = {
             name: taskName,
@@ -75,7 +80,10 @@ if (Meteor.isClient) {
             {$push: {tasks: newTask}, $inc: {nextTaskId: 1}});
           Sprints.update(
             {_id: sprint._id},
-            {$set: {totalHours: sprint.totalHours + newTask.hours}});
+            {$set: {
+              totalHours: sprint.totalHours + newTask.hours,
+              hoursRemaining: sprint.hoursRemaining + newTask.hoursRemaining
+            }});
         }
         $('#add-task-dialog').modal('hide');
       } else {
@@ -93,6 +101,7 @@ if (Meteor.isClient) {
           for (var ii = 0; ii < story.tasks.length; ii++) {
             if (story.tasks[ii].id == taskId) {
               var taskHours = story.tasks[ii].hours;
+              var taskHoursRemaining = story.tasks[ii].hoursRemaining;
               story.tasks.splice(ii, 1);
               Stories.update(
                 {_id: story._id},
@@ -100,7 +109,10 @@ if (Meteor.isClient) {
               var sprint = getSprint();
               Sprints.update(
                 {_id: sprint._id},
-                {$set: {totalHours: sprint.totalHours - taskHours}});
+                {$set: {
+                  totalHours: sprint.totalHours - taskHours,
+                  hoursRemaining: sprint.hoursRemaining - taskHoursRemaining
+                }});
               break;
             }
           }

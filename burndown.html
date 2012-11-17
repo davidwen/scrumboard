@@ -1,24 +1,28 @@
 <template name="burndown">
-  <table class="table" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
+  <div class="burndown-graph" style="width: 400px; height: 300px; margin: 0 auto 50px;"></div>
+  <table class="table table-bordered" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
     <tbody>
       <tr>
         <td><h5>Day</h5></td>
         {{#each days}}
-          <td>{{day}}</td>
+          <td style="text-align: center;"><h5>{{day}}</h5></td>
         {{/each}}
       </tr>
       <tr>
         <td><h5>Hours Remaining (Expected)</h5></td>
         {{#each days}}
-          <td>{{hoursExpected}}</td>
+          <td style="vertical-align: middle; text-align: center;">{{hoursExpected}}</td>
         {{/each}}
       </tr>
       <tr>
         <td><h5>Hours Remaining (Actual)</h5></td>
         {{#each days}}
-          <td>{{hoursActual}}</td>
+          <td style="vertical-align: middle; text-align: center;">{{hoursActual}}</td>
         {{/each}}
       </tr>
     </tbody>
   </table>
+  <div style="text-align: center; margin-top: 20px;">
+    <button type="button" class="btn log-day">Log Next Day ({{hoursRemaining}} hours)</button>
+  </div>
 </template>

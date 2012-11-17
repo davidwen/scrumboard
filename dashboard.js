@@ -93,7 +93,7 @@ var submitAddSprintForm = function() {
         stories: sprintStories,
         days: days,
         totalHours: totalHours,
-        hoursRemaining: []
+        hoursRemainingPerDay: []
       });
       $('#add-sprint-dialog').modal('hide');
     }
