@@ -32,12 +32,15 @@
     white-space: pre-wrap;
 }
 
-.hours-input-container {
-    background-color: #fff;
-    position: absolute;
-    z-index: 15;
+.hours-display {
+    cursor: pointer;
 }
 
 .hours-input {
+    margin: 0 !important;
     width: 20px;
+}
+
+.hours-hover {
+    background-color: #a9effd;
 }

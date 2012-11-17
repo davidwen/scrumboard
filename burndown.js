@@ -97,8 +97,18 @@ if (Meteor.isClient) {
       Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
     },
 
-    'dblclick td.hours-actual': function() {
-      $('.hours-edit:visible').each(function() {
+    'mouseenter .log-day': function() {
+      if (!$(event.target).attr('disabled')) {
+        $('.hours-display:contains("--"):first').closest('td').addClass('hours-hover');
+      }
+    },
+
+    'mouseleave .log-day': function() {
+      $('.hours-hover').removeClass('hours-hover');
+    },
+
+    'click .hours-display': function() {
+      $('.hours-input:visible').each(function() {
         $(this).val($(this).closest('td').find('.hours-display').text());
       });
       $('.hours-edit').hide();
