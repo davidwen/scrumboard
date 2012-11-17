@@ -22,11 +22,11 @@ if (Meteor.isClient) {
         points: { show: true }
       });
 
-    $('.hours-input').unbind('keyup');
-    $('.hours-input').keyup(function(e) {
+    $('.burndown-hours-input').unbind('keyup');
+    $('.burndown-hours-input').keyup(function(e) {
       if (e.which == 13) {
         var hoursRemainingPerDay = [];
-        $('.hours-input').each(function() {
+        $('.burndown-hours-input').each(function() {
           var value = $(this).val();
           if (value != null && value != '' && !isNaN(value)) {
             hoursRemainingPerDay.push(Number(value));
@@ -99,25 +99,25 @@ if (Meteor.isClient) {
 
     'mouseenter .log-day': function() {
       if (!$(event.target).attr('disabled')) {
-        $('.hours-display:contains("--"):first').closest('td').addClass('hours-hover');
+        $('.burndown-hours-display:contains("--"):first').closest('td').addClass('burndown-hours-hover');
       }
     },
 
     'mouseleave .log-day': function() {
-      $('.hours-hover').removeClass('hours-hover');
+      $('.burndown-hours-hover').removeClass('burndown-hours-hover');
     },
 
-    'click .hours-display': function() {
-      $('.hours-input:visible').each(function() {
-        $(this).val($(this).closest('td').find('.hours-display').text());
+    'click .burndown-hours-display': function() {
+      $('.burndown-hours-input:visible').each(function() {
+        $(this).val($(this).closest('td').find('.burndown-hours-display').text());
       });
-      $('.hours-edit').hide();
-      $('.hours-display').show();
+      $('.burndown-hours-edit').hide();
+      $('.burndown-hours-display').show();
       var $target = $(event.target).closest('td');
-      if ($target.find('.hours-display').is(':visible')) {
-        $target.find('.hours-display').hide();
-        $target.find('.hours-edit').show();
-        $target.find('.hours-input').focus();
+      if ($target.find('.burndown-hours-display').is(':visible')) {
+        $target.find('.burndown-hours-display').hide();
+        $target.find('.burndown-hours-edit').show();
+        $target.find('.burndown-hours-input').focus();
       }
     }
   }

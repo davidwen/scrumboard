@@ -32,16 +32,16 @@
     white-space: pre-wrap;
 }
 
-.hours-display {
+.burndown-hours-display {
     cursor: pointer;
 }
 
-.hours-input {
+.burndown-hours-input {
     margin: 0 !important;
-    width: 20px;
+    width: 25px;
 }
 
-.hours-hover {
+.burndown-hours-hover {
     background-color: #a9effd;
 }
 
