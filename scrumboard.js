@@ -69,6 +69,17 @@ if (Meteor.isClient) {
         backdrop: true,
         keyboard: true
       }).addClass('big-modal');
+    },
+
+    'click .show-burndown': function() {
+      $('.show-on-scrumboard').hide();
+      $('.show-on-burndown').show();
+    },
+
+    'click .show-scrumboard': function() {
+      $('.show-on-burndown').hide();
+      $('.show-on-scrumboard').show();
+      $(window).trigger('resize');
     }
   }
 

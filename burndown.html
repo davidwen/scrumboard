@@ -1,3 +1,24 @@
 <template name="burndown">
-  Burndown
+  <table class="table" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
+    <tbody>
+      <tr>
+        <td><h5>Day</h5></td>
+        {{#each days}}
+          <td>{{day}}</td>
+        {{/each}}
+      </tr>
+      <tr>
+        <td><h5>Hours Remaining (Expected)</h5></td>
+        {{#each days}}
+          <td>{{hoursExpected}}</td>
+        {{/each}}
+      </tr>
+      <tr>
+        <td><h5>Hours Remaining (Actual)</h5></td>
+        {{#each days}}
+          <td>{{hoursActual}}</td>
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
 </template>

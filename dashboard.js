@@ -24,7 +24,7 @@ var parseImport = function(input) {
 var submitAddSprintForm = function() {
   var $form = $('form.add-sprint-form');
   var sprintName = $form.find('#sprint-name').val();
-  var days = $form.find('#sprint-days').val();
+  var days = Number($form.find('#sprint-days').val());
   var totalHours = 0;
   if (sprintName) {
     if (getSprint(sprintName)) {

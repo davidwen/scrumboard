@@ -3,11 +3,14 @@
     <div class="pull-left" style="width: 200px;">
       <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
     </div>
-    <div class="pull-right" style="width: 200px; height: 1px;"></div>
+    <div class="pull-right" style="width: 200px;">
+      <a class="btn show-burndown show-on-scrumboard pull-right" style="margin-right: 20px;">Show Burndown</a>
+      <a class="btn show-scrumboard show-on-burndown pull-right" style="margin-right: 20px; display: none;">Show Scrumboard</a>
+    </div>
     <div style="text-align: center; margin: 0 auto;">
       <h1>{{name}}</h1>
     </div>
-    <table class="sprint-table table table-bordered">
+    <table class="sprint-table table table-bordered show-on-scrumboard">
       <thead>
         <th style="text-align: center;" width="14.5%">Story</th>
         <th style="text-align: center;" width="28.5%">Not Started</th>
@@ -25,6 +28,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="show-on-burndown" style="display: none;">
+      {{> burndown}}
+    </div>
   {{/with}}
   {{> newStoryDialog}}
   {{> newTaskDialog}}
