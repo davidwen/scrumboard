@@ -32,6 +32,7 @@ if (Meteor.isClient) {
 
   Template.newTaskDialog.events = {
     'click .add-task': function() {
+      var sprint = getSprint();
       var $form = $('form.add-task-form');
       var taskName = $form.find('#task-name').val();
       var taskOwner = $form.find('#task-owner').val();
@@ -44,6 +45,7 @@ if (Meteor.isClient) {
         var story = getStory(storyId);
         if (taskId) {
           var task = getTask(story, taskId);
+          var hoursDelta = taskHours - task.hours;
           task.name = taskName;
           task.owner = taskOwner;
           task.hours = taskHours;
@@ -54,6 +56,9 @@ if (Meteor.isClient) {
           Stories.update(
             {_id: story._id},
             {$set: {tasks: story.tasks}});
+          Sprints.update(
+            {_id: sprint._id},
+            {$set: {totalHours: sprint.totalHours + hoursDelta}});
         } else {
           var newTask = {
             name: taskName,
@@ -68,6 +73,9 @@ if (Meteor.isClient) {
           Stories.update(
             {_id: story._id},
             {$push: {tasks: newTask}, $inc: {nextTaskId: 1}});
+          Sprints.update(
+            {_id: sprint._id},
+            {$set: {totalHours: sprint.totalHours + newTask.hours}});
         }
         $('#add-task-dialog').modal('hide');
       } else {
@@ -84,13 +92,18 @@ if (Meteor.isClient) {
         if (story) {
           for (var ii = 0; ii < story.tasks.length; ii++) {
             if (story.tasks[ii].id == taskId) {
+              var taskHours = story.tasks[ii].hours;
               story.tasks.splice(ii, 1);
+              Stories.update(
+                {_id: story._id},
+                {$set: {tasks: story.tasks}});
+              var sprint = getSprint();
+              Sprints.update(
+                {_id: sprint._id},
+                {$set: {totalHours: sprint.totalHours - taskHours}});
               break;
             }
           }
-          Stories.update(
-            {_id: story._id},
-            {$set: {tasks: story.tasks}});
         }
         $('#add-task-dialog').modal('hide');
       }

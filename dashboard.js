@@ -24,6 +24,8 @@ var parseImport = function(input) {
 var submitAddSprintForm = function() {
   var $form = $('form.add-sprint-form');
   var sprintName = $form.find('#sprint-name').val();
+  var days = $form.find('#sprint-days').val();
+  var totalHours = 0;
   if (sprintName) {
     if (getSprint(sprintName)) {
       alert('Sprint with that name already exists');
@@ -56,6 +58,7 @@ var submitAddSprintForm = function() {
               description: taskRow[2],
               owner: taskRow[4],
               hours: Number(taskRow[5]),
+              hoursRemaining: Number(taskRow[5]),
               status: 'notstarted'
             }
             var storyName = taskRow[0]
@@ -68,6 +71,7 @@ var submitAddSprintForm = function() {
                 task.id = story.nextTaskId;
                 story.nextTaskId++;
                 story.tasks.push(task);
+                totalHours += task.hours;
                 break;
               }
             }
@@ -84,7 +88,13 @@ var submitAddSprintForm = function() {
           name: story.name
         });
       }
-      Sprints.insert({name: sprintName, stories: sprintStories});
+      Sprints.insert({
+        name: sprintName,
+        stories: sprintStories,
+        days: days,
+        totalHours: totalHours,
+        hoursRemaining: []
+      });
       $('#add-sprint-dialog').modal('hide');
     }
   } else {
