@@ -67,8 +67,20 @@ if (Meteor.isClient) {
             task.owner = $input.val();
           } else if ($input.hasClass('hours-input')) {
             task.hours = Number($input.val());
+            if (task.hoursRemaining < task.hours) {
+              task.status = 'inprogress';
+            } else if (task.hoursRemaining == task.hours) {
+              task.status = 'notstarted';
+            }
           } else if ($input.hasClass('hours-remaining-input')) {
             task.hoursRemaining = Number($input.val());
+            if (task.hoursRemaining == 0) {
+              task.status = 'done'
+            } else if (task.hoursRemaining < task.hours) {
+              task.status = 'inprogress';
+            } else if (task.hoursRemaining == task.hours) {
+              task.status = 'notstarted';
+            }
           }
         }
         for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
