@@ -56,3 +56,7 @@
 .hours-input, .hours-remaining-input {
     width: 32px !important;
 }
+
+.table-view .story-cell {
+    background-color: #fff !important;
+}
