@@ -95,4 +95,7 @@ if (Meteor.isClient) {
     }
   }
 
+  Template.taskRow.nameColor = function(name) {
+    return getNameColor(name);
+  }
 }
