@@ -1,6 +1,8 @@
 var closeAllEdits = function() {
   $('.task-row-input:visible').each(function() {
-    $(this).val($(this).closest('td').find('.task-row-display').text());
+    var $td = $(this).closest('td');
+    $(this).val($td.find('.task-row-display').text());
+    $td.removeClass('editing');
   });
   $('.task-row-edit').hide();
   $('.task-row-display').show();
@@ -103,6 +105,7 @@ if (Meteor.isClient) {
         $target.find('.task-row-input').width($target.width());
         $target.find('.task-row-edit').show();
         $target.find('.task-row-input').focus();
+        $target.addClass('editing');
       }
     }
   }

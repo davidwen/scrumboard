@@ -60,3 +60,32 @@
 .table-view .story-cell {
     background-color: #fff !important;
 }
+
+.task-row-edit input {
+    background-color: inherit;
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    padding: 0;
+}
+
+.task-row-edit input:focus {
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    padding: 0;
+}
+
+.editing {
+    border: 1px solid blue !important;
+}

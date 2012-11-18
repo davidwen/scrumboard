@@ -64,13 +64,13 @@
   <td style="text-align: center;">
     <span class="task-row-display">{{hours}}</span>
     <span class="task-row-edit" style="display: none;">
-      <input type="number" class="task-row-input hours-input" value="{{hours}}">
+      <input type="number" class="task-row-input hours-input" min="0" value="{{hours}}">
     </span>
   </td>
   <td style="text-align: center;">
     <span class="task-row-display">{{hoursRemaining}}</span>
     <span class="task-row-edit" style="display: none;">
-      <input type="number" class="task-row-input hours-remaining-input" value="{{hoursRemaining}}">
+      <input type="number" class="task-row-input hours-remaining-input" min="0" value="{{hoursRemaining}}">
     </span>
   </td>
 </template>
