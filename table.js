@@ -97,7 +97,7 @@ if (Meteor.isClient) {
   }
 
   Template.storyTable.events = {
-    'dblclick .task-row-display': function() {
+    'dblclick .task-row-cell': function() {
       closeAllEdits();
       var $target = $(event.target).closest('td');
       if ($target.find('.task-row-display').is(':visible')) {
