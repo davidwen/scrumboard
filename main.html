@@ -1,3 +1,19 @@
+<head>
+  <title>scrumboard</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  {{#if sprint}}
+    {{> sprint}}
+  {{else}}
+    {{> dashboard}}
+  {{/if}}
+</template>
+
 <template name="sprint">
   {{#with sprint}}
     <div class="pull-left" style="width: 300px;">

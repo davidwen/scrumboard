@@ -1,87 +1,77 @@
-<head>
-  <title>scrumboard</title>
-</head>
-
-<body>
-  {{> main}}
-</body>
-
-<template name="main">
-  {{#if sprint}}
-    {{> sprint}}
-  {{else}}
-    {{> dashboard}}
-  {{/if}}
-</template>
-
-<template name="sprint">
+<template name="scrumboard">
   {{#with sprint}}
-    <div class="pull-left" style="width: 300px;">
-      <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
-    </div>
-    <div class="pull-right" style="width: 300px;">
-      <ul class="nav nav-pills pull-right" style="margin-right: 20px;">
-        <li {{#if sprintView "scrumboard"}}class="active"{{/if}}>
-          <a href="#" class="show-scrumboard">Scrumboard</a>
-        </li>
-        <li {{#if sprintView "table"}}class="active"{{/if}}>
-          <a href="#" class="show-table">Table</a>
-        </li>
-        <li {{#if sprintView "burndown"}}class="active"{{/if}}>
-          <a href="#" class="show-burndown">Burndown</a>
-        </li>
-      </ul>
-    </div>
-    <div style="text-align: center; margin: 0 auto;">
-      <h1>{{name}}</h1>
-    </div>
-    {{#if sprintView "table"}}
-      {{> table}}
-    {{else}}
-      {{#if sprintView "burndown"}}
-        {{> burndown}}
-      {{else}}
-        {{> scrumboard}}
-      {{/if}}
-    {{/if}}
-  {{/with}}
-  {{> newStoryDialog}}
-  {{> newTaskDialog}}
-  {{> storyDetailsDialog}}
-</template>
-
-<template name="dashboard">
-  <div style="margin: 0 auto; max-width: 1100px;">
-    <div class="pull-right">
-      <button type="button" class="btn show-add-sprint-dialog" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
-    </div>
-    <div style="text-align: center; margin: 0 auto; width: 300px;">
-      <h1>Sprint Directory</h1>
-    </div>
-    <table class="table">
+    <table class="sprint-table table table-bordered">
       <thead>
-        <th width="30%"><h3>Sprint Name</h3></th>
-        <th width="70%"><h3>Stories</h3></th>
+        <th style="text-align: center;" width="14.5%">Story</th>
+        <th style="text-align: center;" width="28.5%">Not Started</th>
+        <th style="text-align: center;" width="28.5%">In Progress</th>
+        <th style="text-align: center;" width="28.5%">Done</th>
       </thead>
       <tbody>
-        {{#each sprint}}
-          {{> dashboardSprint}}
+        {{#each stories}}
+          {{> story}}
         {{/each}}
+        <tr class="add-story-row" >
+          <td colspan="4" style="text-align: center;">
+            <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
+          </td>
+        </tr>
       </tbody>
     </table>
-    {{> addSprintDialog}}
-  </div>
+  {{/with}}
 </template>
 
-<template name="dashboardSprint">
-  <tr>
-    <td><h3><a href="/{{nameUriDecoded}}">{{name}}</a></h3></td>
-    <td>
-      <ul>
-        {{#each stories}}
-          <li><span class="lead">{{name}}</span></li>
+<template name="story">
+  {{#with story}}
+  <tr data-id="{{_id}}">
+    <td class="story-cell">
+      <div style="text-align: center; margin: 0 auto;">
+        <span class="story-name">{{name}}</span>
+        <div class="story-controls" style="visibility: hidden;">
+          <a class="show-story-details-dialog btn btn-link">Details</a>
+          <a class="show-add-task-dialog btn btn-link" data-toggle="modal" data-target="#add-task-dialog">+Task</a>
+        </div>
+      </div>
+    </td>
+    <td class="droppable" data-status="notstarted">
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "notstarted"}}
+            {{> task}}
+          {{/if}}
         {{/each}}
-      </ul>
+      </div>
+    </td>
+    <td class="droppable" data-status="inprogress">
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "inprogress"}}
+            {{> task}}
+          {{/if}}
+        {{/each}}
+      </div>
+    </td>
+    <td class="droppable" data-status="done">
+      <div class="tasks-container">
+        {{#each tasks}}
+          {{#if taskStatus "done"}}
+            {{> task}}
+          {{/if}}
+        {{/each}}
+      </div>
     </td>
   </tr>
+  {{/with}}
+</template>
+
+<template name="task">
+  <div class="task" style="background-color: {{color}}" data-id="{{id}}">
+    <div>
+      <small class="pull-left">{{name}}</small>
+      <i class="edit-task icon-edit pull-right" style="visibility: hidden;"></i>
+      <div class="clearfix"></div>
+    </div>
+    <div style="text-align: center;"><h5>{{description}}</h5></div>
+    <div style="text-align: right; margin-right: 2px;"><small>{{owner}}: {{hours}} hrs</small></div>
+  </div>
 </template>

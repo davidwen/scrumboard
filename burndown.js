@@ -1,5 +1,4 @@
 if (Meteor.isClient) {
-
   Template.burndown.rendered = function() {
     var sprint = getSprint();
     var expected = [];
