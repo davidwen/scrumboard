@@ -2,7 +2,7 @@ var parseImport = function(input) {
   var rows = [];
   var currentRow = [];
   var rowSplit = input.split('\t');
-  for (var ii = 0; ii < rowSplit.length; ii++) {
+  for (var ii = 0, len = rowSplit.length; ii < len; ii++) {
     var cell = rowSplit[ii];
     if (cell[0] == '"' || cell.indexOf('\n') == -1) {
       if (cell[0] == '"') {
@@ -50,7 +50,7 @@ if (Meteor.isClient) {
           var storiesImport = $form.find('#sprint-stories-import').val();
           if (storiesImport) {
             var storyRows = parseImport(storiesImport);
-            for (var ii = 0; ii < storyRows.length; ii++) {
+            for (var ii = 0, len = storyRows.length; ii < len; ii++) {
               var storyRow = storyRows[ii];
               var story = {
                 name: storyRow[0],
@@ -67,7 +67,7 @@ if (Meteor.isClient) {
             if (tasksImport) {
               var taskRows = parseImport(tasksImport);
               var currentStory;
-              for (var ii = 0; ii < taskRows.length; ii++) {
+              for (var ii = 0, len = taskRows.length; ii < len; ii++) {
                 var taskRow = taskRows[ii];
                 var task = {
                   name: taskRow[1],
@@ -81,7 +81,7 @@ if (Meteor.isClient) {
                 if (storyName) {
                   currentStory = storyName;
                 }
-                for (var jj = 0; jj < stories.length; jj++) {
+                for (var jj = 0, len2 = stories.length; jj < len2; jj++) {
                   var story = stories[jj];
                   if (story.name == currentStory) {
                     task.id = story.nextTaskId;
@@ -96,7 +96,7 @@ if (Meteor.isClient) {
           }
 
           var sprintStories = [];
-          for (var ii = 0; ii < stories.length; ii++) {
+          for (var ii = 0, len = stories.length; ii < len; ii++) {
             var story = stories[ii];
             var storyId = Stories.insert(story);
             sprintStories.push({
@@ -229,7 +229,7 @@ if (Meteor.isClient) {
         var taskId = $form.find('#task-id').val();
         var story = getStory(storyId);
         if (story) {
-          for (var ii = 0; ii < story.tasks.length; ii++) {
+          for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
             if (story.tasks[ii].id == taskId) {
               var taskHours = story.tasks[ii].hours;
               var taskHoursRemaining = story.tasks[ii].hoursRemaining;

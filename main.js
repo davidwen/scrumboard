@@ -20,7 +20,7 @@ var getTask = function(story, taskId) {
   if (!story) {
     return null;
   }
-  for (var jj = 0; jj < story.tasks.length; jj++) {
+  for (var jj = 0, len = story.tasks.length; jj < len; jj++) {
     var task = story.tasks[jj];
     if (task.id == taskId) {
       return task;

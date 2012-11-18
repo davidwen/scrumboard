@@ -40,7 +40,7 @@ if (Meteor.isClient) {
     var story = getStory(this.id);
     if (story && story.tasks.length > 1) {
       story.tasks.splice(0, 1);
-      for (var ii = 0; ii < story.tasks.length; ii++) {
+      for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
         story.tasks[ii].storyId = story._id;
       }
       return story.tasks;
@@ -71,7 +71,7 @@ if (Meteor.isClient) {
             task.hoursRemaining = Number($input.val());
           }
         }
-        for (var ii = 0; ii < story.tasks.length; ii++) {
+        for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
           if (story.tasks[ii].id == task.id) {
             story.tasks[ii] = task;
             break;

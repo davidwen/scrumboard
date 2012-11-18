@@ -57,3 +57,7 @@
 .task-row-input {
     margin: 0 !important;
 }
+
+.hours-input, .hours-remaining-input {
+    width: 32px !important;
+}

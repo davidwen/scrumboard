@@ -84,7 +84,7 @@ if (Meteor.isClient) {
       var sprint = getSprint();
       var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
       var added = false;
-      for (var ii = 0; ii < hoursRemainingPerDay.length; ii++) {
+      for (var ii = 0, len = hoursRemainingPerDay.length; ii < len; ii++) {
         if (hoursRemainingPerDay[ii] == null) {
           hoursRemainingPerDay[ii] = sprint.hoursRemaining;
           added = true;
