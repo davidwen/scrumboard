@@ -43,31 +43,31 @@
 </template>
 
 <template name="taskRow">
-  <td>
+  <td class="task-row-cell">
     <span class="task-row-display">{{name}}</span>
     <span class="task-row-edit" style="display: none;">
       <input type="text" class="task-row-input name-input" value="{{name}}">
     </span>
   </td>
-  <td>
+  <td class="task-row-cell">
     <span class="task-row-display">{{description}}</span>
     <span class="task-row-edit" style="display: none;">
       <input type="text" class="task-row-input description-input" value="{{description}}">
     </span>
   </td>
-  <td style="background-color: {{nameColor owner}}">
+  <td class="task-row-cell" style="background-color: {{nameColor owner}}">
     <span class="task-row-display">{{owner}}</span>
     <span class="task-row-edit" style="display: none;">
       <input type="text" class="task-row-input owner-input" value="{{owner}}">
     </span>
   </td>
-  <td style="text-align: center;">
+  <td class="task-row-cell" style="text-align: center;">
     <span class="task-row-display">{{hours}}</span>
     <span class="task-row-edit" style="display: none;">
       <input type="number" class="task-row-input hours-input" min="0" value="{{hours}}">
     </span>
   </td>
-  <td style="text-align: center;">
+  <td class="task-row-cell" style="text-align: center;">
     <span class="task-row-display">{{hoursRemaining}}</span>
     <span class="task-row-edit" style="display: none;">
       <input type="number" class="task-row-input hours-remaining-input" min="0" value="{{hoursRemaining}}">

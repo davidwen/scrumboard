@@ -75,17 +75,11 @@
 }
 
 .task-row-edit input:focus {
-    border: 0;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
-    padding: 0;
 }
 
 .editing {
-    border: 1px solid blue !important;
+    border: 1px solid #00f !important;
 }
