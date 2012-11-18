@@ -29,6 +29,19 @@ var getTask = function(story, taskId) {
   return null;
 }
 
+if (Meteor.is_client) {
+  Meteor.startup(function() {
+    var pathSplit = window.location.pathname.split('/');
+    if (pathSplit.length >= 2 && pathSplit[1] != '') {
+      Session.set(SPRINT, decodeURI(pathSplit[1]));
+    }
+  });
+
+  Template.main.sprint = function() {
+    return Session.get(SPRINT);
+  }
+}
+
 if (Meteor.is_server) {
   Sprints.allow({
     'insert': function (userId, doc) {

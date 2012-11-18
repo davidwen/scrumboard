@@ -3,15 +3,51 @@
 </head>
 
 <body>
-  {{> scrumboard}}
+  {{> main}}
 </body>
 
-<template name="scrumboard">
+<template name="main">
   {{#if sprint}}
     {{> sprint}}
   {{else}}
     {{> dashboard}}
   {{/if}}
+</template>
+
+<template name="sprint">
+  {{#with sprint}}
+    <div class="pull-left" style="width: 300px;">
+      <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
+    </div>
+    <div class="pull-right" style="width: 300px;">
+      <ul class="nav nav-pills pull-right" style="margin-right: 20px;">
+        <li {{#if sprintView "scrumboard"}}class="active"{{/if}}>
+          <a href="#" class="show-scrumboard">Scrumboard</a>
+        </li>
+        <li {{#if sprintView "table"}}class="active"{{/if}}>
+          <a href="#" class="show-table">Table</a>
+        </li>
+        <li {{#if sprintView "burndown"}}class="active"{{/if}}>
+          <a href="#" class="show-burndown">Burndown</a>
+        </li>
+      </ul>
+    </div>
+    <div style="text-align: center; margin: 0 auto;">
+      <h1>{{name}}</h1>
+    </div>
+    {{#if sprintView "table"}}
+      {{> table}}
+    {{else}}
+      {{#if sprintView "burndown"}}
+        {{> burndown}}
+      {{else}}
+        {{> scrumboard}}
+      {{/if}}
+    {{/if}}
+  {{/with}}
+  {{> newStoryDialog}}
+  {{> newTaskDialog}}
+  {{> storyDetailsDialog}}
 </template>
 
 <template name="dashboard">

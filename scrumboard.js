@@ -1,21 +1,10 @@
 if (Meteor.isClient) {
-  Meteor.startup(function() {
-    var pathSplit = window.location.pathname.split('/');
-    if (pathSplit.length >= 2 && pathSplit[1] != '') {
-      Session.set(SPRINT, decodeURI(pathSplit[1]));
-    }
-  });
-
-  Template.scrumboard.sprint = function() {
-    return Session.get(SPRINT);
-  }
-
   Template.sprint.sprint = function() {
     return getSprint();
   }
 
   Template.sprint.sprintView = function(view) {
-    var currentView = "scrumboard";
+    currentView = 'scrumboard';
     if (Session.get(SPRINT_VIEW)) {
       currentView = Session.get(SPRINT_VIEW);
     }
@@ -35,16 +24,6 @@ if (Meteor.isClient) {
       });
     }); 
     $(window).trigger('resize');
-
-    if (Session.get(SPRINT_VIEW) == 'burndown') {
-      $('.show-on-scrumboard').hide();
-      $('.show-on-table').hide();
-      $('.show-on-burndown').show();
-    } else if (Session.get(SPRINT_VIEW) == 'table') {
-      $('.show-on-scrumboard').hide();
-      $('.show-on-table').show();
-      $('.show-on-burndown').hide();
-    }
 
     $('.sprint-table, .table-view').on('mouseenter', '.task', function() {
       $(this).find('.edit-task').css('visibility', 'visible');
@@ -100,35 +79,22 @@ if (Meteor.isClient) {
 
     'click .show-burndown': function() {
       event.preventDefault();
-      $('.nav .active').removeClass('active');
-      $(event.target).closest('li').addClass('active');
-      $('.show-on-scrumboard').hide();
-      $('.show-on-table').hide();
-      $('.show-on-burndown').show();
       Session.set(SPRINT_VIEW, 'burndown');
     },
 
     'click .show-table': function() {
       event.preventDefault();
-      $('.nav .active').removeClass('active');
-      $(event.target).closest('li').addClass('active');
-      $('.show-on-scrumboard').hide();
-      $('.show-on-burndown').hide();
-      $('.show-on-table').show();
-      $(window).trigger('resize');
       Session.set(SPRINT_VIEW, 'table');
     },
 
     'click .show-scrumboard': function() {
       event.preventDefault();
-      $('.nav .active').removeClass('active');
-      $(event.target).closest('li').addClass('active');
-      $('.show-on-table').hide();
-      $('.show-on-burndown').hide();
-      $('.show-on-scrumboard').show();
-      $(window).trigger('resize');
       Session.set(SPRINT_VIEW, 'scrumboard');
     }
+  }
+
+  Template.scrumboard.sprint = function() {
+    return getSprint();
   }
 
   Template.story.taskStatus = function(status) {
