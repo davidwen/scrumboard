@@ -32,10 +32,6 @@
     white-space: pre-wrap;
 }
 
-.burndown-hours-display {
-    cursor: pointer;
-}
-
 .burndown-hours-input {
     margin: 0 !important;
     width: 25px;
@@ -86,4 +82,29 @@
 
 .table-hover tbody tr.no-hover:hover td {
     background-color: #fff !important;
+}
+
+.burndown-hours-display,
+.burndown-hours-edit {
+    display: inline-block;
+    width: 30px !important;
+}
+
+.burndown-hours-actual input {
+    background-color: inherit;
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    padding: 0;
+}
+
+.burndown-hours-actual input:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }

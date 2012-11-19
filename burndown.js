@@ -121,11 +121,12 @@ if (Meteor.isClient) {
       $('.burndown-hours-hover').removeClass('burndown-hours-hover');
     },
 
-    'click .burndown-hours-display': function() {
+    'dblclick .burndown-hours-actual': function() {
       closeAllBurndownEdits();
       var $target = $(event.target).closest('td');
       if ($target.find('.burndown-hours-display').is(':visible')) {
         $target.find('.burndown-hours-display').hide();
+        $target.find('.burndown-hours-input').width('100%');
         $target.find('.burndown-hours-edit').show();
         $target.find('.burndown-hours-input').focus();
       }
