@@ -144,13 +144,10 @@ Template.newStoryDialog.events = {
         tasks: [],
         nextTaskId: 0
       };
-      var storyId = Stories.insert(newStory);
-      Sprints.update(
-        {_id: sprint._id},
-        {$push: {stories: {
-          id: storyId,
-          name: storyName
-        }}});
+      Meteor.call('addStory', newStory, function(error, storyId) {
+        newStory._id = storyId;
+        Meteor.call('addStoryToSprint', newStory, sprint);
+      });
       $('#add-story-dialog').modal('hide');
     } else {
       $form.find('.error').text('All fields required').show();
@@ -177,10 +174,8 @@ Template.taskDialog.events = {
     if (taskName && taskOwner && taskHours && taskDescription && taskStatus) {
       var story = getStory(storyId);
       if (taskId) {
-        var task = getTask(story, taskId);
+        var task = $.extend(true, {}, getTask(story, taskId));
         var taskHoursRemaining = Number($form.find('#task-hours-remaining').val());
-        var hoursDelta = taskHours - task.hours;
-        var hoursRemainingDelta = taskHoursRemaining - task.hoursRemaining;
         task.name = taskName;
         task.owner = taskOwner;
         task.hours = taskHours;
@@ -188,15 +183,7 @@ Template.taskDialog.events = {
         task.description = taskDescription;
         task.status = taskStatus;
         Session.set(UPDATED_TASK, task.id);
-        Stories.update(
-          {_id: story._id},
-          {$set: {tasks: story.tasks}});
-        Sprints.update(
-          {_id: sprint._id},
-          {$set: {
-            totalHours: sprint.totalHours + hoursDelta,
-            hoursRemaining: sprint.hoursRemaining + hoursRemainingDelta
-          }});
+        Meteor.call('upsertTask', task, story, sprint);
       } else {
         var newTask = {
           name: taskName,
@@ -205,18 +192,9 @@ Template.taskDialog.events = {
           hoursRemaining: taskStatus == 'done' ? 0 : taskHours,
           description: taskDescription,
           status: taskStatus,
-          id: story.nextTaskId
         };
-        Session.set(UPDATED_TASK, newTask.id);
-        Stories.update(
-          {_id: story._id},
-          {$push: {tasks: newTask}, $inc: {nextTaskId: 1}});
-        Sprints.update(
-          {_id: sprint._id},
-          {$set: {
-            totalHours: sprint.totalHours + newTask.hours,
-            hoursRemaining: sprint.hoursRemaining + newTask.hoursRemaining
-          }});
+        Session.set(UPDATED_TASK, story.nextTaskId);
+        Meteor.call('upsertTask', newTask, story, sprint);
       }
       $('#add-task-dialog').modal('hide');
     } else {
@@ -226,30 +204,12 @@ Template.taskDialog.events = {
 
   'click .delete-task': function() {
     if (confirm('Are you sure you would like to delete this task?')) {
+      debugger;
       var $form = $('form.add-task-form');
       var storyId = $form.find('#story-id').val();
       var taskId = $form.find('#task-id').val();
-      var story = getStory(storyId);
-      if (story) {
-        for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
-          if (story.tasks[ii].id == taskId) {
-            var taskHours = story.tasks[ii].hours;
-            var taskHoursRemaining = story.tasks[ii].hoursRemaining;
-            story.tasks.splice(ii, 1);
-            Stories.update(
-              {_id: story._id},
-              {$set: {tasks: story.tasks}});
-            var sprint = getSprint();
-            Sprints.update(
-              {_id: sprint._id},
-              {$set: {
-                totalHours: sprint.totalHours - taskHours,
-                hoursRemaining: sprint.hoursRemaining - taskHoursRemaining
-              }});
-            break;
-          }
-        }
-      }
+      var sprint = getSprint();
+      Meteor.call('deleteTask', taskId, storyId, sprint);
       $('#add-task-dialog').modal('hide');
     }
   }

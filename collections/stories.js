@@ -16,3 +16,19 @@ var getTask = function(story, taskId) {
   }
   return null;
 }
+
+var getStoryHours = function(story) {
+  var hours = 0;
+  for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
+    hours += story.tasks[ii].hours;
+  }
+  return hours;
+}
+
+var getStoryHoursRemaining = function(story) {
+  var hoursRemaining = 0;
+  for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
+    hoursRemaining += story.tasks[ii].hoursRemaining;
+  }
+  return hoursRemaining;
+}
