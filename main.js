@@ -3,6 +3,7 @@ Stories = new Meteor.Collection('stories');
 
 var SPRINT = 'sprint';
 var UPDATED_TASK = 'updated-task';
+var UPDATED_TASK_NAME = 'updated-task-name';
 var SPRINT_VIEW = 'sprint-view';
 
 var getSprint = function(name) {

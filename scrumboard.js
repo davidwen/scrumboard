@@ -55,8 +55,9 @@ if (Meteor.isClient) {
               {_id: sprint._id},
               {$set: {hoursRemaining: sprint.hoursRemaining + hoursRemainingDelta}});
           }
+          Session.set(UPDATED_TASK, taskId);
+          Session.set(UPDATED_TASK_NAME, task.name);
         }
-        Session.set(UPDATED_TASK, taskId);
       },
       hoverClass: 'task-hover'
     });
@@ -91,8 +92,10 @@ if (Meteor.isClient) {
   }
 
   Template.task.rendered = function() {
-    if (this.data.id == Session.get(UPDATED_TASK)) {
+    if (this.data.id == Session.get(UPDATED_TASK) &&
+        this.data.name == Session.get(UPDATED_TASK_NAME)) {
       Session.set(UPDATED_TASK, null);
+      Session.set(UPDATED_TASK_NAME, null);
       $(this.find('.task')).hide().fadeIn('slow');
     }
   }
