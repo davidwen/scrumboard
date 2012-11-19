@@ -129,6 +129,7 @@ if (Meteor.isClient) {
         $target.find('.burndown-hours-input').width('100%');
         $target.find('.burndown-hours-edit').show();
         $target.find('.burndown-hours-input').focus();
+        $target.addClass('editing');
       }
     }
   }
