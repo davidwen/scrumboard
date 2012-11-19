@@ -102,7 +102,7 @@ if (Meteor.isClient) {
       var $target = $(event.target).closest('td');
       if ($target.find('.task-row-display').is(':visible')) {
         $target.find('.task-row-display').hide();
-        $target.find('.task-row-input').width($target.width());
+        $target.find('.task-row-input').width('100%');
         $target.find('.task-row-edit').show();
         $target.find('.task-row-input').focus();
         $target.addClass('editing');
