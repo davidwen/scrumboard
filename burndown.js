@@ -69,7 +69,7 @@ if (Meteor.isClient) {
       if (sprint.hoursRemainingPerDay.length < sprint.days) {
         return false;
       }
-      for (var ii = 0; ii < sprint.days; ii++) {
+      for (var ii = 0; ii < sprint.days + 1; ii++) {
         if (sprint.hoursRemainingPerDay[ii] == null) {
           return false;
         }
