@@ -1,3 +1,11 @@
+var closeAllBurndownEdits = function() {
+  $('.burndown-hours-input:visible').each(function() {
+    $(this).val($(this).closest('td').find('.burndown-hours-display').text());
+  });
+  $('.burndown-hours-edit').hide();
+  $('.burndown-hours-display').show();
+}
+
 if (Meteor.isClient) {
   Template.burndown.rendered = function() {
     var sprint = getSprint();
@@ -34,6 +42,13 @@ if (Meteor.isClient) {
           }
         });
         Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
+      }
+    });
+
+    $(window).unbind('keyup');
+    $(window).keyup(function(e) {
+      if (e.which == 27) {
+        closeAllBurndownEdits();
       }
     });
   }
@@ -107,11 +122,7 @@ if (Meteor.isClient) {
     },
 
     'click .burndown-hours-display': function() {
-      $('.burndown-hours-input:visible').each(function() {
-        $(this).val($(this).closest('td').find('.burndown-hours-display').text());
-      });
-      $('.burndown-hours-edit').hide();
-      $('.burndown-hours-display').show();
+      closeAllBurndownEdits();
       var $target = $(event.target).closest('td');
       if ($target.find('.burndown-hours-display').is(':visible')) {
         $target.find('.burndown-hours-display').hide();
