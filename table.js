@@ -68,14 +68,20 @@ if (Meteor.isClient) {
           } else if ($input.hasClass('owner-input')) {
             task.owner = $input.val();
           } else if ($input.hasClass('hours-input')) {
-            task.hours = Number($input.val());
+            var inputHours = Number($input.val());
+            var hoursDelta = inputHours - task.hours;
+            task.hours = inputHours;
             if (task.hoursRemaining < task.hours) {
               task.status = 'inprogress';
             } else if (task.hoursRemaining == task.hours) {
               task.status = 'notstarted';
             }
+            var sprint = getSprint();
+            Sprints.update({_id: sprint._id}, {$inc: {totalHours: hoursDelta}});
           } else if ($input.hasClass('hours-remaining-input')) {
-            task.hoursRemaining = Number($input.val());
+            var inputHoursRemaining = Number($input.val());
+            var hoursRemainingDelta = inputHoursRemaining - task.hoursRemaining;
+            task.hoursRemaining = inputHoursRemaining;
             if (task.hoursRemaining == 0) {
               task.status = 'done'
             } else if (task.hoursRemaining < task.hours) {
@@ -83,6 +89,8 @@ if (Meteor.isClient) {
             } else if (task.hoursRemaining == task.hours) {
               task.status = 'notstarted';
             }
+            var sprint = getSprint();
+            Sprints.update({_id: sprint._id}, {$inc: {hoursRemaining: hoursRemainingDelta}});
           }
         }
         for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
