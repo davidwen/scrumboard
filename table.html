@@ -11,7 +11,12 @@
       {{#each stories}}
         {{> storyTable}}
       {{/each}}
-      <tr class="add-story-row" >
+      <tr class="no-hover">
+        <td colspan="4"><span class="pull-right">Total</span></td>
+        <td style="text-align: center; font-weight: bold;">{{totalHours}}</td>
+        <td style="text-align: center; font-weight: bold;">{{hoursRemaining}}</td>
+      </tr>
+      <tr class="no-hover add-story-row" >
         <td colspan="6" style="text-align: center;">
           <button type="button" class="btn show-add-story-dialog" data-toggle="modal" data-target="#add-story-dialog" style="visibility: hidden;">Add Story</button>
         </td>
