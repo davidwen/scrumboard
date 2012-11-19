@@ -1,6 +1,8 @@
 var closeAllBurndownEdits = function() {
   $('.burndown-hours-input:visible').each(function() {
-    $(this).val($(this).closest('td').find('.burndown-hours-display').text());
+    var $td = $(this).closest('td');
+    $(this).val($td.find('.burndown-hours-display').text());
+    $td.removeClass('editing');
   });
   $('.burndown-hours-edit').hide();
   $('.burndown-hours-display').show();
