@@ -121,4 +121,12 @@ if (Meteor.isClient) {
   Template.taskRow.nameColor = function(name) {
     return getNameColor(name);
   }
+
+  Template.taskRow.hoursRemainingColor = function(hoursRemaining) {
+    if (hoursRemaining == 0) {
+      return '#d9ead3';
+    } else if (hoursRemaining > 0) {
+      return '#fce5cd';
+    }
+  }
 }
