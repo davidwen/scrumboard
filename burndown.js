@@ -60,7 +60,7 @@ if (Meteor.isClient) {
       for (var ii = 0; ii < sprint.days + 1; ii++) {
         var day = {};
         day.day = ii;
-        day.hoursExpected = Math.round(sprint.totalHours * (sprint.days - ii) / sprint.days * 10) / 10;
+        day.hoursExpected = Math.round(sprint.totalHours * (sprint.days - ii) / sprint.days);
         day.hoursActual = sprint.hoursRemainingPerDay[ii];
         if (day.hoursActual == null) {
           day.hoursActual = '--';
