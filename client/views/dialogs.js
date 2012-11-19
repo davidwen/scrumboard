@@ -103,13 +103,16 @@ Template.addSprintDialog.events = {
             name: story.name
           });
         }
-        Sprints.insert({
+        var newSprint = {
           name: sprintName,
           stories: sprintStories,
           days: days,
           totalHours: totalHours,
           hoursRemaining: totalHours,
           hoursRemainingPerDay: []
+        };
+        Meteor.call('addSprint', newSprint, function(error, sprintName) {
+            window.location = '/' + encodeURIComponent(sprintName);
         });
         $('#add-sprint-dialog').modal('hide');
       }
