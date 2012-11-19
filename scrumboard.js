@@ -28,10 +28,10 @@ if (Meteor.isClient) {
     $td.removeData('ui-droppable');
     $td.droppable({
       drop: function(event, ui) {
-        var taskId = $(ui.draggable).attr('data-id');
+        var taskId = $(ui.draggable).attr('data-task-id');
         var newStatus = $(this).attr('data-status');
 
-        var storyId = $(this).closest('tr').attr('data-id');
+        var storyId = $(this).closest('tr').attr('data-story-id');
         var story = getStory(storyId);
         var task = getTask(story, taskId);
         if (task && task.status != newStatus) {
@@ -64,8 +64,8 @@ if (Meteor.isClient) {
     var $edits = $tr.find('.edit-task');
     $edits.unbind('click');
     $edits.click(function() {
-      var storyId = $(this).closest('tr').attr('data-id');
-      var taskId = $(this).closest('.task').attr('data-id');
+      var storyId = $(this).closest('tr').attr('data-story-id');
+      var taskId = $(this).closest('.task').attr('data-task-id');
 
       var story = getStory(storyId);
       var task = getTask(story, taskId);

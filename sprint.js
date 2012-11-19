@@ -56,7 +56,7 @@ if (Meteor.isClient) {
       var $dialog = $('#add-task-dialog');
       $form[0].reset();
       $form.find('.error').hide();
-      $form.find('#story-id').val($(event.target).closest('tr').attr('data-id'));
+      $form.find('#story-id').val($(event.target).closest('tr').attr('data-story-id'));
       $form.find('#task-id').val('');
       $dialog.find('.add-task').text('Add Task To ' + this.name);
       $dialog.find('.show-on-edit').hide();
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
     },
 
     'click .show-story-details-dialog': function() {
-      var storyId = $(event.target).closest('tr').attr('data-id');
+      var storyId = $(event.target).closest('tr').attr('data-story-id');
       var story = getStory(storyId);
       var $dialog = $('#story-details-dialog');
       $dialog.find('#story-name').text(story.name);

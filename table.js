@@ -56,7 +56,7 @@ if (Meteor.isClient) {
       if (e.which == 13) {
         var $input = $(this);
         var $tr = $input.closest('tr');
-        var storyId = $tr.attr('data-id');
+        var storyId = $tr.attr('data-story-id');
         var story = getStory(storyId);
         var taskId = Number($tr.attr('data-task-id'));
         var task = getTask(story, taskId);

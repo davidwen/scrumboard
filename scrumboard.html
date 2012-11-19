@@ -23,7 +23,7 @@
 
 <template name="story">
   {{#with story}}
-  <tr data-id="{{_id}}">
+  <tr data-story-id="{{_id}}">
     <td class="story-cell">
       <div style="text-align: center; margin: 0 auto;">
         <span class="story-name">{{name}}</span>
@@ -65,7 +65,7 @@
 </template>
 
 <template name="task">
-  <div class="task" style="background-color: {{color}}" data-id="{{id}}">
+  <div class="task" style="background-color: {{color}}" data-task-id="{{id}}">
     <div>
       <small class="pull-left">{{name}}</small>
       <i class="edit-task icon-edit pull-right" style="visibility: hidden;"></i>

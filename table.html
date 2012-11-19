@@ -22,7 +22,7 @@
 
 <template name="storyTable">
   {{#with firstTask}}
-    <tr data-id="{{storyId}}" data-task-id="{{id}}">
+    <tr data-story-id="{{storyId}}" data-task-id="{{id}}">
       <td class="story-cell" rowspan="{{numTasks}}">
         <div style="text-align: center; margin: 0 auto;">
           <span class="story-name">{{storyName}}</span>
@@ -36,7 +36,7 @@
     </tr>
   {{/with}}
   {{#each otherTasks}}
-    <tr data-id="{{storyId}}" data-task-id="{{id}}">
+    <tr data-story-id="{{storyId}}" data-task-id="{{id}}">
       {{> taskRow}}
     </tr>
   {{/each}}
