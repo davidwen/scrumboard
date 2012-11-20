@@ -64,7 +64,8 @@ Template.addSprintDialog.events = {
               totalHours: 0,
               hoursRemaining: 0,
               tasks: [],
-              nextTaskId: 0
+              nextTaskId: 0,
+              idx: ii
             };
             stories.push(story);
           }
@@ -143,7 +144,8 @@ Template.newStoryDialog.events = {
         description: storyDescription,
         acceptanceCriteria: storyAcceptanceCriteria,
         tasks: [],
-        nextTaskId: 0
+        nextTaskId: 0,
+        idx: getLastStoryIndexInSprint(getSprintId()).idx + 1,
       };
       Meteor.call('addStory', newStory);
       $('#add-story-dialog').modal('hide');

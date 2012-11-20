@@ -32,3 +32,15 @@ var getStoryHoursRemaining = function(story) {
   }
   return hoursRemaining;
 }
+
+var getLastStoryIndexInSprint = function(sprintId) {
+  var story = Stories.findOne(
+    { sprintId: sprintId },
+    { sort: ['idx', 'desc'] }
+  );
+  if (story) {
+    return story.idx;
+  } else {
+    return 0;
+  }
+}
