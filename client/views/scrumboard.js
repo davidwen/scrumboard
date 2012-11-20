@@ -2,12 +2,16 @@ Template.scrumboard.sprint = function() {
   return getSprint();
 }
 
+Template.scrumboard.stories = function() {
+  return getSprintStories(this._id);
+}
+
 Template.story.taskStatus = function(status) {
   return this.status == status;
 }
 
 Template.story.story = function() {
-  return getStory(this.id);
+  return getStory(this._id);
 }
 
 Template.story.rendered = function() {

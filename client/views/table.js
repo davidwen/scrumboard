@@ -9,11 +9,21 @@ var closeAllEdits = function() {
 }
 
 Template.table.totalHours = function() {
-  return getSprintTotalHours(getSprint());
+  var sprint = getSprint();
+  if (sprint) {
+    return getSprintTotalHours(sprint._id);
+  }
 }
 
 Template.table.hoursRemaining = function() {
-  return getSprintHoursRemaining(getSprint());
+  var sprint = getSprint();
+  if (sprint) {
+    return getSprintHoursRemaining(sprint._id);
+  }
+}
+
+Template.table.stories = function() {
+  return getSprintStories(this._id);
 }
 
 Template.table.rendered = function() {
@@ -26,7 +36,7 @@ Template.table.rendered = function() {
 }
 
 Template.storyTable.firstTask = function() {
-  var story = getStory(this.id);
+  var story = getStory(this._id);
   if (story) {
     var firstTask = story.tasks[0];
     if (firstTask) {
@@ -45,7 +55,7 @@ Template.storyTable.firstTask = function() {
 }
 
 Template.storyTable.otherTasks = function() {
-  var story = getStory(this.id);
+  var story = getStory(this._id);
   if (story && story.tasks.length > 1) {
     story.tasks.splice(0, 1);
     for (var ii = 0, len = story.tasks.length; ii < len; ii++) {

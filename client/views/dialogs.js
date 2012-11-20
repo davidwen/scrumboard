@@ -40,9 +40,14 @@ Template.addSprintDialog.events = {
     $form.find('.error').hide();
     var sprintName = $form.find('#sprint-name').val();
     var days = Number($form.find('#sprint-days').val());
-    if (sprintName && days) {
-      if (getSprint(sprintName)) {
-        $form.find('.error').text('Sprint with that name already exists').show();
+    var newSprint = {
+      name: sprintName,
+      days: days,
+      hoursRemainingPerDay: []
+    }
+    Meteor.call('addSprint', newSprint, function(error, sprintId) {
+      if (error) {
+        $form.find('.error').text(error.reason).show();
       } else {
         var stories = [];
         var storiesImport = $form.find('#sprint-stories-import').val();
@@ -51,6 +56,7 @@ Template.addSprintDialog.events = {
           for (var ii = 0, len = storyRows.length; ii < len; ii++) {
             var storyRow = storyRows[ii];
             var story = {
+              sprintId: sprintId,
               name: storyRow[0],
               description: storyRow[2],
               acceptanceCriteria: storyRow[3],
@@ -69,13 +75,26 @@ Template.addSprintDialog.events = {
             var currentStory;
             for (var ii = 0, len = taskRows.length; ii < len; ii++) {
               var taskRow = taskRows[ii];
+              var hours = Number(taskRow[5]);
+              var hoursRemaining;
+              var status = 'notstarted'
+              if (taskRow[6] != null) {
+                hoursRemaining = Number(taskRow[6]);
+                if (hoursRemaining == 0) {
+                  status = 'done';
+                } else if (hoursRemaining < hours) {
+                  status = 'inprogress';
+                }
+              } else {
+                hoursRemaining = Number(taskRow[5]);
+              }
               var task = {
                 name: taskRow[1],
                 description: taskRow[2],
                 owner: taskRow[4],
-                hours: Number(taskRow[5]),
-                hoursRemaining: Number(taskRow[5]),
-                status: 'notstarted'
+                hours: hours,
+                hoursRemaining: hoursRemaining,
+                status: status
               }
               var storyName = taskRow[0]
               if (storyName) {
@@ -88,30 +107,20 @@ Template.addSprintDialog.events = {
                   story.nextTaskId++;
                   story.tasks.push(task);
                   story.totalHours += task.hours;
-                  story.hoursRemaining += task.hours;
+                  story.hoursRemaining += task.hoursRemaining;
                   break;
                 }
               }
             }
           }
         }
-
-        Meteor.call('addStories', stories, function(error, sprintStories) {
-          var newSprint = {
-            name: sprintName,
-            stories: sprintStories,
-            days: days,
-            hoursRemainingPerDay: []
-          };
-          Meteor.call('addSprint', newSprint, function(error, sprintName){
-            window.location = '/' + encodeURIComponent(sprintName);
-          });
+        console.log(sprintId);
+        Meteor.call('addStories', stories, function(error, result) {
+          $('#add-sprint-dialog').modal('hide');
+          window.location = '/' + encodeURIComponent(sprintName);
         });
-        $('#add-sprint-dialog').modal('hide');
       }
-    } else {
-      $form.find('.error').text('Name and number of days required').show();
-    }
+    });
   }
 }
 

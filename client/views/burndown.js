@@ -13,7 +13,7 @@ Template.burndown.rendered = function() {
   var expected = [];
   var actual = [];
   if (sprint) {
-    var sprintTotalHours = getSprintTotalHours(sprint);
+    var sprintTotalHours = getSprintTotalHours(sprint._id);
     for (var ii = 0; ii < sprint.days + 1; ii++) {
       var expectedDay = [ii, sprintTotalHours * (sprint.days - ii) / sprint.days];
       expected.push(expectedDay);
@@ -59,7 +59,7 @@ Template.burndown.days = function() {
   var days = [];
   var sprint = getSprint();
   if (sprint) {
-    var sprintTotalHours = getSprintTotalHours(sprint);
+    var sprintTotalHours = getSprintTotalHours(sprint._id);
     for (var ii = 0; ii < sprint.days + 1; ii++) {
       var day = {};
       day.day = ii;
@@ -75,7 +75,7 @@ Template.burndown.days = function() {
 }
 
 Template.burndown.hoursRemaining = function() {
-  return getSprintHoursRemaining(getSprint());
+  return getSprintHoursRemaining(getSprint()._id);
 }
 
 Template.burndown.noMoreDays = function() {
@@ -97,7 +97,7 @@ Template.burndown.events = {
   'click .log-day': function() {
     var sprint = getSprint();
     var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
-    var sprintHoursRemaining = getSprintHoursRemaining(sprint);
+    var sprintHoursRemaining = getSprintHoursRemaining(sprint._id);
     var added = false;
     for (var ii = 0, len = hoursRemainingPerDay.length; ii < len; ii++) {
       if (hoursRemainingPerDay[ii] == null) {

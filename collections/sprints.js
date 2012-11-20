@@ -7,30 +7,30 @@ var getSprint = function(name) {
   return Sprints.findOne({ name: name });
 }
 
-var getSprintTotalHours = function(sprint) {
-  if (!sprint) {
+var getSprintTotalHours = function(sprintId) {
+  if (!sprintId) {
     return 0;
   }
   var result = 0;
-  for (var ii = 0, len = sprint.stories.length; ii < len; ii++) {
-    var story = getStory(sprint.stories[ii].id);
-    if (story) {
-      result += story.totalHours;
-    }
+  var sprintStories = getSprintStories(sprintId);
+  for (var ii = 0, len = sprintStories.length; ii < len; ii++) {
+    result += sprintStories[ii].totalHours;
   }
   return result;
 }
 
-var getSprintHoursRemaining = function(sprint) {
-  if (!sprint) {
+var getSprintHoursRemaining = function(sprintId) {
+  if (!sprintId) {
     return 0;
   }
   var result = 0;
-  for (var ii = 0, len = sprint.stories.length; ii < len; ii++) {
-    var story = getStory(sprint.stories[ii].id);
-    if (story) {
-      result += story.hoursRemaining;
-    }
+  var sprintStories = getSprintStories(sprintId);
+  for (var ii = 0, len = sprintStories.length; ii < len; ii++) {
+    result += sprintStories[ii].hoursRemaining;
   }
   return result;
+}
+
+var getSprintStories = function(sprintId) {
+  return Stories.find({sprintId: sprintId}).fetch();
 }
