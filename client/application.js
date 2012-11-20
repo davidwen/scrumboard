@@ -3,4 +3,9 @@ Meteor.startup(function() {
   if (pathSplit.length >= 2 && pathSplit[1] != '') {
     Session.set(SPRINT_NAME, decodeURI(pathSplit[1]));
   }
+
+  Meteor.autosubscribe(function () {
+    Meteor.subscribe('sprints');
+    Meteor.subscribe('stories');
+  });
 });
