@@ -9,16 +9,14 @@ var closeAllEdits = function() {
 }
 
 Template.table.totalHours = function() {
-  var sprint = getSprint();
-  if (sprint) {
-    return getSprintTotalHours(sprint._id);
+  if (getSprintId()) {
+    return getSprintTotalHours(getSprintId());
   }
 }
 
 Template.table.hoursRemaining = function() {
-  var sprint = getSprint();
-  if (sprint) {
-    return getSprintHoursRemaining(sprint._id);
+  if (getSprintId()) {
+    return getSprintHoursRemaining(getSprintId());
   }
 }
 
@@ -117,8 +115,7 @@ Template.storyTable.rendered = function() {
           }
         }
         if (changed) {
-          var sprint = getSprint();
-          Meteor.call('upsertTask', task, story._id, sprint._id);
+          Meteor.call('upsertTask', task, story._id, getSprintId());
         }
       }
     }

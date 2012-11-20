@@ -114,8 +114,7 @@ Template.addSprintDialog.events = {
             }
           }
         }
-        console.log(sprintId);
-        Meteor.call('addStories', stories, function(error, result) {
+        Meteor.call('addStories', stories, function() {
           $('#add-sprint-dialog').modal('hide');
           window.location = '/' + encodeURIComponent(sprintName);
         });
@@ -130,7 +129,6 @@ Template.newStoryDialog.rendered = function() {
 
 Template.newStoryDialog.events = {
   'click .add-story': function() {
-    var sprint = getSprint();
     var $form = $('form.add-story-form');
     $form.find('.error').hide();
     var storyName = $form.find('#story-name').val();
@@ -139,6 +137,7 @@ Template.newStoryDialog.events = {
     var storyAcceptanceCriteria = $form.find('#story-acceptance-criteria').val();
     if (storyName && storyPoints && storyDescription && storyAcceptanceCriteria) {
       var newStory = {
+        sprintId: getSprintId(),
         name: storyName,
         points: storyPoints,
         description: storyDescription,
@@ -146,10 +145,7 @@ Template.newStoryDialog.events = {
         tasks: [],
         nextTaskId: 0
       };
-      Meteor.call('addStory', newStory, function(error, storyId) {
-        newStory._id = storyId;
-        Meteor.call('addStoryToSprint', newStory, sprint._id);
-      });
+      Meteor.call('addStory', newStory);
       $('#add-story-dialog').modal('hide');
     } else {
       $form.find('.error').text('All fields required').show();
@@ -163,7 +159,6 @@ Template.taskDialog.rendered = function() {
 
 Template.taskDialog.events = {
   'click .add-task': function() {
-    var sprint = getSprint();
     var $form = $('form.add-task-form');
     $form.find('.error').hide();
     var taskName = $form.find('#task-name').val();
@@ -185,7 +180,7 @@ Template.taskDialog.events = {
         task.description = taskDescription;
         task.status = taskStatus;
         Session.set(UPDATED_TASK, task.id);
-        Meteor.call('upsertTask', task, story._id, sprint._id);
+        Meteor.call('upsertTask', task, story._id, getSprintId());
       } else {
         var newTask = {
           name: taskName,
@@ -196,7 +191,7 @@ Template.taskDialog.events = {
           status: taskStatus,
         };
         Session.set(UPDATED_TASK, story.nextTaskId);
-        Meteor.call('upsertTask', newTask, story._id, sprint._id);
+        Meteor.call('upsertTask', newTask, story._id, getSprintId());
       }
       $('#add-task-dialog').modal('hide');
     } else {
@@ -209,8 +204,7 @@ Template.taskDialog.events = {
       var $form = $('form.add-task-form');
       var storyId = $form.find('#story-id').val();
       var taskId = $form.find('#task-id').val();
-      var sprint = getSprint();
-      Meteor.call('deleteTask', taskId, storyId, sprint._id);
+      Meteor.call('deleteTask', taskId, storyId, getSprintId());
       $('#add-task-dialog').modal('hide');
     }
   }

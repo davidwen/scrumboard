@@ -1,10 +1,18 @@
 Sprints = new Meteor.Collection('sprints');
 
-var getSprint = function(name) {
-  if (!name) {
-    name = Session.get(SPRINT);
+var getSprintId = function() {
+  return Session.get(SPRINT);
+}
+
+var getSprint = function(sprintId) {
+  if (!sprintId) {
+    sprintId = Session.get(SPRINT);
   }
-  return Sprints.findOne({ name: name });
+  return Sprints.findOne({ _id: sprintId });
+}
+
+var getSprintByName = function(sprintName) {
+  return Sprints.findOne({ name: sprintName });
 }
 
 var getSprintTotalHours = function(sprintId) {

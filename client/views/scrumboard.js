@@ -46,8 +46,7 @@ Template.story.rendered = function() {
           task.hoursRemaining = 0;
         }
         task.status = newStatus;
-        var sprint = getSprint();
-        Meteor.call('upsertTask', task, story._id, sprint._id);
+        Meteor.call('upsertTask', task, story._id, getSprintId());
         Session.set(UPDATED_TASK, taskId);
         Session.set(UPDATED_TASK_NAME, task.name);
       }

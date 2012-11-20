@@ -75,7 +75,7 @@ Template.burndown.days = function() {
 }
 
 Template.burndown.hoursRemaining = function() {
-  return getSprintHoursRemaining(getSprint()._id);
+  return getSprintHoursRemaining(getSprintId());
 }
 
 Template.burndown.noMoreDays = function() {
