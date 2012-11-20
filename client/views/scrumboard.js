@@ -34,26 +34,16 @@ Template.story.rendered = function() {
       var story = getStory(storyId);
       var task = getTask(story, taskId);
       if (task && task.status != newStatus) {
-        var hoursRemainingDelta;
         if (task.status == 'done' && task.hoursRemaining == 0) {
           // If moving task from done and there were no hours
           // remaining, replenish hours.
-          hoursRemainingDelta = task.hours;
           task.hoursRemaining = task.hours;
         } else if (newStatus == 'done') {
-          hoursRemainingDelta = -task.hoursRemaining;
           task.hoursRemaining = 0;
         }
         task.status = newStatus;
-        Stories.update(
-          {_id: story._id},
-          {$set: {tasks: story.tasks}});
-        if (hoursRemainingDelta) {
-          var sprint = getSprint();
-          Sprints.update(
-            {_id: sprint._id},
-            {$set: {hoursRemaining: sprint.hoursRemaining + hoursRemainingDelta}});
-        }
+        var sprint = getSprint();
+        Meteor.call('upsertTask', task, story._id, sprint._id);
         Session.set(UPDATED_TASK, taskId);
         Session.set(UPDATED_TASK_NAME, task.name);
       }

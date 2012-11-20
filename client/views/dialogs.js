@@ -97,7 +97,7 @@ Template.addSprintDialog.events = {
         var sprintStories = [];
         for (var ii = 0, len = stories.length; ii < len; ii++) {
           var story = stories[ii];
-          var storyId = Stories.insert(story);
+          var storyId = Meteor.call('addStory', story);
           sprintStories.push({
             id: storyId,
             name: story.name
@@ -146,7 +146,7 @@ Template.newStoryDialog.events = {
       };
       Meteor.call('addStory', newStory, function(error, storyId) {
         newStory._id = storyId;
-        Meteor.call('addStoryToSprint', newStory, sprint);
+        Meteor.call('addStoryToSprint', newStory, sprint._id);
       });
       $('#add-story-dialog').modal('hide');
     } else {
@@ -174,7 +174,7 @@ Template.taskDialog.events = {
     if (taskName && taskOwner && taskHours && taskDescription && taskStatus) {
       var story = getStory(storyId);
       if (taskId) {
-        var task = $.extend(true, {}, getTask(story, taskId));
+        var task = getTask(story, taskId);
         var taskHoursRemaining = Number($form.find('#task-hours-remaining').val());
         task.name = taskName;
         task.owner = taskOwner;
@@ -183,7 +183,7 @@ Template.taskDialog.events = {
         task.description = taskDescription;
         task.status = taskStatus;
         Session.set(UPDATED_TASK, task.id);
-        Meteor.call('upsertTask', task, story, sprint);
+        Meteor.call('upsertTask', task, story._id, sprint._id);
       } else {
         var newTask = {
           name: taskName,
@@ -194,7 +194,7 @@ Template.taskDialog.events = {
           status: taskStatus,
         };
         Session.set(UPDATED_TASK, story.nextTaskId);
-        Meteor.call('upsertTask', newTask, story, sprint);
+        Meteor.call('upsertTask', newTask, story._id, sprint._id);
       }
       $('#add-task-dialog').modal('hide');
     } else {
@@ -204,12 +204,11 @@ Template.taskDialog.events = {
 
   'click .delete-task': function() {
     if (confirm('Are you sure you would like to delete this task?')) {
-      debugger;
       var $form = $('form.add-task-form');
       var storyId = $form.find('#story-id').val();
       var taskId = $form.find('#task-id').val();
       var sprint = getSprint();
-      Meteor.call('deleteTask', taskId, storyId, sprint);
+      Meteor.call('deleteTask', taskId, storyId, sprint._id);
       $('#add-task-dialog').modal('hide');
     }
   }

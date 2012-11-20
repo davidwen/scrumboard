@@ -59,45 +59,50 @@ Template.storyTable.rendered = function() {
       var taskId = Number($tr.attr('data-task-id'));
       var task = getTask(story, taskId);
       if ($input.val()) {
+        var changed = false;
         if ($input.hasClass('name-input')) {
-          task.name = $input.val();
+          if (task.name != $input.val()) {
+            task.name = $input.val();
+            changed = true;
+          }
         } else if ($input.hasClass('description-input')) {
-          task.description = $input.val();
+          if (task.description != $input.val()) {
+            task.description = $input.val();
+            changed = true;
+          }
         } else if ($input.hasClass('owner-input')) {
-          task.owner = $input.val();
+          if (task.owner != $input.val()) {
+            task.owner = $input.val();
+            changed = true;
+          }
         } else if ($input.hasClass('hours-input')) {
           var inputHours = Number($input.val());
-          var hoursDelta = inputHours - task.hours;
-          task.hours = inputHours;
-          if (task.hoursRemaining < task.hours) {
-            task.status = 'inprogress';
-          } else if (task.hoursRemaining == task.hours) {
-            task.status = 'notstarted';
+          if (task.hours != inputHours) {
+            task.hours = inputHours;
+            if (task.status != 'inprogress' && task.hoursRemaining < task.hours) {
+              task.status = 'inprogress';
+            }
+            changed = true;
           }
-          var sprint = getSprint();
-          Sprints.update({_id: sprint._id}, {$inc: {totalHours: hoursDelta}});
         } else if ($input.hasClass('hours-remaining-input')) {
           var inputHoursRemaining = Number($input.val());
-          var hoursRemainingDelta = inputHoursRemaining - task.hoursRemaining;
-          task.hoursRemaining = inputHoursRemaining;
-          if (task.hoursRemaining == 0) {
-            task.status = 'done'
-          } else if (task.hoursRemaining < task.hours) {
-            task.status = 'inprogress';
-          } else if (task.hoursRemaining == task.hours) {
-            task.status = 'notstarted';
+          if (task.hoursRemaining != inputHoursRemaining) {
+            task.hoursRemaining = inputHoursRemaining;
+            if (task.hoursRemaining == 0) {
+              task.status = 'done'
+            } else if (task.hoursRemaining < task.hours) {
+              task.status = 'inprogress';
+            } else if (task.status == 'done' && task.hoursRemaining == task.hours) {
+              task.status = 'notstarted';
+            }
+            changed = true;
           }
+        }
+        if (changed) {
           var sprint = getSprint();
-          Sprints.update({_id: sprint._id}, {$inc: {hoursRemaining: hoursRemainingDelta}});
+          Meteor.call('upsertTask', task, story._id, sprint._id);
         }
       }
-      for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
-        if (story.tasks[ii].id == task.id) {
-          story.tasks[ii] = task;
-          break;
-        }
-      }
-      Stories.update({_id: story._id}, {$set: {tasks: story.tasks}});
     }
   });
 }

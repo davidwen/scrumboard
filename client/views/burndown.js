@@ -16,7 +16,7 @@ Template.burndown.rendered = function() {
     for (var ii = 0; ii < sprint.days + 1; ii++) {
       var expectedDay = [ii, sprint.totalHours * (sprint.days - ii) / sprint.days];
       expected.push(expectedDay);
-      if (sprint.hoursRemainingPerDay[ii]) {
+      if (sprint.hoursRemainingPerDay[ii] != null) {
         var actualDay = [ii, sprint.hoursRemainingPerDay[ii]];
         actual.push(actualDay);
       }
@@ -42,7 +42,7 @@ Template.burndown.rendered = function() {
           hoursRemainingPerDay.push(null);
         }
       });
-      Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
+      Meteor.call('setSprintHoursRemainingPerDay', sprint._id, hoursRemainingPerDay);
     }
   });
 
@@ -108,8 +108,11 @@ Template.burndown.events = {
     }
     if (!added && hoursRemainingPerDay.length < sprint.days) {
       hoursRemainingPerDay.push(sprint.hoursRemaining);
+      added = true;
     }
-    Sprints.update({_id: sprint._id}, {$set: {hoursRemainingPerDay: hoursRemainingPerDay}});
+    if (added) {
+      Meteor.call('setSprintHoursRemainingPerDay', sprint._id, hoursRemainingPerDay);
+    }
   },
 
   'mouseenter .log-day': function() {
