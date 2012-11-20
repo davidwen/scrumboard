@@ -8,6 +8,14 @@ var closeAllEdits = function() {
   $('.task-row-display').show();
 }
 
+Template.table.totalHours = function() {
+  return getSprintTotalHours(getSprint());
+}
+
+Template.table.hoursRemaining = function() {
+  return getSprintHoursRemaining(getSprint());
+}
+
 Template.table.rendered = function() {
   $(window).unbind('keyup');
   $(window).keyup(function(e) {

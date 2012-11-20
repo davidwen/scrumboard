@@ -40,7 +40,6 @@ Template.addSprintDialog.events = {
     $form.find('.error').hide();
     var sprintName = $form.find('#sprint-name').val();
     var days = Number($form.find('#sprint-days').val());
-    var totalHours = 0;
     if (sprintName && days) {
       if (getSprint(sprintName)) {
         $form.find('.error').text('Sprint with that name already exists').show();
@@ -56,6 +55,8 @@ Template.addSprintDialog.events = {
               description: storyRow[2],
               acceptanceCriteria: storyRow[3],
               points: Number(storyRow[4]),
+              totalHours: 0,
+              hoursRemaining: 0,
               tasks: [],
               nextTaskId: 0
             };
@@ -86,7 +87,8 @@ Template.addSprintDialog.events = {
                   task.id = story.nextTaskId;
                   story.nextTaskId++;
                   story.tasks.push(task);
-                  totalHours += task.hours;
+                  story.totalHours += task.hours;
+                  story.hoursRemaining += task.hours;
                   break;
                 }
               }
@@ -94,25 +96,16 @@ Template.addSprintDialog.events = {
           }
         }
 
-        var sprintStories = [];
-        for (var ii = 0, len = stories.length; ii < len; ii++) {
-          var story = stories[ii];
-          var storyId = Meteor.call('addStory', story);
-          sprintStories.push({
-            id: storyId,
-            name: story.name
-          });
-        }
-        var newSprint = {
-          name: sprintName,
-          stories: sprintStories,
-          days: days,
-          totalHours: totalHours,
-          hoursRemaining: totalHours,
-          hoursRemainingPerDay: []
-        };
-        Meteor.call('addSprint', newSprint, function(error, sprintName) {
+        Meteor.call('addStories', stories, function(error, sprintStories) {
+          var newSprint = {
+            name: sprintName,
+            stories: sprintStories,
+            days: days,
+            hoursRemainingPerDay: []
+          };
+          Meteor.call('addSprint', newSprint, function(error, sprintName){
             window.location = '/' + encodeURIComponent(sprintName);
+          });
         });
         $('#add-sprint-dialog').modal('hide');
       }

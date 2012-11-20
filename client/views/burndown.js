@@ -13,8 +13,9 @@ Template.burndown.rendered = function() {
   var expected = [];
   var actual = [];
   if (sprint) {
+    var sprintTotalHours = getSprintTotalHours(sprint);
     for (var ii = 0; ii < sprint.days + 1; ii++) {
-      var expectedDay = [ii, sprint.totalHours * (sprint.days - ii) / sprint.days];
+      var expectedDay = [ii, sprintTotalHours * (sprint.days - ii) / sprint.days];
       expected.push(expectedDay);
       if (sprint.hoursRemainingPerDay[ii] != null) {
         var actualDay = [ii, sprint.hoursRemainingPerDay[ii]];
@@ -58,10 +59,11 @@ Template.burndown.days = function() {
   var days = [];
   var sprint = getSprint();
   if (sprint) {
+    var sprintTotalHours = getSprintTotalHours(sprint);
     for (var ii = 0; ii < sprint.days + 1; ii++) {
       var day = {};
       day.day = ii;
-      day.hoursExpected = Math.round(sprint.totalHours * (sprint.days - ii) / sprint.days);
+      day.hoursExpected = Math.round(sprintTotalHours * (sprint.days - ii) / sprint.days);
       day.hoursActual = sprint.hoursRemainingPerDay[ii];
       if (day.hoursActual == null) {
         day.hoursActual = '--';
@@ -73,10 +75,7 @@ Template.burndown.days = function() {
 }
 
 Template.burndown.hoursRemaining = function() {
-  var sprint = getSprint();
-  if (sprint) {
-    return sprint.hoursRemaining;
-  }
+  return getSprintHoursRemaining(getSprint());
 }
 
 Template.burndown.noMoreDays = function() {
@@ -98,16 +97,17 @@ Template.burndown.events = {
   'click .log-day': function() {
     var sprint = getSprint();
     var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
+    var sprintHoursRemaining = getSprintHoursRemaining(sprint);
     var added = false;
     for (var ii = 0, len = hoursRemainingPerDay.length; ii < len; ii++) {
       if (hoursRemainingPerDay[ii] == null) {
-        hoursRemainingPerDay[ii] = sprint.hoursRemaining;
+        hoursRemainingPerDay[ii] = sprintHoursRemaining;
         added = true;
         break;
       }
     }
     if (!added && hoursRemainingPerDay.length < sprint.days) {
-      hoursRemainingPerDay.push(sprint.hoursRemaining);
+      hoursRemainingPerDay.push(sprintHoursRemaining);
       added = true;
     }
     if (added) {
