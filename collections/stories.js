@@ -36,7 +36,7 @@ var getStoryHoursRemaining = function(story) {
 var getLastStoryIndexInSprint = function(sprintId) {
   var story = Stories.findOne(
     { sprintId: sprintId },
-    { sort: ['idx', 'desc'] }
+    { sort: {idx: -1} }
   );
   if (story) {
     return story.idx;

@@ -42,5 +42,5 @@ var getSprintHoursRemaining = function(sprintId) {
 var getSprintStories = function(sprintId) {
   return Stories.find(
     { sprintId: sprintId },
-    { sort: ['idx', 'desc'] }).fetch();
+    { sort: { idx: 1 } }).fetch();
 }

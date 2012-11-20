@@ -145,7 +145,7 @@ Template.newStoryDialog.events = {
         acceptanceCriteria: storyAcceptanceCriteria,
         tasks: [],
         nextTaskId: 0,
-        idx: getLastStoryIndexInSprint(getSprintId()).idx + 1,
+        idx: getLastStoryIndexInSprint(getSprintId()) + 1,
       };
       Meteor.call('addStory', newStory);
       $('#add-story-dialog').modal('hide');
