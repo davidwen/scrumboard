@@ -1,3 +1,7 @@
+/**
+ * View for the sprint directory
+ */
+
 Template.dashboard.sprint = function() {
   return Sprints.find();
 }

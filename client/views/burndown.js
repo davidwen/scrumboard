@@ -1,3 +1,9 @@
+/**
+ * Burndown view for a sprint, displaying a burndown chart and expected/actual hours remaining for
+ * each day in the sprint.
+ */
+
+// Close all visible burndown hour inputs and revert them to display mode
 var closeAllBurndownEdits = function() {
   $('.burndown-hours-input:visible').each(function() {
     var $td = $(this).closest('td');
@@ -10,6 +16,8 @@ var closeAllBurndownEdits = function() {
 
 Template.burndown.rendered = function() {
   var sprint = getSprint();
+
+  // Accumulate hours expected/actual per day in the sprint
   var expected = [];
   var actual = [];
   if (sprint) {
@@ -23,6 +31,8 @@ Template.burndown.rendered = function() {
       }
     }
   }
+
+  // Generate burndown graph
   var plot = $.plot(
     $('.burndown-graph')[0],
     [{label: 'Expected', data: expected}, {label: 'Actual', data: actual}],
@@ -31,6 +41,7 @@ Template.burndown.rendered = function() {
       points: { show: true }
     });
 
+  // Bind saving hours on hitting enter
   $('.burndown-hours-input').unbind('keyup');
   $('.burndown-hours-input').keyup(function(e) {
     if (e.which == 13) {
@@ -47,6 +58,7 @@ Template.burndown.rendered = function() {
     }
   });
 
+  // Bind closing all edits on hitting escape
   $(window).unbind('keyup');
   $(window).keyup(function(e) {
     if (e.which == 27) {
@@ -78,6 +90,7 @@ Template.burndown.hoursRemaining = function() {
   return getSprintHoursRemaining(getSprintId());
 }
 
+// Returns true if all hoursRemainingPerDay have been set for eachd ay in the sprint
 Template.burndown.noMoreDays = function() {
   var sprint = getSprint();
   if (sprint) {
@@ -94,6 +107,8 @@ Template.burndown.noMoreDays = function() {
 }
 
 Template.burndown.events = {
+
+  // Assigns the current hours remaining left in the sprint into the next open day
   'click .log-day': function() {
     var sprint = getSprint();
     var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
@@ -115,16 +130,18 @@ Template.burndown.events = {
     }
   },
 
+  // Shade next open day on hover over the log-day button 
   'mouseenter .log-day': function() {
     if (!$(event.target).attr('disabled')) {
-      $('.burndown-hours-display:contains("--"):first').closest('td').addClass('burndown-hours-hover');
+      $('.burndown-hours-display:contains("--"):first').closest('td')
+        .addClass('burndown-hours-hover');
     }
   },
-
   'mouseleave .log-day': function() {
     $('.burndown-hours-hover').removeClass('burndown-hours-hover');
   },
 
+  // Show edit mode when double clicking actual hours
   'dblclick .burndown-hours-actual': function() {
     closeAllBurndownEdits();
     var $target = $(event.target).closest('td');

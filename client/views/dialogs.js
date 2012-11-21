@@ -1,26 +1,34 @@
+/**
+ * View for various dialogs (adding/editing sprints/stories/tasks)
+ */
+
+// Parse cells from a copy/paste from a Google Docs spreadsheet (may work for other formats too)
 var parseImport = function(input) {
   var rows = [];
   var currentRow = [];
-  var rowSplit = input.split('\t');
-  for (var ii = 0, len = rowSplit.length; ii < len; ii++) {
-    var cell = rowSplit[ii];
-    if (cell[0] == '"' || cell.indexOf('\n') == -1) {
+  var cells = input.split('\t');
+  for (var ii = 0, len = cells.length; ii < len; ii++) {
+    var cell = cells[ii];
+    if (cell[0] != '"' && cell.indexOf('\n') != -1) {
+      // If cell is not surrounded by quotes and contains a new line, this is the last cell
+      // in this row.
+      var cellSplit = cell.split('\n');
+      currentRow.push(cellSplit[0]);
+      rows.push(currentRow);
+      currentRow = [cellSplit[1]];
+    } else {
       if (cell[0] == '"') {
         // Strip surrounding quotes
         cell = cell.slice(1, -1);
       }
       currentRow.push(cell);
-    } else {
-      var cellSplit = cell.split('\n');
-      currentRow.push(cellSplit[0]);
-      rows.push(currentRow);
-      currentRow = [cellSplit[1]];
     }
   }
   rows.push(currentRow);
   return rows;
 }
 
+// Bind the given inputs to submit the form on enter
 var submitOnEnter = function($inputs, $button) {
   $inputs.unbind('keyup');
   $inputs.keyup(function(e) {
@@ -54,6 +62,7 @@ Template.addSprintDialog.events = {
         if (storiesImport) {
           var storyRows = parseImport(storiesImport);
           for (var ii = 0, len = storyRows.length; ii < len; ii++) {
+            // Hard-coded conversion of imported spreadsheet to stories
             var storyRow = storyRows[ii];
             var story = {
               sprintId: sprintId,
@@ -75,10 +84,13 @@ Template.addSprintDialog.events = {
             var taskRows = parseImport(tasksImport);
             var currentStory;
             for (var ii = 0, len = taskRows.length; ii < len; ii++) {
+              // Hard-coded conversion of imported spreadsheet to tasks
               var taskRow = taskRows[ii];
               var hours = Number(taskRow[5]);
               var hoursRemaining;
               var status = 'notstarted'
+
+              // Optionally take the hoursRemaining column
               if (taskRow[6] != null) {
                 hoursRemaining = Number(taskRow[6]);
                 if (hoursRemaining == 0) {
@@ -97,10 +109,14 @@ Template.addSprintDialog.events = {
                 hoursRemaining: hoursRemaining,
                 status: status
               }
+
+              // If no storyName is provided on this row, use previous storyName
               var storyName = taskRow[0]
               if (storyName) {
                 currentStory = storyName;
               }
+
+              // Add task into associated story
               for (var jj = 0, len2 = stories.length; jj < len2; jj++) {
                 var story = stories[jj];
                 if (story.name == currentStory) {
@@ -181,7 +197,11 @@ Template.taskDialog.events = {
         task.hoursRemaining = taskHoursRemaining;
         task.description = taskDescription;
         task.status = taskStatus;
+
+        // Mark in session so that updated task is emphasized on render
         Session.set(UPDATED_TASK, task.id);
+        Session.set(UPDATED_TASK_NAME, task.name);
+
         Meteor.call('upsertTask', task, story._id, getSprintId());
       } else {
         var newTask = {
@@ -192,7 +212,11 @@ Template.taskDialog.events = {
           description: taskDescription,
           status: taskStatus,
         };
+
+        // Mark in session so that updated task is emphasized on render
         Session.set(UPDATED_TASK, story.nextTaskId);
+        Session.set(UPDATED_TASK_NAME, newTask.name);
+
         Meteor.call('upsertTask', newTask, story._id, getSprintId());
       }
       $('#add-task-dialog').modal('hide');

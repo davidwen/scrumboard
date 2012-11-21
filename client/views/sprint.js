@@ -1,3 +1,7 @@
+/**
+ * Top-level view for a sprint, controlling which specific view should be shown
+ */
+
 Template.sprint.sprint = function() {
   return getSprint();
 }
@@ -11,19 +15,6 @@ Template.sprint.sprintView = function(view) {
 }
 
 Template.sprint.rendered = function() {
-  $(window).unbind('resize');
-  $(window).resize(function() {
-    $('.tasks-container').each(function() {
-      if ($(this).data('masonry')) {
-        $(this).masonry('destroy');
-      } 
-    }); 
-    $('.tasks-container').masonry({
-      itemSelector : '.task',
-    });
-  }); 
-  $(window).trigger('resize');
-
   $('.sprint-table, .table-view').on('mouseenter', '.task', function() {
     $(this).find('.edit-task').css('visibility', 'visible');
   }).on('mouseleave', '.task', function() {

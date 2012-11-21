@@ -1,4 +1,8 @@
-Template.scrumboard.sprint = function() {
+/**
+ * Scrumboard view for a sprint, allowing users to view and edit tasks visually
+ */
+
+ Template.scrumboard.sprint = function() {
   return getSprint();
 }
 
@@ -15,6 +19,21 @@ Template.story.story = function() {
 }
 
 Template.story.rendered = function() {
+  // Set up masonry plugin to have tasks stack properly
+  $(window).unbind('resize');
+  $(window).resize(function() {
+    $('.tasks-container').each(function() {
+      if ($(this).data('masonry')) {
+        $(this).masonry('destroy');
+      } 
+    }); 
+    $('.tasks-container').masonry({
+      itemSelector : '.task',
+    });
+  }); 
+  $(window).trigger('resize');
+
+  // Set up draggable tasks
   var $tasks = $(this.findAll('.task'));
   var $tr = $(this.find('tr'));
   $tasks.removeData('ui-draggable');
@@ -27,6 +46,7 @@ Template.story.rendered = function() {
     zIndex: 100
   });
 
+  // Set up droppable areas within stories
   var $td = $(this.findAll('td.droppable'));
   $td.removeData('ui-droppable');
   $td.droppable({
@@ -54,6 +74,7 @@ Template.story.rendered = function() {
     hoverClass: 'task-hover'
   });
 
+  // Show edit task form on edit click
   var $edits = $tr.find('.edit-task');
   $edits.unbind('click');
   $edits.click(function() {
@@ -83,6 +104,7 @@ Template.story.rendered = function() {
   });
 }
 
+// If task was just updated, fade task in to emphasize an update visually
 Template.task.rendered = function() {
   if (this.data.id == Session.get(UPDATED_TASK) &&
       this.data.name == Session.get(UPDATED_TASK_NAME)) {
@@ -92,7 +114,6 @@ Template.task.rendered = function() {
   }
 }
 
-/* Return random color based on task owner */
 Template.task.color = function() {
   return getNameColor(this.owner);
 }

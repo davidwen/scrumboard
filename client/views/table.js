@@ -1,3 +1,8 @@
+/**
+ * Table view for a sprint, allowing users to view/edit task information in a table format
+ */
+
+// Close all visible table inputs and revert them to display mode
 var closeAllEdits = function() {
   $('.task-row-input:visible').each(function() {
     var $td = $(this).closest('td');
@@ -33,6 +38,7 @@ Template.table.rendered = function() {
   });
 }
 
+// Renders the first task row for a story, including data required to render the story cell
 Template.storyTable.firstTask = function() {
   var story = getStory(this._id);
   if (story) {
@@ -43,6 +49,7 @@ Template.storyTable.firstTask = function() {
       firstTask.numTasks = story.tasks.length;
       return firstTask;
     } else {
+      // Dummy firstTask for empty stories
       return {
         storyId: story._id,
         storyName: story.name,
@@ -52,6 +59,7 @@ Template.storyTable.firstTask = function() {
   }
 }
 
+// Renders the rest of the task rows for a story (not including the first task)
 Template.storyTable.otherTasks = function() {
   var story = getStory(this._id);
   if (story && story.tasks.length > 1) {
@@ -64,6 +72,8 @@ Template.storyTable.otherTasks = function() {
 }
 
 Template.storyTable.rendered = function() {
+
+  // Bind saving task edits on enter
   var $inputs = $(this.findAll('.task-row-input'));
   $inputs.unbind('keyup');
   $inputs.keyup(function(e) {
@@ -123,6 +133,8 @@ Template.storyTable.rendered = function() {
 }
 
 Template.storyTable.events = {
+
+  // Show edit mode when double clicking table inputs
   'dblclick .task-row-cell': function() {
     closeAllEdits();
     var $target = $(event.target).closest('td');
