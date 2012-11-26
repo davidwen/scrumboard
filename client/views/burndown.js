@@ -5,13 +5,13 @@
 
 // Close all visible burndown hour inputs and revert them to display mode
 var closeAllBurndownEdits = function() {
-  $('.burndown-hours-input:visible').each(function() {
+  $('#burndown-table input.burndown-hours-input:visible').each(function() {
     var $td = $(this).closest('td');
-    $(this).val($td.find('.burndown-hours-display').text());
+    $(this).val($td.find('span.burndown-hours-display').text());
     $td.removeClass('editing');
   });
-  $('.burndown-hours-edit').hide();
-  $('.burndown-hours-display').show();
+  $('#burndown-table span.burndown-hours-edit').hide();
+  $('#burndown-table span.burndown-hours-display').show();
 }
 
 Template.burndown.rendered = function() {
@@ -34,37 +34,21 @@ Template.burndown.rendered = function() {
 
   // Generate burndown graph
   var plot = $.plot(
-    $('.burndown-graph')[0],
+    $('#burndown-graph')[0],
     [{label: 'Expected', data: expected}, {label: 'Actual', data: actual}],
     {
       lines: { show: true },
       points: { show: true }
     });
 
-  // Bind saving hours on hitting enter
-  $('.burndown-hours-input').unbind('keyup');
-  $('.burndown-hours-input').keyup(function(e) {
-    if (e.which == 13) {
-      var hoursRemainingPerDay = [];
-      $('.burndown-hours-input').each(function() {
-        var value = $(this).val();
-        if (value != null && value != '' && !isNaN(value)) {
-          hoursRemainingPerDay.push(Number(value));
-        } else {
-          hoursRemainingPerDay.push(null);
-        }
-      });
-      Meteor.call('setSprintHoursRemainingPerDay', sprint._id, hoursRemainingPerDay);
-    }
-  });
-
   // Bind closing all edits on hitting escape
-  $(window).unbind('keyup');
-  $(window).keyup(function(e) {
-    if (e.which == 27) {
-      closeAllBurndownEdits();
-    }
-  });
+  $(window)
+    .unbind('keyup')
+    .keyup(function(e) {
+      if (e.which == 27) {
+        closeAllBurndownEdits();
+      }
+    });
 }
 
 Template.burndown.days = function() {
@@ -109,7 +93,7 @@ Template.burndown.noMoreDays = function() {
 Template.burndown.events = {
 
   // Assigns the current hours remaining left in the sprint into the next open day
-  'click .log-day': function() {
+  'click #log-day-button': function() {
     var sprint = getSprint();
     var hoursRemainingPerDay = sprint.hoursRemainingPerDay;
     var sprintHoursRemaining = getSprintHoursRemaining(sprint._id);
@@ -131,26 +115,41 @@ Template.burndown.events = {
   },
 
   // Shade next open day on hover over the log-day button 
-  'mouseenter .log-day': function() {
+  'mouseenter #log-day-button': function() {
     if (!$(event.target).attr('disabled')) {
-      $('.burndown-hours-display:contains("--"):first').closest('td')
+      $('#burndown-table span.burndown-hours-display:contains("--"):first').closest('td')
         .addClass('burndown-hours-hover');
     }
   },
-  'mouseleave .log-day': function() {
-    $('.burndown-hours-hover').removeClass('burndown-hours-hover');
+  'mouseleave #log-day-button': function() {
+    $('#burndown-table td.burndown-hours-hover').removeClass('burndown-hours-hover');
   },
 
   // Show edit mode when double clicking actual hours
-  'dblclick .burndown-hours-actual': function() {
+  'dblclick #burndown-table td.burndown-hours-actual': function() {
     closeAllBurndownEdits();
     var $target = $(event.target).closest('td');
-    if ($target.find('.burndown-hours-display').is(':visible')) {
-      $target.find('.burndown-hours-display').hide();
-      $target.find('.burndown-hours-input').width('100%');
-      $target.find('.burndown-hours-edit').show();
-      $target.find('.burndown-hours-input').focus();
+    if ($target.find('span.burndown-hours-display').is(':visible')) {
+      $target.find('span.burndown-hours-display').hide();
+      $target.find('input.burndown-hours-input').width('100%');
+      $target.find('span.burndown-hours-edit').show();
+      $target.find('input.burndown-hours-input').focus();
       $target.addClass('editing');
+    }
+  },
+
+  'keyup #burndown-table input.burndown-hours-input': function() {
+    if (event.which == 13) {
+      var hoursRemainingPerDay = [];
+      $('#burndown-table input.burndown-hours-input').each(function() {
+        var value = $(this).val();
+        if (value != null && value != '' && !isNaN(value)) {
+          hoursRemainingPerDay.push(Number(value));
+        } else {
+          hoursRemainingPerDay.push(null);
+        }
+      });
+      Meteor.call('setSprintHoursRemainingPerDay', getSprintId(), hoursRemainingPerDay);
     }
   }
 }

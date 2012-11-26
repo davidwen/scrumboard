@@ -1,6 +1,6 @@
 <template name="burndown">
-  <div class="burndown-graph" style="width: 400px; height: 300px; margin: 0 auto 50px;"></div>
-  <table class="table table-bordered table-condensed" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
+  <div id="burndown-graph" style="width: 400px; height: 300px; margin: 0 auto 50px;"></div>
+  <table id="burndown-table" class="table table-bordered table-condensed" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
     <tbody>
       <tr>
         <td><h5>Day</h5></td>
@@ -28,7 +28,7 @@
     </tbody>
   </table>
   <div style="text-align: center; margin: 20px 0;">
-    <button type="button" class="btn log-day" {{#if noMoreDays ""}}disabled{{/if}}>
+    <button type="button" id="log-day-button" class="btn log-day" {{#if noMoreDays ""}}disabled{{/if}}>
       Log Next Day ({{hoursRemaining}} hours)
     </button>
   </div>
