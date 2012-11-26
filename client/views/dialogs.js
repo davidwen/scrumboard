@@ -159,6 +159,8 @@ Template.newStoryDialog.events = {
         points: storyPoints,
         description: storyDescription,
         acceptanceCriteria: storyAcceptanceCriteria,
+        totalHours: 0,
+        hoursRemaining: 0,
         tasks: [],
         nextTaskId: 0,
         idx: getLastStoryIndexInSprint(getSprintId()) + 1,
