@@ -5,7 +5,7 @@
       <h3>New Story</h3>
     </div>
     <div class="modal-body">
-      <form class="form-horizontal add-story-form">
+      <form id="add-story-form" class="form-horizontal">
         <div class="control-group">
           <div class="controls">
             <div class="error text-error"></div>
@@ -39,7 +39,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      <button class="btn btn-primary add-story">Add Story</button>
+      <button id="add-story-button" class="btn btn-primary">Add Story</button>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@
       <h3 class="show-on-edit task-header">Edit Task</h3>
     </div>
     <div class="modal-body">
-      <form class="form-horizontal add-task-form">
+      <form id="add-task-form" class="form-horizontal">
         <input type="hidden" id="story-id">
         <input type="hidden" id="task-id">
         <div class="control-group">
@@ -103,9 +103,9 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-danger pull-left delete-task show-on-edit">Delete</button>
+      <button id="delete-task-button" class="btn btn-danger pull-left show-on-edit">Delete</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      <button class="btn btn-primary add-task"></button>
+      <button id="add-task-button" class="btn btn-primary"></button>
     </div>
   </div>
 </template>
@@ -117,7 +117,7 @@
       <h3>Add Sprint</h3>
     </div>
     <div class="modal-body">
-      <form class="form-horizontal add-sprint-form">
+      <form id="add-sprint-form" class="form-horizontal">
         <div class="control-group">
           <div class="controls">
             <div class="error text-error"></div>
@@ -151,7 +151,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-      <button class="btn btn-primary add-sprint">Add Sprint</button>
+      <button id="add-sprint-button" class="btn btn-primary">Add Sprint</button>
     </div>
   </div>
 </template>

@@ -36,19 +36,19 @@ Template.sprint.rendered = function() {
 
 Template.sprint.events = {
   'click .show-add-story-dialog': function() {
-    var $form = $('form.add-story-form');
+    var $form = $('#add-story-form');
     $form[0].reset();
     $form.find('.error').hide();
   },
 
   'click .show-add-task-dialog': function() {
-    var $form = $('form.add-task-form');
+    var $form = $('#add-task-form');
     var $dialog = $('#add-task-dialog');
     $form[0].reset();
     $form.find('.error').hide();
     $form.find('#story-id').val($(event.target).closest('tr').attr('data-story-id'));
     $form.find('#task-id').val('');
-    $dialog.find('.add-task').text('Add Task To ' + this.name);
+    $dialog.find('#add-task-button').text('Add Task To ' + this.name);
     $dialog.find('.show-on-edit').hide();
     $dialog.find('.show-on-add').show();
   },

@@ -15,7 +15,7 @@ Template.dashboardSprint.stories = function() {
 }
 
 Template.dashboard.events = {
-  'click .show-add-sprint-dialog': function() {
-    $('form.add-sprint-form')[0].reset();
+  'click #show-add-sprint-dialog': function() {
+    $('#add-sprint-form')[0].reset();
   }
 }

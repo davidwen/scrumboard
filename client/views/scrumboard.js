@@ -84,7 +84,7 @@ Template.story.rendered = function() {
     var story = getStory(storyId);
     var task = getTask(story, taskId);
     if (task) {
-      var $form = $('form.add-task-form');
+      var $form = $('#add-task-form');
       var $dialog = $('#add-task-dialog');
       $form[0].reset();
       $form.find('.error').hide();
@@ -96,7 +96,7 @@ Template.story.rendered = function() {
       $form.find('#task-hours-remaining').val(task.hoursRemaining);
       $form.find('#task-description').val(task.description);
       $form.find('#task-status').val(task.status);
-      $dialog.find('.add-task').text('Save');
+      $dialog.find('#add-task-button').text('Save');
       $dialog.find('.show-on-add').hide();
       $dialog.find('.show-on-edit').show();
       $dialog.modal({});

@@ -28,23 +28,15 @@ var parseImport = function(input) {
   return rows;
 }
 
-// Bind the given inputs to submit the form on enter
-var submitOnEnter = function($inputs, $button) {
-  $inputs.unbind('keyup');
-  $inputs.keyup(function(e) {
-    if (e.which == 13) {
-      $button.click();
-    }
-  });
-}
-
-Template.addSprintDialog.rendered = function() {
-  submitOnEnter($('form.add-sprint-form input'), $('.add-sprint'));
-}
-
 Template.addSprintDialog.events = {
-  'click .add-sprint': function() {
-    var $form = $('form.add-sprint-form');
+  'keyup #add-sprint-form input': function() {
+    if (event.which == 13) {
+      $('#add-sprint-button').click();
+    }
+  },
+
+  'click #add-sprint-button': function() {
+    var $form = $('#add-sprint-form');
     $form.find('.error').hide();
     var sprintName = $form.find('#sprint-name').val();
     var days = Number($form.find('#sprint-days').val());
@@ -140,13 +132,15 @@ Template.addSprintDialog.events = {
   }
 }
 
-Template.newStoryDialog.rendered = function() {
-  submitOnEnter($('form.add-story-form input'), $('.add-story'));
-}
-
 Template.newStoryDialog.events = {
-  'click .add-story': function() {
-    var $form = $('form.add-story-form');
+  'keyup #add-story-form input': function() {
+    if (event.which == 13) {
+      $('#add-story-button').click();
+    }
+  },
+
+  'click #add-story-button': function() {
+    var $form = $('#add-story-form');
     $form.find('.error').hide();
     var storyName = $form.find('#story-name').val();
     var storyPoints = Number($form.find('#story-points').val());
@@ -173,13 +167,15 @@ Template.newStoryDialog.events = {
   }
 }
 
-Template.taskDialog.rendered = function() {
-  submitOnEnter($('form.add-task-form input'), $('.add-task'));
-}
-
 Template.taskDialog.events = {
-  'click .add-task': function() {
-    var $form = $('form.add-task-form');
+  'keyup #add-task-form input': function() {
+    if (event.which == 13) {
+      $('#add-task-button').click();
+    }
+  },
+
+  'click #add-task-button': function() {
+    var $form = $('#add-task-form');
     $form.find('.error').hide();
     var taskName = $form.find('#task-name').val();
     var taskOwner = $form.find('#task-owner').val();
@@ -227,9 +223,9 @@ Template.taskDialog.events = {
     }
   },
 
-  'click .delete-task': function() {
+  'click #delete-task-button': function() {
     if (confirm('Are you sure you would like to delete this task?')) {
-      var $form = $('form.add-task-form');
+      var $form = $('#add-task-form');
       var storyId = $form.find('#story-id').val();
       var taskId = $form.find('#task-id').val();
       Meteor.call('deleteTask', taskId, storyId, getSprintId());
