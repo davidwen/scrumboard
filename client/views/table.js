@@ -4,13 +4,13 @@
 
 // Close all visible table inputs and revert them to display mode
 var closeAllEdits = function() {
-  $('.task-row-input:visible').each(function() {
+  $('#table-view input.task-row-input:visible').each(function() {
     var $td = $(this).closest('td');
     $(this).val($td.find('.task-row-display').text());
     $td.removeClass('editing');
   });
-  $('.task-row-edit').hide();
-  $('.task-row-display').show();
+  $('#table-view span.task-row-edit').hide();
+  $('#table-view span.task-row-display').show();
 }
 
 Template.table.totalHours = function() {
@@ -71,14 +71,25 @@ Template.storyTable.otherTasks = function() {
   }
 }
 
-Template.storyTable.rendered = function() {
+Template.storyTable.events = {
+
+  // Show edit mode when double clicking table inputs
+  'dblclick .task-row-cell': function() {
+    closeAllEdits();
+    var $target = $(event.target).closest('td');
+    if ($target.find('.task-row-display').is(':visible')) {
+      $target.find('.task-row-display').hide();
+      $target.find('.task-row-input').width('100%');
+      $target.find('.task-row-edit').show();
+      $target.find('.task-row-input').focus();
+      $target.addClass('editing');
+    }
+  },
 
   // Bind saving task edits on enter
-  var $inputs = $(this.findAll('.task-row-input'));
-  $inputs.unbind('keyup');
-  $inputs.keyup(function(e) {
-    if (e.which == 13) {
-      var $input = $(this);
+  'keyup input.task-row-input': function() {
+    if (event.which == 13) {
+      var $input = $(event.target);
       var $tr = $input.closest('tr');
       var storyId = $tr.attr('data-story-id');
       var story = getStory(storyId);
@@ -128,22 +139,6 @@ Template.storyTable.rendered = function() {
           Meteor.call('upsertTask', task, story._id, getSprintId());
         }
       }
-    }
-  });
-}
-
-Template.storyTable.events = {
-
-  // Show edit mode when double clicking table inputs
-  'dblclick .task-row-cell': function() {
-    closeAllEdits();
-    var $target = $(event.target).closest('td');
-    if ($target.find('.task-row-display').is(':visible')) {
-      $target.find('.task-row-display').hide();
-      $target.find('.task-row-input').width('100%');
-      $target.find('.task-row-edit').show();
-      $target.find('.task-row-input').focus();
-      $target.addClass('editing');
     }
   }
 }

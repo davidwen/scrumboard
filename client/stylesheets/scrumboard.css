@@ -41,7 +41,7 @@
     background-color: #a9effd;
 }
 
-.table-view td {
+#table-view td {
     vertical-align: middle;
 }
 
@@ -53,7 +53,7 @@
     width: 32px !important;
 }
 
-.table-view .story-cell {
+#table-view .story-cell {
     background-color: #fff !important;
 }
 
