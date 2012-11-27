@@ -15,7 +15,7 @@ Template.sprint.sprintView = function(view) {
 }
 
 Template.sprint.rendered = function() {
-  $('.sprint-table, .table-view').on('mouseenter', '.task', function() {
+  $('#sprint-table, #table-view').on('mouseenter', '.task', function() {
     $(this).find('.edit-task').css('visibility', 'visible');
   }).on('mouseleave', '.task', function() {
     $(this).find('.edit-task').css('visibility', 'hidden');
@@ -24,9 +24,9 @@ Template.sprint.rendered = function() {
   }).on('mouseleave', 'td.story-cell', function() {
     $(this).find('.story-controls').css('visibility', 'hidden');
   }).on('mouseenter', 'tr.add-story-row', function() {
-    $(this).find('.show-add-story-dialog').css('visibility', 'visible');
+    $(this).find('#show-add-story-dialog').css('visibility', 'visible');
   }).on('mouseleave', 'tr.add-story-row', function() {
-    $(this).find('.show-add-story-dialog').css('visibility', 'hidden');
+    $(this).find('#show-add-story-dialog').css('visibility', 'hidden');
   });
 
   $('#add-task-dialog, #add-story-dialog').on('shown', function () {
@@ -35,13 +35,13 @@ Template.sprint.rendered = function() {
 }
 
 Template.sprint.events = {
-  'click .show-add-story-dialog': function() {
+  'click #show-add-story-dialog': function() {
     var $form = $('#add-story-form');
     $form[0].reset();
     $form.find('.error').hide();
   },
 
-  'click .show-add-task-dialog': function() {
+  'click #show-add-task-dialog': function() {
     var $form = $('#add-task-form');
     var $dialog = $('#add-task-dialog');
     $form[0].reset();
@@ -53,7 +53,7 @@ Template.sprint.events = {
     $dialog.find('.show-on-add').show();
   },
 
-  'click .show-story-details-dialog': function() {
+  'click #show-story-details-dialog': function() {
     var storyId = $(event.target).closest('tr').attr('data-story-id');
     var story = getStory(storyId);
     var $dialog = $('#story-details-dialog');
@@ -67,17 +67,17 @@ Template.sprint.events = {
     }).addClass('big-modal');
   },
 
-  'click .show-burndown': function() {
+  'click #show-burndown': function() {
     event.preventDefault();
     Session.set(SPRINT_VIEW, 'burndown');
   },
 
-  'click .show-table': function() {
+  'click #show-table': function() {
     event.preventDefault();
     Session.set(SPRINT_VIEW, 'table');
   },
 
-  'click .show-scrumboard': function() {
+  'click #show-scrumboard': function() {
     event.preventDefault();
     Session.set(SPRINT_VIEW, 'scrumboard');
   }
