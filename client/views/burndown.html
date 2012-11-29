@@ -42,13 +42,14 @@
 </template>
 
 <template name="retrospective">
-  {{#if retrospectiveImage}}
-    <img id="retrospective-image" src="{{retrospectiveImage}}" width="300">
-  {{else}}
-    <div style="text-align: center; margin-top: 180px;">
-      <button type="button" id="upload-retrospective-button" class="btn">
+  <div style="text-align: center;">
+    {{#if retrospectiveImage}}
+      <h3>Retrospective</h3>
+      <img id="retrospective-image" src="{{retrospectiveImage}}" style="cursor: pointer; max-width: 300px;">
+    {{else}}
+      <button type="button" id="upload-retrospective-button" class="btn" style="margin-top: 180px;">
         Upload retrospective image
       </button>
-    </div>
-  {{/if}}
+    {{/if}}
+  </div>
 </template>

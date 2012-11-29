@@ -170,11 +170,8 @@ Template.retrospective.events = {
   },
 
   'click #retrospective-image': function() {
-    var $dialog = $('#image-dialog');
-    $dialog.find('#image-dialog-image').attr('src', getSprint().retrospectiveImage);
-    $dialog.modal({
-      backdrop: true,
-      keyboard: true
-    });
+    var $lightbox = $('#image-lightbox');
+    $lightbox.find('#image-lightbox-image').attr('src', getSprint().retrospectiveImage);
+    $lightbox.lightbox();
   }
 }

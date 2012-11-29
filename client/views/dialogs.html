@@ -176,7 +176,12 @@
 </template>
 
 <template name="imageDialog">
-  <div id="image-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <img id="image-dialog-image"></img>
+  <div id="image-lightbox" class="lightbox hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="lightbox-header">
+      <button type="button" class="close" data-dismiss="lightbox" aria-hidden="true">&times;</button>
+    </div>
+    <div class="lightbox-content">
+      <img id="image-lightbox-image">
+    </div>
   </div>
 </template>
