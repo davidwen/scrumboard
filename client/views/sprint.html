@@ -2,7 +2,9 @@
   {{#with sprint}}
     <div class="pull-left" style="width: 400px;">
       <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
-      <button id="upload-retrospective-button" class="btn" style="margin-left: 20px;">Upload Retrospective</button>
+      {{#if sprintView "burndown"}}
+        <button id="upload-retrospective-button" class="btn" style="margin-left: 20px;">Upload Retrospective</button>
+      {{/if}}
     </div>
     <div class="pull-right" style="width: 400px;">
       <ul class="nav nav-pills pull-right" style="margin-right: 20px;">

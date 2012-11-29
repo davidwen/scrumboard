@@ -157,6 +157,12 @@ Template.burndown.events = {
     var $lightbox = $('#image-lightbox');
     $lightbox.find('#image-lightbox-image').attr('src', getSprint().retrospectiveImage);
     $lightbox.lightbox();
+  },
+
+  'click #remove-retrospective': function() {
+    if (confirm('Are you sure you want to remove this retrospective image from this sprint?')) {
+      Meteor.call('setSprintRetrospectiveImage', getSprintId(), null);
+    }
   }
 }
 
