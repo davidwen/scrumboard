@@ -153,3 +153,28 @@ Template.burndown.events = {
     }
   }
 }
+
+Template.retrospective.retrospectiveImage = function() {
+  var sprint = getSprint();
+  if (sprint) {
+    return sprint.retrospectiveImage;
+  }
+}
+
+Template.retrospective.events = {
+  'click #upload-retrospective-button': function() {
+    filepicker.setKey('AXszezHiITlaaapCUz0wkz');
+    filepicker.pick(function(fpfile) {
+      Meteor.call('setSprintRetrospectiveImage', getSprintId(), fpfile.url);
+    });
+  },
+
+  'click #retrospective-image': function() {
+    var $dialog = $('#image-dialog');
+    $dialog.find('#image-dialog-image').attr('src', getSprint().retrospectiveImage);
+    $dialog.modal({
+      backdrop: true,
+      keyboard: true
+    });
+  }
+}

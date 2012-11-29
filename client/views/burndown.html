@@ -1,5 +1,11 @@
 <template name="burndown">
-  <div id="burndown-graph" style="width: 400px; height: 300px; margin: 0 auto 50px;"></div>
+  <div style="margin: 0 auto 50px; width: 960px;">
+    <div id="burndown-graph" style="float: left; width: 600px; height: 450px;"></div>
+    <div id="retrospective-container" style="float: right; width: 300px; height: 420px;">
+      {{> retrospective}}
+    </div>
+    <div style="clear: both;"></div>
+  </div>
   <table id="burndown-table" class="table table-bordered table-condensed" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
     <tbody>
       <tr>
@@ -28,8 +34,21 @@
     </tbody>
   </table>
   <div style="text-align: center; margin: 20px 0;">
-    <button type="button" id="log-day-button" class="btn log-day" {{#if noMoreDays ""}}disabled{{/if}}>
+    <button type="button" id="log-day-button" class="btn" {{#if noMoreDays ""}}disabled{{/if}}>
       Log Next Day ({{hoursRemaining}} hours)
     </button>
   </div>
+  {{> imageDialog}}
+</template>
+
+<template name="retrospective">
+  {{#if retrospectiveImage}}
+    <img id="retrospective-image" src="{{retrospectiveImage}}" width="300">
+  {{else}}
+    <div style="text-align: center; margin-top: 180px;">
+      <button type="button" id="upload-retrospective-button" class="btn">
+        Upload retrospective image
+      </button>
+    </div>
+  {{/if}}
 </template>
