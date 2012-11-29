@@ -1,10 +1,14 @@
 <template name="burndown">
   <div style="margin: 0 auto 50px; width: 960px;">
-    <div id="burndown-graph" style="float: left; width: 600px; height: 450px;"></div>
-    <div id="retrospective-container" style="float: right; width: 300px; height: 420px;">
-      {{> retrospective}}
-    </div>
-    <div style="clear: both;"></div>
+    {{#if retrospectiveImage}}
+      <div id="burndown-graph" style="float: left; width: 600px; height: 450px;"></div>
+      <div id="retrospective-container" style="float: right; width: 300px; height: 420px; text-align: center;">
+        <img id="retrospective-image" src="{{retrospectiveImage}}" style="cursor: pointer; max-width: 100%; max-height: 100%;">
+      </div>
+      <div style="clear: both;"></div>
+    {{else}}
+      <div id="burndown-graph" style="margin: 0 auto; width: 600px; height: 450px;"></div>
+    {{/if}}
   </div>
   <table id="burndown-table" class="table table-bordered table-condensed" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
     <tbody>
@@ -39,17 +43,4 @@
     </button>
   </div>
   {{> imageDialog}}
-</template>
-
-<template name="retrospective">
-  <div style="text-align: center;">
-    {{#if retrospectiveImage}}
-      <h3>Retrospective</h3>
-      <img id="retrospective-image" src="{{retrospectiveImage}}" style="cursor: pointer; max-width: 300px;">
-    {{else}}
-      <button type="button" id="upload-retrospective-button" class="btn" style="margin-top: 180px;">
-        Upload retrospective image
-      </button>
-    {{/if}}
-  </div>
 </template>

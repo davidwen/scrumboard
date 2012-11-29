@@ -1,9 +1,10 @@
 <template name="sprint">
   {{#with sprint}}
-    <div class="pull-left" style="width: 300px;">
+    <div class="pull-left" style="width: 400px;">
       <a class="btn" style="margin-left: 20px;" href="/">&lt; All Sprints</a>
+      <button id="upload-retrospective-button" class="btn" style="margin-left: 20px;">Upload Retrospective</button>
     </div>
-    <div class="pull-right" style="width: 300px;">
+    <div class="pull-right" style="width: 400px;">
       <ul class="nav nav-pills pull-right" style="margin-right: 20px;">
         <li {{#if sprintView "scrumboard"}}class="active"{{/if}}>
           <a href="#" id="show-scrumboard">Scrumboard</a>

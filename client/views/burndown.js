@@ -151,27 +151,18 @@ Template.burndown.events = {
       });
       Meteor.call('setSprintHoursRemainingPerDay', getSprintId(), hoursRemainingPerDay);
     }
-  }
-}
-
-Template.retrospective.retrospectiveImage = function() {
-  var sprint = getSprint();
-  if (sprint) {
-    return sprint.retrospectiveImage;
-  }
-}
-
-Template.retrospective.events = {
-  'click #upload-retrospective-button': function() {
-    filepicker.setKey('AXszezHiITlaaapCUz0wkz');
-    filepicker.pick(function(fpfile) {
-      Meteor.call('setSprintRetrospectiveImage', getSprintId(), fpfile.url);
-    });
   },
 
   'click #retrospective-image': function() {
     var $lightbox = $('#image-lightbox');
     $lightbox.find('#image-lightbox-image').attr('src', getSprint().retrospectiveImage);
     $lightbox.lightbox();
+  }
+}
+
+Template.burndown.retrospectiveImage = function() {
+  var sprint = getSprint();
+  if (sprint) {
+    return sprint.retrospectiveImage;
   }
 }

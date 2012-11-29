@@ -80,5 +80,12 @@ Template.sprint.events = {
   'click #show-scrumboard': function() {
     event.preventDefault();
     Session.set(SPRINT_VIEW, 'scrumboard');
-  }
+  },
+
+  'click #upload-retrospective-button': function() {
+    filepicker.setKey('AXszezHiITlaaapCUz0wkz');
+    filepicker.pick(function(fpfile) {
+      Meteor.call('setSprintRetrospectiveImage', getSprintId(), fpfile.url);
+    });
+  },
 }
