@@ -41,7 +41,7 @@ Template.sprint.events = {
     $form.find('.error').hide();
   },
 
-  'click #show-add-task-dialog': function() {
+  'click .show-add-task-dialog': function() {
     var $form = $('#add-task-form');
     var $dialog = $('#add-task-dialog');
     $form[0].reset();
@@ -53,7 +53,7 @@ Template.sprint.events = {
     $dialog.find('.show-on-add').show();
   },
 
-  'click #show-story-details-dialog': function() {
+  'click .show-story-details-dialog': function() {
     var storyId = $(event.target).closest('tr').attr('data-story-id');
     var story = getStory(storyId);
     var $dialog = $('#story-details-dialog');
