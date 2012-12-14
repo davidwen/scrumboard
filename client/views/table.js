@@ -71,6 +71,15 @@ Template.storyTable.otherTasks = function() {
   }
 }
 
+Template.storyTable.rendered = function() {
+  var $tr = $(this.find('tr'));
+  var $details = $tr.find('.show-story-details-dialog');
+  $details.unbind('click');
+  $details.click(function() {
+    $('#story-details-dialog').attr('data-story-id', $tr.attr('data-story-id'));
+  });
+}
+
 Template.storyTable.events = {
 
   // Show edit mode when double clicking table inputs

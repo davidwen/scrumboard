@@ -102,6 +102,12 @@ Template.story.rendered = function() {
       $dialog.modal({});
     }
   });
+
+  var $details = $tr.find('.show-story-details-dialog');
+  $details.unbind('click');
+  $details.click(function() {
+    $('#story-details-dialog').attr('data-story-id', $tr.attr('data-story-id'));
+  });
 }
 
 // If task was just updated, fade task in to emphasize an update visually

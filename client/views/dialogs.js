@@ -233,3 +233,13 @@ Template.taskDialog.events = {
     }
   }
 }
+
+Template.storyDetailsDialog.events = {
+  'click #delete-story-button': function() {
+    if (confirm('Are you sure you would like to delete this story?')) {
+      var storyId = $('#story-details-dialog').attr('data-story-id');
+      Meteor.call('deleteStory', storyId);
+      $('#story-details-dialog').modal('hide');
+    }
+  }
+}

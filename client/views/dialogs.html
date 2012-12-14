@@ -157,7 +157,7 @@
 </template>
 
 <template name="storyDetailsDialog">
-  <div id="story-details-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div id="story-details-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-story-id="">
     <div class="modal-header">
       <h1 id="story-name" class="pull-left"></h1>
       <h3 class="pull-right"><span id="story-points"></span> points</h3>
@@ -170,6 +170,7 @@
       <p id="story-acceptance-criteria" class="lead keep-white-space"></p>
     </div>
     <div class="modal-footer">
+      <button id="delete-story-button" class="btn btn-danger pull-left">Delete</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>
