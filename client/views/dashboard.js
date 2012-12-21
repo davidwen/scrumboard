@@ -3,7 +3,10 @@
  */
 
 Template.dashboard.sprint = function() {
-  return Sprints.find();
+  return Sprints.find(
+    {},
+    { sort:{_id:1} }
+  );
 }
 
 Template.dashboardSprint.nameUriDecoded = function() {
