@@ -246,7 +246,7 @@ Template.storyDetailsDialog.events = {
 
 Template.editSprintDialog.events = {
   'click #delete-sprint-button': function() {
-    if (confirm('Are you sure you would like to delete this story?')) {
+    if (confirm('Are you sure you would like to delete this sprint?')) {
       var sprintId = $('#edit-sprint-dialog').attr('data-sprint-id');
       Meteor.call('deleteSprint', sprintId);
       $('#edit-sprint-dialog').modal('hide');
