@@ -3,7 +3,11 @@
  */
 
 Template.dashboard.sprint = function() {
-  return Sprints.find();
+  Scrumboard.UI.sprintDashboard.init();
+  return Sprints.find(
+    {},
+    { sort:{ _id : 1 } }
+  );
 }
 
 Template.dashboardSprint.nameUriDecoded = function() {

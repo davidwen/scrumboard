@@ -1,26 +1,21 @@
 <template name="dashboard">
-  <div style="margin: 0 auto; max-width: 1100px;">
-    <div class="pull-right">
-      <button type="button" id="show-add-sprint-dialog" class="btn" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
-    </div>
-    <div style="text-align: center; margin: 0 auto; width: 300px;">
-      <h1>Sprint Directory</h1>
-    </div>
-    <table class="table">
-      <thead>
-        <th width="30%"><h3>Sprint Name</h3></th>
-        <th width="65%"><h3>Stories</h3></th>
-        <th width="5%"></th>
-      </thead>
-      <tbody>
-        {{#each sprint}}
-          {{> dashboardSprint}}
-        {{/each}}
-      </tbody>
-    </table>
-    {{> addSprintDialog}}
-    {{> editSprintDialog}}
+  <div class="pull-right">
+    <button type="button" id="show-add-sprint-dialog" class="btn" data-toggle="modal" data-target="#add-sprint-dialog">Add Sprint</button>
   </div>
+  <h1>Sprint Directory</h1>
+  <table class="table">
+    <thead>
+      <th width="30%"><h3>Sprint Name</h3></th>
+      <th width="70%"><h3>Stories</h3></th>
+    </thead>
+    <tbody>
+      {{#each sprint}}
+        {{> dashboardSprint}}
+      {{/each}}
+    </tbody>
+  </table>
+  {{> addSprintDialog}}
+  {{> editSprintDialog}}
 </template>
 
 <template name="dashboardSprint">

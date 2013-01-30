@@ -3,13 +3,17 @@
 </head>
 
 <body>
-  {{> main}}
+  <div id="wab">
+    {{> main}}
+  </div>
 </body>
 
 <template name="main">
-  {{#if sprint}}
-    {{> sprint}}
-  {{else}}
-    {{> dashboard}}
-  {{/if}}
+  <div id="main-wrapper">
+    {{#if sprint}}
+      {{> sprint}}
+    {{else}}
+      {{> dashboard}}
+    {{/if}}
+  </div>
 </template>
