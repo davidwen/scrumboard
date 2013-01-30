@@ -5,11 +5,11 @@
    */
   var Scrumboard = {}
   window.Scrumboard = Scrumboard;
-  
+
   /* Handles all dynamic interface interactions
    */
   Scrumboard.UI = {
-    
+
     // Sprint Dashboard
     sprintDashboard : {
       init : function() {
@@ -17,17 +17,17 @@
         this.bindSlideToggle();
         this.bindToolTip();
       },
-      
+
       bindSlideToggle : function() {
-        console.log('Toggle sprint enabled!');
+        // slide toggle for sprint directory
       },
-      
+
       showCurrentSprint : function() {
-        console.log('Show current sprint successful!');
+        // show first sprint (current)
       },
-      
+
       bindToolTip : function() {
-        console.log('Tooltip enabled!');
+        // Tooltip functionality
       }
     }
   }
