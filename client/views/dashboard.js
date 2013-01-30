@@ -6,7 +6,7 @@ Template.dashboard.sprint = function() {
   Scrumboard.UI.sprintDashboard.init();
   return Sprints.find(
     {},
-    { sort:{ _id : 1 } }
+    { sort:{ $natural : -1 } }
   );
 }
 
