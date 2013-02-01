@@ -184,13 +184,15 @@ Template.taskDialog.events = {
     var taskStatus = $form.find('#task-status').val();
     var storyId = $form.find('#story-id').val();
     var taskId = $form.find('#task-id').val();
-    if (taskName && taskOwner && taskHours && taskDescription && taskStatus) {
+    if (taskName && taskHours && taskDescription && taskStatus) {
       var story = getStory(storyId);
       if (taskId) {
         var task = getTask(story, taskId);
         var taskHoursRemaining = Number($form.find('#task-hours-remaining').val());
         task.name = taskName;
-        task.owner = taskOwner;
+        if (taskOwner) {
+          task.owner = taskOwner;
+        }
         task.hours = taskHours;
         task.hoursRemaining = taskHoursRemaining;
         task.description = taskDescription;
@@ -219,7 +221,7 @@ Template.taskDialog.events = {
       }
       $('#add-task-dialog').modal('hide');
     } else {
-      $form.find('.error').text('All fields required').show();
+      $form.find('.error').text('All fields except Owner required').show();
     }
   },
 
