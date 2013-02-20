@@ -21,4 +21,62 @@
     margin-top: 15px;
     padding: 15px;
   }
+
+  #sprints-container {
+    margin: 25px 0;
+    border: 1px #c0c0c0 solid;
+    border-radius: 8px;
+    padding: 0;
+
+    .sprint-wrapper {
+      position: relative;
+      border-top: 1px #c0c0c0 solid;
+      padding: 5px;
+      margin: 2px;
+
+      .state-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-color: #d0d0d0;
+        border-radius: 2px;
+        text-align: center;
+        line-height: 20px;
+        margin: 0 15px;
+        border: 1px #b0b0b0 solid;
+
+        &:hover {
+          border: 1px #a0a0a0 solid;
+          box-shadow: 1px 1px 3px #c0c0c0;
+        }
+      }
+
+      &:first-child { border-top: 0; }
+
+      &:hover {
+        cursor: pointer;
+        background-color: #f9f9f9;
+      }
+
+      h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+      }
+
+      .stories {
+        font-size: 16px;
+        display: none;
+        margin: 0 0 10px 70px;
+
+        li { padding: 2px 0; }
+      }
+
+      .edit-sprint {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+    }
+  }
 }
