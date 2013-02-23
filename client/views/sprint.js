@@ -57,10 +57,10 @@ Template.sprint.events = {
     var storyId = $(event.target).closest('tr').attr('data-story-id');
     var story = getStory(storyId);
     var $dialog = $('#story-details-dialog');
-    $dialog.find('#story-name').text(story.name);
-    $dialog.find('#story-description').text(story.description);
-    $dialog.find('#story-acceptance-criteria').text(story.acceptanceCriteria);
-    $dialog.find('#story-points').text(story.points);
+    $dialog.find('#story-name').val(story.name);
+    $dialog.find('#story-description').val(story.description);
+    $dialog.find('#story-acceptance-criteria').val(story.acceptanceCriteria);
+    $dialog.find('#story-points').val(story.points);
     $dialog.modal({
       backdrop: true,
       keyboard: true
