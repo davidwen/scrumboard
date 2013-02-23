@@ -241,6 +241,22 @@ Template.storyDetailsDialog.events = {
       Meteor.call('deleteStory', storyId);
       $('#story-details-dialog').modal('hide');
     }
+  },
+
+  'click #save-story-button': function() {
+    var $dialog = $('#story-details-dialog');
+    $dialog.find('.error').hide();
+    var storyId = $('#story-details-dialog').attr('data-story-id');
+    var storyName = $dialog.find('#story-name').val();
+    var storyPoints = Number($dialog.find('#story-points').val());
+    var storyDescription = $dialog.find('#story-description').val();
+    var storyAcceptanceCriteria = $dialog.find('#story-acceptance-criteria').val();
+    if (storyName && storyPoints && storyDescription && storyAcceptanceCriteria) {
+      Meteor.call('updateStory', storyId, storyName, storyPoints, storyDescription, storyAcceptanceCriteria);
+      $('#story-details-dialog').modal('hide');
+    } else {
+      $dialog.find('.error').text('All fields required').show();
+    }
   }
 }
 
