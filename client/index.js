@@ -3,7 +3,7 @@ Template.main.sprint = function() {
   if (sprintName) {
     var sprint = getSprintByName(sprintName);
     if (sprint) {
-      Session.set(SPRINT, sprint._id);  
+      Session.set(SPRINT, sprint._id);
     }
     return true;
   }
