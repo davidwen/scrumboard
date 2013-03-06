@@ -184,7 +184,7 @@ Template.taskDialog.events = {
     var taskStatus = $form.find('#task-status').val();
     var storyId = $form.find('#story-id').val();
     var taskId = $form.find('#task-id').val();
-    if (taskName && taskOwner && taskHours && taskDescription && taskStatus) {
+    if (taskName && taskHours && taskDescription && taskStatus) {
       var story = getStory(storyId);
       if (taskId) {
         var task = getTask(story, taskId);
