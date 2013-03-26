@@ -1,7 +1,0 @@
-{
-  "packages": {
-    "filepicker": {
-        "git": "https://github.com/Filepicker/meteor.git"
-    }
-  }
-}

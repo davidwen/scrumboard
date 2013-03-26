@@ -151,24 +151,5 @@ Template.burndown.events = {
       });
       Meteor.call('setSprintHoursRemainingPerDay', getSprintId(), hoursRemainingPerDay);
     }
-  },
-
-  'click #retrospective-image': function() {
-    var $lightbox = $('#image-lightbox');
-    $lightbox.find('#image-lightbox-image').attr('src', getSprint().retrospectiveImage);
-    $lightbox.lightbox();
-  },
-
-  'click #remove-retrospective': function() {
-    if (confirm('Are you sure you want to remove this retrospective image from this sprint?')) {
-      Meteor.call('setSprintRetrospectiveImage', getSprintId(), null);
-    }
-  }
-}
-
-Template.burndown.retrospectiveImage = function() {
-  var sprint = getSprint();
-  if (sprint) {
-    return sprint.retrospectiveImage;
   }
 }

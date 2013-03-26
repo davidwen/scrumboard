@@ -6,26 +6,25 @@ This is a digital scrum board made in the Meteor framework.
 
 #### Requirements
 
-1. Install [Meteor](http://docs.meteor.com/#quickstart)
-2. Install [Meteorite](https://github.com/oortcloud/meteorite), a package manager for the Meteor framework
-3. Install the [filepicker.io Meteorite package ](https://github.com/Filepicker/meteor)
+Install [Meteor](http://docs.meteor.com/#quickstart)
+
+    $ curl https://install.meteor.com | /bin/sh
 
 #### Usage
 
 Once all the requirements are installed, run scrumboard locally by navigating to the scrumboard project directory and running
 
-    mrt run
+    $ meteor run
 
 To deploy a scrumboard instance, run
 
-    mrt deploy <your scrumboard name>.meteor.com
+    $ meteor deploy <your scrumboard name>.meteor.com
 
 #### Features
 
 * Drag/drop task cards into different stages (Not Started/In Progress/Done)
 * View/edit tasks in scrumboard view or in table view
 * View and maintain burndown chart
-* Upload retrospective images as reminders for action points
 * Import sprints from Google spreadsheets
 
 #### Spreadsheet Imports

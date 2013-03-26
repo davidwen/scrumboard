@@ -1,15 +1,6 @@
 <template name="burndown">
   <div style="margin: 0 auto 50px; width: 960px;">
-    {{#if retrospectiveImage}}
-      <div id="burndown-graph" style="float: left; width: 600px; height: 450px;"></div>
-      <div id="retrospective-container" style="float: right; width: 300px; height: 420px; text-align: center; position: relative;">
-        <i id="remove-retrospective" class="icon-trash pull-right" style="position: absolute; top: 5px; right: 5px;"></i>
-        <img id="retrospective-image" src="{{retrospectiveImage}}" style="cursor: pointer; max-width: 100%; max-height: 100%;">
-      </div>
-      <div style="clear: both;"></div>
-    {{else}}
-      <div id="burndown-graph" style="margin: 0 auto; width: 600px; height: 450px;"></div>
-    {{/if}}
+    <div id="burndown-graph" style="margin: 0 auto; width: 600px; height: 450px;"></div>
   </div>
   <table id="burndown-table" class="table table-bordered table-condensed" style="margin: 0 auto; min-width: 800px; max-width: 1100px; width: 80%;">
     <tbody>
