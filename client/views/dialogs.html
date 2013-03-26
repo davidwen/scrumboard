@@ -159,18 +159,20 @@
 <template name="storyDetailsDialog">
   <div id="story-details-dialog" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true" data-story-id="">
     <div class="modal-header">
-      <h1 id="story-name" class="pull-left"></h1>
-      <h3 class="pull-right"><span id="story-points"></span> points</h3>
+      <div class="error text-error"></div>
+      <h1 class="pull-left"><input type="text" id="story-name"></h1>
+      <h3 class="pull-right"><input type="number" id="story-points"> points</h3>
       <div class="clearfix"></div>
     </div>
     <div class="modal-body">
       <h2>Description</h2>
-      <p id="story-description" class="lead keep-white-space"></p>
+      <textarea rows="5" id="story-description" class="lead keep-white-space"></textarea>
       <h2>Acceptance Criteria</h2>
-      <p id="story-acceptance-criteria" class="lead keep-white-space"></p>
+      <textarea rows="5" id="story-acceptance-criteria" class="lead keep-white-space"></textarea>
     </div>
     <div class="modal-footer">
       <button id="delete-story-button" class="btn btn-danger pull-left">Delete</button>
+      <button id="save-story-button" class="btn btn-primary" aria-hidden="true">Save</button>
       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
     </div>
   </div>

@@ -3,7 +3,10 @@
  */
 
 Template.dashboard.sprint = function() {
-  return Sprints.find();
+  return Sprints.find(
+    {},
+    { sort:{ _id : 1 } }
+  );
 }
 
 Template.dashboardSprint.nameUriDecoded = function() {
@@ -19,16 +22,30 @@ Template.dashboard.events = {
     $('#add-sprint-form')[0].reset();
   },
 
-  'mouseenter .sprint-row': function() {
+  'mouseenter .sprint-wrapper': function() {
     $(event.target).find('.edit-sprint').show();
   },
 
-  'mouseleave .sprint-row': function() {
+  'mouseleave .sprint-wrapper': function() {
     $(event.target).find('.edit-sprint').hide();
   },
 
+  'click .state-icon' : function() {
+    if ($(event.target).hasClass('open')) {
+      $(event.target).removeClass('open');
+      $(event.target).text("+");
+    } else {
+      $(event.target).addClass('open');
+      $(event.target).text("-");
+    }
+    $(event.target)
+    .closest('.sprint-wrapper')
+    .find('.stories')
+    .slideToggle();
+  },
+
   'click .edit-sprint': function() {
-    var sprint = getSprint($(event.target).closest('tr').attr('data-sprint-id'));
+    var sprint = getSprint($(event.target).closest('.sprint-wrapper').attr('data-sprint-id'));
     var $dialog = $('#edit-sprint-dialog');
     $dialog.attr('data-sprint-id', sprint._id);
     $dialog.find('#sprint-name').val(sprint.name);

@@ -3,13 +3,24 @@
 </head>
 
 <body>
-  {{> main}}
+  <div id="wab">
+    {{> header}}
+    {{> main}}
+  </div>
 </body>
 
+<template name="header">
+  <div id="header">
+    ScrumBoard
+  </div>
+</template>
+
 <template name="main">
-  {{#if sprint}}
-    {{> sprint}}
-  {{else}}
-    {{> dashboard}}
-  {{/if}}
+  <div id="main-wrapper">
+    {{#if sprint}}
+      {{> sprint}}
+    {{else}}
+      {{> dashboard}}
+    {{/if}}
+  </div>
 </template>
