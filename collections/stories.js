@@ -1,10 +1,10 @@
 Stories = new Meteor.Collection('stories');
 
-var getStory = function(storyId) {
+getStory = function(storyId) {
   return Stories.findOne({ _id: storyId });
 }
 
-var getTask = function(story, taskId) {
+getTask = function(story, taskId) {
   if (!story) {
     return null;
   }
@@ -17,7 +17,7 @@ var getTask = function(story, taskId) {
   return null;
 }
 
-var getStoryHours = function(story) {
+getStoryHours = function(story) {
   var hours = 0;
   for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
     hours += story.tasks[ii].hours;
@@ -25,7 +25,7 @@ var getStoryHours = function(story) {
   return hours;
 }
 
-var getStoryHoursRemaining = function(story) {
+getStoryHoursRemaining = function(story) {
   var hoursRemaining = 0;
   for (var ii = 0, len = story.tasks.length; ii < len; ii++) {
     hoursRemaining += story.tasks[ii].hoursRemaining;
@@ -33,7 +33,7 @@ var getStoryHoursRemaining = function(story) {
   return hoursRemaining;
 }
 
-var getLastStoryIndexInSprint = function(sprintId) {
+getLastStoryIndexInSprint = function(sprintId) {
   var story = Stories.findOne(
     { sprintId: sprintId },
     { sort: {idx: -1} }

@@ -1,21 +1,21 @@
 Sprints = new Meteor.Collection('sprints');
 
-var getSprintId = function() {
+getSprintId = function() {
   return Session.get(SPRINT);
 }
 
-var getSprint = function(sprintId) {
+getSprint = function(sprintId) {
   if (!sprintId) {
     sprintId = Session.get(SPRINT);
   }
   return Sprints.findOne({ _id: sprintId });
 }
 
-var getSprintByName = function(sprintName) {
+getSprintByName = function(sprintName) {
   return Sprints.findOne({ name: sprintName });
 }
 
-var getSprintTotalHours = function(sprintId) {
+getSprintTotalHours = function(sprintId) {
   if (!sprintId) {
     return 0;
   }
@@ -27,7 +27,7 @@ var getSprintTotalHours = function(sprintId) {
   return result;
 }
 
-var getSprintHoursRemaining = function(sprintId) {
+getSprintHoursRemaining = function(sprintId) {
   if (!sprintId) {
     return 0;
   }
@@ -39,7 +39,7 @@ var getSprintHoursRemaining = function(sprintId) {
   return result;
 }
 
-var getSprintStories = function(sprintId) {
+getSprintStories = function(sprintId) {
   return Stories.find(
     { sprintId: sprintId },
     { sort: { idx: 1 } }).fetch();
