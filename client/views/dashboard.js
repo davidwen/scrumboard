@@ -5,7 +5,7 @@
 Template.dashboard.sprint = function() {
   return Sprints.find(
     {},
-    { sort:{ _id : 1 } }
+    { sort:{ timestamp : -1 } }
   );
 }
 

@@ -43,7 +43,8 @@ Template.addSprintDialog.events = {
     var newSprint = {
       name: sprintName,
       days: days,
-      hoursRemainingPerDay: []
+      hoursRemainingPerDay: [],
+      timestamp: new Date().getTime()
     }
     Meteor.call('addSprint', newSprint, function(error, sprintId) {
       if (error) {
